@@ -1,8 +1,8 @@
 package hr.tvz.master.erasmus.repository;
 
 import hr.tvz.master.erasmus.entity.Field;
-import org.springframework.data.jpa.repository.JpaRepository;
+import hr.tvz.master.erasmus.entity.Subject;
 import org.springframework.data.repository.CrudRepository;
 
-public interface FieldRepository extends CrudRepository<Field, Long> {
+public interface SubjectRepository extends CrudRepository<Subject, Long> {
 }

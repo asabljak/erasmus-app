@@ -19,8 +19,8 @@ public class FieldController {
     @GetMapping("/fields")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         List<Field> list = fieldRepository.findAll();
-        model.addAttribute("name", list );
-        return "greeting";
+        model.addAttribute("fields", list );
+        return "field/list";
     }
 
     @GetMapping("/create")

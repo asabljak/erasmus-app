@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<html>
-	<head>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:fragment="htmlHeader">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Ink &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title>
@@ -66,7 +66,7 @@
 	<div class="fh5co-loader"></div>
 	
 	<div id="page">
-	<nav class="fh5co-nav" role="navigation">
+	<nav class="fh5co-nav" role="navigation" th:fragment="navigation">
 		<div class="top-menu">
 			<div class="container-fluid">
 				<div class="row">
@@ -340,7 +340,7 @@
 		</div>
 	</div>
 
-	<footer id="fh5co-footer" role="contentinfo">
+	<footer id="fh5co-footer" role="contentinfo" th:fragment="footer">
 		<div class="container">
 			<div class="row row-pb-md">
 				<div class="col-md-4 fh5co-widget">
