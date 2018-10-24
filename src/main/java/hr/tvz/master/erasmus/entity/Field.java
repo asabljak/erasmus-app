@@ -13,8 +13,8 @@ public class Field {
     @Column(name = "id")
     private Long id;
 
-    public String CODE;
-    public String NAME;
+    private String code;
+    private String name;
 
     public Long getId() {
         return id;
@@ -24,19 +24,19 @@ public class Field {
         this.id = id;
     }
 
-    public String getCODE() {
-        return CODE;
+    public String getCode() {
+        return code;
     }
 
-    public void setCODE(String CODE) {
-        this.CODE = CODE;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getNAME() {
-        return NAME;
+    public String getName() {
+        return name;
     }
 
-    public void setNAME(String NAME) {
-        this.NAME = NAME;
+    public void setName(String name) {
+        this.name = name;
     }
 }
