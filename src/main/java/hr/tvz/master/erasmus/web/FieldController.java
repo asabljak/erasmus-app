@@ -46,7 +46,6 @@ public class FieldController {
 
     @PostMapping("/field")
     public String create(@ModelAttribute Field field) {
-        Field tmp = field;
         fieldRepository.save(field);
         return "redirect:/fields";
     }

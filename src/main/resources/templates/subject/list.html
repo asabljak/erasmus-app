@@ -7,21 +7,27 @@
 <body>
     <div th:replace="template :: navigation"></div>
 
+    <!--<p th:text="'Hello, ' + ${name} + '!'" />-->
+
     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
         <form method="get" id="forma">
             <table id="fields">
                 <thead>
                 <tr>
                     <td>Id</td>
-                    <td>Code</td>
                     <td>Name</td>
+                    <td>Description</td>
+                    <td>Ects</td>
+                    <td>Language</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="field : ${fields}">
-                    <td th:text="${field.getId()}"></td>
-                    <td th:text="${field.getCode()}"></td>
-                    <td th:text="${field.getName()}"></td>
+                <tr th:each="subject : ${subjects}">
+                    <td th:text="${subject.getId()}"></td>
+                    <td th:text="${subject.getName()}"></td>
+                    <td th:text="${subject.getDescription()}"></td>
+                    <td th:text="${subject.getEctsValue()}"></td>
+                    <td th:text="${subject.getLanguage()}"></td>
                 </tr>
                 </tbody>
             </table>
