@@ -2,15 +2,17 @@ package hr.tvz.master.erasmus.web;
 
 import hr.tvz.master.erasmus.entity.Field;
 import hr.tvz.master.erasmus.repository.FieldRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 //TODO srediti mappinge
 
@@ -49,4 +51,51 @@ public class FieldController {
         fieldRepository.save(field);
         return "redirect:/fields";
     }
+
+    //TODO edit, delete, validacija
+
+    @GetMapping("/field/edit/{id}")
+    public ModelAndView editFieldView(@PathVariable Long id) throws NotFoundException {
+
+        Optional<Field> field = fieldRepository.findById(id);
+
+        if (!field.isPresent()) {
+            throw new NotFoundException("Field not found");
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("field/edit");
+        modelAndView.addObject("field", field.get());
+
+        return modelAndView;
+    }
+
+    @PostMapping("/field/edit/{id}")
+    public ModelAndView editFieldAction(HttpServletRequest request, @PathVariable Long id, Field fieldView,
+                                       BindingResult bindingResult) throws Exception {
+
+        Field field = fieldRepository.getOne(id);
+
+        if (field == null) {
+            throw new NotFoundException("Field not found");
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("field.edit");
+            modelAndView.addObject("field", fieldView);
+
+            return modelAndView;
+        }
+
+//        Normalizer.Form.bind(request, fieldView, field);
+        this.fieldRepository.save(fieldView);
+
+        modelAndView.setViewName("redirect:/fields");
+
+        return modelAndView;
+    }
+
+
 }

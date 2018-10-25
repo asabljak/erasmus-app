@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<fieldset th:if="${#fields.hasErrors('${field.*}')}" class="text-warning">
+    <legend>Some errors appeared !</legend>
+    <ul>
+        <li th:each="err : ${#fields.errors('filed.*')}" th:text="${err}"></li>
+    </ul>
+</fieldset>
+
+<form action="#" th:action="@{/field/edit/{id}(id=${field.getId()})}" th:object="${field}" method="post">
+    <div th:class="${#fields.hasErrors('code')} ? 'form-group has-error' : 'form-group'">
+        <label class="control-label" for="code">Code <span class="required">*</span></label>
+        <input type="text" th:field="*{code}" required="required">
+        label class="control-label" for="name">Name <span class="required">*</span></label>
+        <input type="text" th:field="*{name}" required="required">
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </div>
+    <input type="hidden" th:field="*{id}">
+</form>
+
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>
