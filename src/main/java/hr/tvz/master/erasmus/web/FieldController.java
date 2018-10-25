@@ -75,9 +75,9 @@ public class FieldController {
     public ModelAndView editFieldAction(HttpServletRequest request, @PathVariable Long id, Field fieldView,
                                        BindingResult bindingResult) throws Exception {
 
-        Field field = fieldRepository.getOne(id);
+//        Field field = fieldRepository.getOne(id);
 
-        if (field == null) {
+        if (fieldView == null) {
             throw new NotFoundException("Field not found");
         }
 
