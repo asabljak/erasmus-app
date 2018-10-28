@@ -1331,4 +1331,12 @@ h1, h2, h3, h4, h5, h6, figure {
   opacity: 0;
 }
 
+.row-pointer {
+  cursor: pointer;
+}
+
+.details-text span {
+    font-size: 18px;
+    padding-left: 18px;
+}
 /*# sourceMappingURL=style.css.map */

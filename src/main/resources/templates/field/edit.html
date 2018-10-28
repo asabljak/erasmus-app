@@ -7,7 +7,7 @@
 <body>
 <div th:replace="template :: navigation"></div>
 
-<fieldset th:if="${#fields.hasErrors('${field.*}')}" class="text-warning">
+<!--<fieldset th:if="${#fields.hasErrors('${field.*}')}" class="text-warning">
     <legend>Some errors appeared !</legend>
     <ul>
         <li th:each="err : ${#fields.errors('filed.*')}" th:text="${err}"></li>
@@ -23,8 +23,48 @@
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </div>
     <input type="hidden" th:field="*{id}">
-</form>
+</form>-->
 
+
+
+<div class="container">
+    <h2>Edit Details</h2>
+    <br>
+    <div>
+        <form class="form-horizontal" th:object="${field}" th:action="@{/fields/edit}" method="post">
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <input type="hidden" class="form-control" th:field="*{id}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <input type="hidden" class="form-control" th:field="*{created}"/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Code:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{code}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{name}" />
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <div class="row">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a th:href="${'/fields/details/' + field.getId()}" class="btn btn-default">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+</div>
 
 <div th:replace="template :: footer"></div>
 </body>

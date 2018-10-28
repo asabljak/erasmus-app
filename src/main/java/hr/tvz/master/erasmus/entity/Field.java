@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 public class Field extends AbstractErasmusEntity{

@@ -6,15 +6,13 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
-
-//TODO srediti mappinge
 
 @Controller
 public class FieldController {
@@ -23,39 +21,32 @@ public class FieldController {
     FieldRepository fieldRepository;
 
     @GetMapping("/fields")
-    public String greeting(Model model) {
+    public String getAll(Model model) {
         List<Field> list = fieldRepository.findAll();
-        model.addAttribute("fields", list );
+        model.addAttribute("fields", list);
         return "field/list";
     }
 
-//    @GetMapping("/createDummy")
-//    public String createDummy(Model model) {
-//        Field field = new Field();
-//        field.setCode("code");
-//        field.setName("dummyName");
-//
-//        fieldRepository.save(field);
-//
-//        return "/greeting";
-//    }
+    @GetMapping(path = "fields/details/{id}")
+    public String getOne(Model model, @PathVariable(value = "id") Long id) {
+        model.addAttribute("field", fieldRepository.getOne(id));
+        return "field/details";
+    }
 
-    @GetMapping("/field")
+    @GetMapping("/fields/create")
     public String getEmpty(Model model){
         model.addAttribute("field", new Field());
         return "field/create";
     }
 
-    @PostMapping("/field")
+    @PostMapping("/fields/create")
     public String create(@ModelAttribute Field field) {
-        fieldRepository.save(field);
-        return "redirect:/fields";
+        Field createdField = fieldRepository.save(field);
+        return "redirect:/fields/details/" + createdField.getId();
     }
 
-    //TODO edit, delete, validacija
-
-    @GetMapping("/field/edit/{id}")
-    public ModelAndView editFieldView(@PathVariable Long id) throws NotFoundException {
+    @GetMapping("/fields/edit/{id}")
+    public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
         Optional<Field> field = fieldRepository.findById(id);
 
@@ -63,39 +54,23 @@ public class FieldController {
             throw new NotFoundException("Field not found");
         }
 
-        ModelAndView modelAndView = new ModelAndView();
+        model.addAttribute("field", field.get());
 
-        modelAndView.setViewName("field/edit");
-        modelAndView.addObject("field", field.get());
-
-        return modelAndView;
+        return "field/edit";
     }
 
-    @PostMapping("/field/edit/{id}")
-    public ModelAndView editFieldAction(HttpServletRequest request, @PathVariable Long id, Field fieldView,
-                                       BindingResult bindingResult) throws Exception {
-
-//        Field field = fieldRepository.getOne(id);
-
-        if (fieldView == null) {
-            throw new NotFoundException("Field not found");
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("field.edit");
-            modelAndView.addObject("field", fieldView);
-
-            return modelAndView;
-        }
-
-//        Normalizer.Form.bind(request, fieldView, field);
-        this.fieldRepository.save(fieldView);
-
-        modelAndView.setViewName("redirect:/fields");
-
-        return modelAndView;
+    @PostMapping("/fields/edit")
+    public String edit(@ModelAttribute Field newField) {
+        Field oldField = fieldRepository.getOne(newField.getId());
+        oldField.setCode(newField.getCode());
+        oldField.setName(newField.getName());
+        fieldRepository.save(oldField);
+        return "redirect:/fields/details/" + oldField.getId();
     }
 
-
+    @GetMapping(path = "/fields/delete/{id}")
+    public String deleteProduct(@PathVariable(name = "id") Long id) {
+        fieldRepository.deleteById(id);
+        return "redirect:/fields";
+    }
 }
