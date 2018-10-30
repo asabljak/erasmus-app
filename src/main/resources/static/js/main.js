@@ -249,6 +249,10 @@
 
 	};
 
+	var rowClicked = function (value) {
+        location.href = value;
+    }
+
 	
 	$(function(){
 		mobileMenuOutsideClick();

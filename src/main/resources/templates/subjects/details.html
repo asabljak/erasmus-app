@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Detalji</h2>
+    <br>
+    <div>
+        <div class="row details-text"><span><b>Ime: </b></span><span th:text="${subject.getName()}"></span></div>
+        <div class ="row details-text"><span><b>Opis: </b></span><span th:text="${subject.getDescription()}"></span></div>
+        <div class ="row details-text"><span><b>Ects: </b></span><span th:text="${subject.getEctsValue()}"></span></div>
+        <div class ="row details-text"><span><b>Jezik: </b></span><span th:text="${subject.getLanguage()}"></span></div>
+        <br>
+        <form>
+            <td><a th:href="${'/subjects/edit/' + subject.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a th:href="${'/subjects/delete/' + subject.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/subjects/'}" class="btn btn-default">Povratak</a></td>
+        </form>
+        <br><br>
+    </div>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

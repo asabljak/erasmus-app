@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="col-md-8 col-md-offset-2 fh5co-heading">
+    <h2>Kreiranje novog predmeta</h2>
+    <br>
+    <form class="form-horizontal" action="#" th:action="@{/subjects/create}" th:object="${subject}" method="post">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Ime:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{name}" />
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Opis:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{description}" />
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Ects:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{ectsValue}" />
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Jezik:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{language}" />
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Spremi</button>
+                <a th:href="${'/subjects/'}" class="btn btn-default">Otkaži</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

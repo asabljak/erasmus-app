@@ -1,15 +1,14 @@
 package hr.tvz.master.erasmus.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 public class Subject extends AbstractErasmusEntity {
     private String name;
     private String description;
-    private int ectsValue;
+    private Integer ectsValue;
     private String language;
 
     public String getName() {
@@ -28,7 +27,7 @@ public class Subject extends AbstractErasmusEntity {
         this.description = description;
     }
 
-    public int getEctsValue() {
+    public Integer getEctsValue() {
         return ectsValue;
     }
 
@@ -42,5 +41,10 @@ public class Subject extends AbstractErasmusEntity {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public boolean isValid() {
+        return Stream.of(name, description, ectsValue, language)
+                .noneMatch(Objects::isNull);
     }
 }

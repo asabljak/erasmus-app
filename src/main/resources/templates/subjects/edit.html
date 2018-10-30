@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Izmjena detalja</h2>
+    <br>
+    <div>
+        <form class="form-horizontal" th:object="${subject}" th:action="@{/subjects/edit}" method="post">
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <input type="hidden" class="form-control" th:field="*{id}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <input type="hidden" class="form-control" th:field="*{created}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Ime:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{name}" />
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Opis:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{description}" />
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Ects:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{ectsValue}" />
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Jezik:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{language}" />
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <div class="row">
+                    <button type="submit" class="btn btn-primary">Spremi</button>
+                    <a th:href="${'/subjects/details/' + subject.getId()}" class="btn btn-default">Otkaži</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

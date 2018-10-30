@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
+//TODO dodavit validate()
 
 @Controller
 public class FieldController {
@@ -24,19 +25,19 @@ public class FieldController {
     public String getAll(Model model) {
         List<Field> list = fieldRepository.findAll();
         model.addAttribute("fields", list);
-        return "field/list";
+        return "fields/list";
     }
 
     @GetMapping(path = "fields/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("field", fieldRepository.getOne(id));
-        return "field/details";
+        return "fields/details";
     }
 
     @GetMapping("/fields/create")
     public String getEmpty(Model model){
         model.addAttribute("field", new Field());
-        return "field/create";
+        return "fields/create";
     }
 
     @PostMapping("/fields/create")
@@ -56,7 +57,7 @@ public class FieldController {
 
         model.addAttribute("field", field.get());
 
-        return "field/edit";
+        return "fields/edit";
     }
 
     @PostMapping("/fields/edit")
