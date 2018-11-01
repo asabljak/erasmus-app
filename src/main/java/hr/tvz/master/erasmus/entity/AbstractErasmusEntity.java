@@ -56,4 +56,6 @@ public abstract class AbstractErasmusEntity {
     public void setVersion(Integer version) {
         this.version = version;
     }
+
+    protected abstract boolean isValid();
 }

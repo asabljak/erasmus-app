@@ -249,9 +249,7 @@
 
 	};
 
-	var rowClicked = function (value) {
-        location.href = value;
-    }
+
 
 	
 	$(function(){
@@ -265,6 +263,10 @@
 		loaderPage();
 		counterWayPoint();
 		fullHeight();
+
+        function rowClicked(value) {
+            location.href = value;
+        };
 	});
 
 

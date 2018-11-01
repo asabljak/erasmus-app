@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css">
+    <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+
+
+</head>
+<body>
+<div class="container">
+    <div class="example">
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#multi-select-demo').multiselect();
+            });
+        </script>
+        <select id="multi-select-demo" multiple="multiple">
+            <option value="jQuery">jQuery tutorial</option>
+            <option value="Bootstrap">Bootstrap Tips</option>
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS tricks</option>
+            <option value="angular">Angular JS</option>
+        </select>
+    </div>
+</div>
+</body>
+</html>

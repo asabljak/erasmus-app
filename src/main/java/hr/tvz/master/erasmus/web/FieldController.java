@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
-//TODO dodavit validate()
+//TODO dodati validate()
 
 @Controller
 public class FieldController {
@@ -42,6 +42,10 @@ public class FieldController {
 
     @PostMapping("/fields/create")
     public String create(@ModelAttribute Field field) {
+        if(!field.isValid()) {
+            throw new IllegalStateException("Sva polja nisu pravilno postavljena");
+        }
+
         Field createdField = fieldRepository.save(field);
         return "redirect:/fields/details/" + createdField.getId();
     }
@@ -62,6 +66,10 @@ public class FieldController {
 
     @PostMapping("/fields/edit")
     public String edit(@ModelAttribute Field newField) {
+        if(!newField.isValid()) {
+            throw new IllegalStateException("Sva polja nisu pravilno postavljena");
+        }
+
         Field oldField = fieldRepository.getOne(newField.getId());
         oldField.setCode(newField.getCode());
         oldField.setName(newField.getName());

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div th:replace="template :: navigation"></div>
+
+    <div class="col-md-8 col-md-offset-2 fh5co-heading">
+        <h2>Smjerovi</h2>
+        <br>
+        <form method="get" id="forma" class="text-center">
+            <table id="courses" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Ime</td>
+                    <td>Opis</td>
+                    <!--<td>Ects</td>-->
+                    <!--<th>Delete</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course : ${courses}" th:onclick="'javascript:rowClicked(\'/courses/details/' + ${course.getId()} + '\');'">
+                        <td th:text="${course.getId()}" class="row-pointer"></td>
+                        <td th:text="${course.getName()}" class="row-pointer"></td>
+                        <td th:text="${course.getDescription()}" class="row-pointer"></td>
+                        <!--<td th:text="${course.getEctsValue()}" class="row-pointer"></td>-->
+                    <!--<td><a th:href="${'/courses/delete/' + course.getId()}" class="btn btn-danger">Delete</a></td>-->
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <br><br>
+        <a th:href="${'/courses/create/'}" class="btn btn-primary">Kreiraj novi smjer</a>
+    </div>
+
+    <div th:replace="template :: footer"></div>
+    <div th:replace="template :: scripts"></div>
+
+    </body>
+</html>
