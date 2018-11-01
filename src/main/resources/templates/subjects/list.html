@@ -1,51 +1,51 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="template :: htmlHeader">
-    <title>Getting Started: Serving Web Content</title> 
+    <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <div th:replace="template :: navigation"></div>
+<div th:replace="template :: navigation"></div>
 
-    <div class="col-md-8 col-md-offset-2 fh5co-heading">
-        <h2>Predmeti</h2>
-        <br>
-        <form method="get" id="forma" class="text-center">
-            <table id="subjects" class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <td>Id</td>
-                    <td>Ime</td>
-                    <td>Opis</td>
-                    <td>Ects</td>
-                    <td>Jezik</td>
-                    <!--<th>Delete</th>-->
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="subject : ${subjects}" th:onclick="'javascript:rowClicked(\'/subjects/details/' + ${subject.getId()} + '\');'">
-                        <td th:text="${subject.getId()}" class="row-pointer"></td>
-                        <td th:text="${subject.getName()}" class="row-pointer"></td>
-                        <td th:text="${subject.getDescription()}" class="row-pointer"></td>
-                        <td th:text="${subject.getEctsValue()}" class="row-pointer"></td>
-                        <td th:text="${subject.getLanguage()}" class="row-pointer"></td>
-                    <!--<td><a th:href="${'/subjects/delete/' + subject.getId()}" class="btn btn-danger">Delete</a></td>-->
-                </tr>
-                </tbody>
-            </table>
-        </form>
-        <br><br>
-        <a th:href="${'/subjects/create/'}" class="btn btn-primary">Kreiraj novi predmet</a>
-    </div>
+<div class="col-md-8 col-md-offset-2 fh5co-heading">
+    <h2>Predmeti</h2>
+    <br>
+    <form method="get" id="forma" class="text-center">
+        <table id="subjects" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Ime</td>
+                <td>Opis</td>
+                <td>Ects</td>
+                <td>Jezik</td>
+                <!--<th>Delete</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subject : ${subjects}" th:onclick="'javascript:rowClicked(\'/subjects/details/' + ${subject.getId()} + '\');'">
+                <td th:text="${subject.getId()}" class="row-pointer"></td>
+                <td th:text="${subject.getName()}" class="row-pointer"></td>
+                <td th:text="${subject.getDescription()}" class="row-pointer"></td>
+                <td th:text="${subject.getEctsValue()}" class="row-pointer"></td>
+                <td th:text="${subject.getLanguage()}" class="row-pointer"></td>
+                <!--<td><a th:href="${'/subjects/delete/' + subject.getId()}" class="btn btn-danger">Delete</a></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <br><br>
+    <a th:href="${'/subjects/create/'}" class="btn btn-primary">Kreiraj novi predmet</a>
+</div>
 
-    <div th:replace="template :: footer"></div>
-    <div th:replace="template :: scripts"></div>
+<div th:replace="template :: footer"></div>
+<div th:replace="template :: scripts"></div>
 
 
-    <!--<script>-->
-        <!--function rowClicked(value) {-->
-            <!--location.href = value;-->
-        <!--}-->
-    <!--</script>-->
+<!--<script>-->
+<!--function rowClicked(value) {-->
+<!--location.href = value;-->
+<!--}-->
+<!--</script>-->
 </body>
 </html>

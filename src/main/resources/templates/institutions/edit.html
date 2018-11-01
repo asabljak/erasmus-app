@@ -8,10 +8,10 @@
 <div th:replace="template :: navigation"></div>
 
 <div class="container">
-    <h2>Izmjena detalja</h2>
+    <h2>Izmjena detalja ustanove</h2>
     <br>
     <div>
-        <form class="form-horizontal" th:object="${subject}" th:action="@{/subjects/edit}" method="post">
+        <form class="form-horizontal" th:object="${institution}" th:action="@{/institutions/edit}" method="post">
             <div class="form-group">
                 <div class="col-sm-5">
                     <input type="hidden" class="form-control" th:field="*{id}"/>
@@ -29,28 +29,46 @@
                 </div>
             </div>
             <div class="form-group ">
-                <label class="col-sm-2 control-label">Opis:</label>
+                <label class="col-sm-2 control-label">Kod:</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="*{description}" required/>
+                    <input type="text" class="form-control" th:field="*{code}" required/>
                 </div>
             </div>
             <div class="form-group ">
-                <label class="col-sm-2 control-label">Ects:</label>
+                <label class="col-sm-2 control-label">Grad:</label>
                 <div class="col-sm-5">
-                    <input type="number" class="form-control" th:field="*{ectsValue}" required/>
+                    <input type="text" class="form-control" th:field="*{city}" required/>
                 </div>
             </div>
             <div class="form-group ">
-                <label class="col-sm-2 control-label">Jezik:</label>
+                <label class="col-sm-2 control-label">Država:</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="*{language}" required/>
+                    <input type="text" class="form-control" th:field="*{country}" required/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Broj studenata:</label>
+                <div class="col-sm-5">
+                    <input type="number" class="form-control" th:field="*{numberOfStudents}" required/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Informacije:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{information}"/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Web:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{webUrl}"/>
                 </div>
             </div>
             <br>
             <div class="form-group">
                 <div class="row">
                     <button type="submit" class="btn btn-primary">Spremi</button>
-                    <a th:href="${'/subjects/details/' + subject.getId()}" class="btn btn-default">Otkaži</a>
+                    <a th:href="${'/institutions/details/' + institution.getId()}" class="btn btn-default">Otkaži</a>
                 </div>
             </div>
         </form>

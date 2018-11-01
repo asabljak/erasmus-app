@@ -14,25 +14,25 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Ime:</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" th:field="*{name}" />
+                <input type="text" class="form-control" th:field="*{name}" required/>
             </div>
         </div>
         <div class="form-group ">
             <label class="col-sm-2 control-label">Opis:</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" th:field="*{description}" />
+                <input type="text" class="form-control" th:field="*{description}" required/>
             </div>
         </div>
         <div class="form-group ">
             <label class="col-sm-2 control-label">Ects:</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" th:field="*{ectsValue}" />
+                <input type="number" class="form-control" th:field="*{ectsValue}" required/>
             </div>
         </div>
         <div class="form-group ">
             <label class="col-sm-2 control-label">Jezik:</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" th:field="*{language}" />
+                <input type="text" class="form-control" th:field="*{language}" required/>
             </div>
         </div>
         <br>

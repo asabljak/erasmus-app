@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Detalji ustanove</h2>
+    <br>
+    <div>
+        <div class="row details-text"><span><b>Ime: </b></span><span th:text="${institution.getName()}"></span></div>
+        <div class ="row details-text"><span><b>Kod: </b></span><span th:text="${institution.getCode()}"></span></div>
+        <div class ="row details-text"><span><b>Grad: </b></span><span th:text="${institution.getCity()}"></span></div>
+        <div class ="row details-text"><span><b>Država: </b></span><span th:text="${institution.getCountry()}"></span></div>
+        <div class ="row details-text"><span><b>Broj studenata: </b></span><span th:text="${institution.getNumberOfStudents()}"></span></div>
+        <div  th:if="${institution.getInformation() != null && institution.getInformation().length() > 0}" class ="row details-text"><span><b>Informacije: </b></span><span th:text="${institution.getInformation()}"></span></div>
+        <div  th:if="${institution.getWebUrl() != null && institution.getWebUrl().length() > 0}" class ="row details-text"><span><b>Web: </b></span><a th:href="${institution.getWebUrl()}"><span th:text="${institution.getWebUrl()}"></span></a></div>
+        <br>
+        <form>
+            <td><a th:href="${'/institutions/edit/' + institution.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a th:href="${'/institutions/delete/' + institution.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/institutions/'}" class="btn btn-default">Povratak</a></td>
+        </form>
+        <br><br>
+    </div>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>
