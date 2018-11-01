@@ -3,68 +3,79 @@
 <head th:include="template :: htmlHeader">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <link rel="stylesheet" th:href="@{https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css}">
-
-    <script type="application/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <script type="application/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-
-    <script th:href="@{/css/bootstrap-multiselect.css}"></script>
-    <script type="application/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
-
-
-
 </head>
 <body>
-<div th:replace="template :: navigation"></div>
+    <div th:replace="template :: navigation"></div>
 
-<div class="col-md-8 col-md-offset-2 fh5co-heading">
-    <h2>Kreiranje novog smjera</h2>
-    <br>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#multi-select').multiselect();
-        });
-    </script>
-
-    <form class="form-horizontal" action="#" th:action="@{/courses/create}" th:object="${course}" method="post">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Ime:</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" th:field="*{name}" required/>
-            </div>
-        </div>
-        <div class="form-group ">
-            <label class="col-sm-2 control-label">Opis:</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" th:field="*{description}" required/>
-            </div>
-        </div>
-
-        <div class="form-group ">
-            <label class="col-sm-2 control-label">Područje:</label>
-            <div class="col-sm-5">
-                <select id="multi-select" th:field="*{fields}" size="10" multiple="multiple" required>
-                    <option th:each="field : ${fieldList}"
-                            th:value="${{field}}"
-                            th:text="${field.name}">
-                    </option>
-                </select>
-            </div>
-        </div>
+    <div class="col-md-8 col-md-offset-2 fh5co-heading">
+        <h2>Kreiranje novog smjera</h2>
         <br>
-        <div class="form-group">
-            <div class="row">
-                <button type="submit" class="btn btn-primary">Spremi</button>
-                <a th:href="${'/courses/'}" class="btn btn-default">Otkaži</a>
-            </div>
-        </div>
-    </form>
-</div>
 
-<div th:replace="template :: footer"></div>
-<div th:replace="template :: scripts"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#multi-select').multiselect();
+            });
+        </script>
+        <script>
+            jQuery(document).ready(function($) {
+                $('#dropdown').selectstyle({
+                    width  : 400,
+                    theme  : 'light',
+                    onchange : function(val){}
+                });
+            });
+        </script>
+
+        <form class="form-horizontal" action="#" th:action="@{/courses/create}" th:object="${course}" method="post">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Ime:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{name}" required/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Opis:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{description}" required/>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Područje:</label>
+                <div class="col-sm-5">
+                    <select id="multi-select" th:field="*{fields}" size="10" multiple="multiple" required>
+                        <option th:each="field : ${fieldList}"
+                                th:value="${{field}}"
+                                th:text="${field.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Područje:</label>
+                <div class="col-sm-5">
+                    <select id="dropdown" class="form-control"  th:field="*{institution}" placeholder="Odaberite instituciju..." data-search="true" required>
+                        <option th:each="institution : ${institutionList}"
+                                th:value="${{institution}}"
+                                th:text="${institution.code + ' - ' + institution.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <br>
+            <div class="form-group">
+                <div class="row">
+                    <button type="submit" class="btn btn-primary">Spremi</button>
+                    <a th:href="${'/courses/'}" class="btn btn-default">Otkaži</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="template :: footer"></div>
+    <div th:replace="template :: scripts"></div>
 
 </body>
 </html>

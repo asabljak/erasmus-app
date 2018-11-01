@@ -3,6 +3,7 @@ package hr.tvz.master.erasmus.entity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,8 +16,9 @@ public class Course extends AbstractErasmusEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Field> fields = new ArrayList<>();
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private List<Subject> subjects = new ArrayList<>();
+
+    @OneToOne(targetEntity = Institution.class)
+    private  Institution institution;
 
     public String getName() {
         return this.name;
@@ -42,16 +44,16 @@ public class Course extends AbstractErasmusEntity {
         this.fields = fields;
     }
 
-//    public List<Subject> getSubjects() {
-//        return subjects;
-//    }
-//
-//    public void setSubjects(List<Subject> subjects) {
-//        this.subjects = subjects;
-//    }
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
 
     public boolean isValid() {
-        return Stream.of(name, description, fields)
+        return Stream.of(name, description, fields, institution)
                 .noneMatch(Objects::isNull);
     }
 }

@@ -14,6 +14,7 @@
             <div class="row details-text"><span><b>Ime: </b></span><span th:text="${course.getName()}"></span></div>
             <div class ="row details-text"><span><b>Opis: </b></span><span th:text="${course.getDescription()}"></span></div>
             <div class ="row details-text"><span><b>Područje: </b></span><span th:text="${course.getFields()}"></span></div>
+            <div th:if="${course.getInstitution() != null}" class ="row details-text"><span><b>Institucija: </b></span><span th:text="${course.getInstitution().getCode() + ' - ' + course.getInstitution().getName()}"></span></div>
             <br>
             <form>
                 <td><a th:href="${'/courses/edit/' + course.getId()}" class="btn btn-primary">Izmjeni</a></td>

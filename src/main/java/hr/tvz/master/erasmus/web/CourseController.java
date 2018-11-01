@@ -3,6 +3,7 @@ package hr.tvz.master.erasmus.web;
 import hr.tvz.master.erasmus.entity.Course;
 import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.FieldRepository;
+import hr.tvz.master.erasmus.repository.InstitutionRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,9 @@ public class CourseController {
     @Autowired
     FieldRepository fieldRepository;
 
+    @Autowired
+    InstitutionRepository institutionRepository;
+
     @GetMapping("/courses")
     public String getAll(Model model) {
         List<Course> list = courseRepository.findAll();
@@ -41,6 +45,8 @@ public class CourseController {
     public String getEmpty(Model model){
         model.addAttribute("course", new Course());
         model.addAttribute("fieldList", fieldRepository.findAll());
+        model.addAttribute("institutionList", institutionRepository.findAll());
+
         return "courses/create";
     }
 
@@ -61,6 +67,7 @@ public class CourseController {
 
         model.addAttribute("course", course.get());
         model.addAttribute("fieldList", fieldRepository.findAll());
+        model.addAttribute("institutionList", institutionRepository.findAll());
 
         return "courses/edit";
     }
@@ -75,6 +82,7 @@ public class CourseController {
         oldCourse.setName(newCourse.getName());
         oldCourse.setDescription(newCourse.getDescription());
         oldCourse.setFields(newCourse.getFields());
+        oldCourse.setInstitution(newCourse.getInstitution());
         courseRepository.save(oldCourse);
 
         return "redirect:/courses/details/" + oldCourse.getId();

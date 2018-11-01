@@ -17,7 +17,7 @@
                     <td>Id</td>
                     <td>Ime</td>
                     <td>Opis</td>
-                    <!--<td>Ects</td>-->
+                    <td>Institucija</td>
                     <!--<th>Delete</th>-->
                 </tr>
                 </thead>
@@ -26,7 +26,7 @@
                         <td th:text="${course.getId()}" class="row-pointer"></td>
                         <td th:text="${course.getName()}" class="row-pointer"></td>
                         <td th:text="${course.getDescription()}" class="row-pointer"></td>
-                        <!--<td th:text="${course.getEctsValue()}" class="row-pointer"></td>-->
+                        <td th:if="${course.getInstitution() != null}" th:text="${course.getInstitution().getName()}" class="row-pointer"></td>
                     <!--<td><a th:href="${'/courses/delete/' + course.getId()}" class="btn btn-danger">Delete</a></td>-->
                 </tr>
                 </tbody>
