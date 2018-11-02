@@ -18,6 +18,20 @@
         <div class ="row details-text"><span><b>Broj studenata: </b></span><span th:text="${institution.getNumberOfStudents()}"></span></div>
         <div  th:if="${institution.getInformation() != null && institution.getInformation().length() > 0}" class ="row details-text"><span><b>Informacije: </b></span><span th:text="${institution.getInformation()}"></span></div>
         <div  th:if="${institution.getWebUrl() != null && institution.getWebUrl().length() > 0}" class ="row details-text"><span><b>Web: </b></span><a th:href="${institution.getWebUrl()}"><span th:text="${institution.getWebUrl()}"></span></a></div>
+        <div class ="row details-text">
+            <span><b>Smjerovi: </b>
+                <span th:each="course : ${courses}">
+                    <span th:text="${course.getName()}"></span>
+                </span>
+            </span>
+        </div>
+        <div class ="row details-text">
+            <span><b>Polja: </b>
+                <span th:each="field : ${fields}">
+                    <span th:text="${field.getName()}"></span>
+                </span>
+            </span>
+        </div>
         <br>
         <form>
             <td><a th:href="${'/institutions/edit/' + institution.getId()}" class="btn btn-primary">Izmjeni</a></td>

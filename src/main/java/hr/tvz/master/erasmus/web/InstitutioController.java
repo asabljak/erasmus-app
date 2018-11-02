@@ -1,6 +1,9 @@
 package hr.tvz.master.erasmus.web;
 
+import hr.tvz.master.erasmus.entity.Course;
+import hr.tvz.master.erasmus.entity.Field;
 import hr.tvz.master.erasmus.entity.Institution;
+import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.InstitutionRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +14,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+//TODO provjeriti ispis više smjerova
 @Controller
 public class InstitutioController {
 
     @Autowired
     InstitutionRepository institutionRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     @GetMapping("/institutions")
     public String getAll(Model model) {
@@ -29,7 +35,13 @@ public class InstitutioController {
 
     @GetMapping(path = "institutions/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
+        List<Course> courses = courseRepository.findByInstitution_Id(id);
+        List<Field> fields = getFieldsDistinct(courses);
+
         model.addAttribute("institution", institutionRepository.getOne(id));
+        model.addAttribute("courses", courses);
+        model.addAttribute("fields", fields);
+
         return "institutions/details";
     }
 
@@ -87,5 +99,16 @@ public class InstitutioController {
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         institutionRepository.deleteById(id);
         return "redirect:/institutions";
+    }
+
+    private List<Field> getFieldsDistinct(List<Course> courses) {
+        Set<Field> fields = new HashSet<>();
+        for(Course course : courses) {
+            for (Field field : course.getFields()) {
+                fields.add(field);
+            }
+        }
+
+        return new ArrayList<>(fields);
     }
 }
