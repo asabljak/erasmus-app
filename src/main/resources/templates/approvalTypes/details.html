@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Detalji statusa tipa odobrenja</h2>
+    <br>
+    <div>
+        <div class="row details-text"><span><b>Ime: </b></span><span th:text="${approvalType.getName()}"></span></div>
+        <div class ="row details-text"><span><b>Opis: </b></span><span th:text="${approvalType.getDescription()}"></span></div>
+        <br>
+        <form>
+            <td><a th:href="${'/approvalTypes/edit/' + approvalType.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a th:href="${'/approvalTypes/delete/' + approvalType.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/approvalTypes/'}" class="btn btn-default">Povratak</a></td>
+        </form>
+        <br><br>
+    </div>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

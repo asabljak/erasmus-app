@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="col-md-8 col-md-offset-2 fh5co-heading">
+    <h2>Tipovi odobrenja</h2>
+    <br>
+    <form method="get" id="forma" class="text-center">
+        <table id="approvalTypes" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <td>Ime</td>
+                <td>Opis</td>
+                <!--<th>Delete</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="approvalType : ${approvalTypes}" th:onclick="'javascript:rowClicked(\'/approvalTypes/details/' + ${approvalType.getId()} + '\');'">
+                <td th:text="${approvalType.getName()}" class="row-pointer"></td>
+                <td th:text="${approvalType.getDescription()}" class="row-pointer"></td>
+                <!--<td><a th:href="${'/approvalTypes/delete/' + approvalType.getId()}" class="btn btn-danger">Delete</a></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <br><br>
+    <a th:href="${'/approvalTypes/create/'}" class="btn btn-primary">Kreiraj novo</a>
+</div>
+
+<div th:replace="template :: footer"></div>
+<div th:replace="template :: scripts"></div>
+
+</body>
+</html>
