@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>-->
+
+</head>
+<body>
+<script>
+    $("input").on("change", function() {
+        this.setAttribute(
+            "data-date",
+            moment(this.value, "YYYY-MM-DD")
+                .format( this.getAttribute("data-date-format") )
+        )
+    }).trigger("change")
+</script>
+
+<div th:replace="template :: navigation"></div>
+<div class="col-md-8 col-md-offset-2 fh5co-heading">
+    <h2>Kreiranje novog studenta</h2>
+    <br>
+    <form class="form-horizontal" action="#" th:action="@{/students/create}" th:object="${student}" method="post">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Ime:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{name}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Prezime:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{surname}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Jmbag:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" th:field="*{jmbag}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Email:</label>
+            <div class="col-sm-5">
+                <input type="email" class="form-control" th:field="*{email}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Datum rođenja:</label>
+            <div class="col-sm-5">
+                <input type="date" class="form-control" th:field="*{birthday}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Broj mobitela:</label>
+            <div class="col-sm-5">
+                <input type="tel" pattern="([+]?)[0-9]{6,12}" class="form-control" th:field="*{phone}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Smjer:</label>
+            <div class="col-sm-5">
+                <select id="dropdown" class="form-control"  th:field="*{homeCourse}" placeholder="Odaberite smjer..." data-search="true" required>
+                    <option th:each="course : ${homeCourseList}"
+                            th:value="${{course}}"
+                            th:text="${course.name}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Godina studija:</label>
+            <div class="col-sm-5">
+                <input type="number" class="form-control" th:field="*{yearOfStudy}" required/>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Spremi</button>
+                <a th:href="${'/students/'}" class="btn btn-default">Otkaži</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>
