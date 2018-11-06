@@ -7,17 +7,11 @@
 <body>
     <div th:replace="template :: navigation"></div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#multi-select').multiselect();
-        });
-    </script>
-
     <div class="container">
         <h2>Izmjena detalja smjera</h2>
         <br>
         <div>
-            <form class="form-horizontal" th:object="${course}" th:action="@{/courses/edit}" method="post">
+            <form class="form-horizontal" th:object="${document}" th:action="@{/documents/edit}" method="post">
                 <div class="form-group">
                     <div class="col-sm-5">
                         <input type="hidden" class="form-control" th:field="*{id}" required/>
@@ -41,23 +35,12 @@
                     </div>
                 </div>
                 <div class="form-group ">
-                    <label class="col-sm-2 control-label">Područje:</label>
+                    <label class="col-sm-2 control-label">Tip dokumenta:</label>
                     <div class="col-sm-5">
-                        <select id="multi-select" th:field="*{fields}" size="10" multiple="multiple" required>
-                            <option th:each="field : ${fieldList}"
-                                    th:value="${{field}}"
-                                    th:text="${field.name}">
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <label class="col-sm-2 control-label">Područje:</label>
-                    <div class="col-sm-5">
-                        <select id="dropdown" class="form-control"  th:field="*{institution}" placeholder="Odaberite instituciju..." data-search="true"  required>
-                            <option th:each="institution : ${institutionList}"
-                                    th:value="${{institution}}"
-                                    th:text="${institution.code + ' - ' + institution.name}">
+                        <select id="dropdown" class="form-control"  th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
+                            <option th:each="documentType : ${documentTypeList}"
+                                    th:value="${{documentType}}"
+                                    th:text="${documentType.name}">
                             </option>
                         </select>
                     </div>
@@ -66,7 +49,7 @@
                 <div class="form-group">
                     <div class="row">
                         <button type="submit" class="btn btn-primary">Spremi</button>
-                        <a th:href="${'/courses/details/' + course.getId()}" class="btn btn-default">Otkaži</a>
+                        <a th:href="${'/documents/details/' + document.getId()}" class="btn btn-default">Otkaži</a>
                     </div>
                 </div>
             </form>

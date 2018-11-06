@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:fragment="htmlHeader">
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" fileContent="IE=edge">
 	<title>Ink &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
-	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
-	<meta name="author" content="freehtml5.co" />
+	<meta name="viewport" fileContent="width=device-width, initial-scale=1">
+	<meta name="description" fileContent="Free HTML5 Website Template by freehtml5.co" />
+	<meta name="keywords" fileContent="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" fileContent="freehtml5.co" />
 
 	<!-- 
 	//////////////////////////////////////////////////////
@@ -24,15 +24,15 @@
 	 -->
 
   	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+	<meta property="og:title" fileContent=""/>
+	<meta property="og:image" fileContent=""/>
+	<meta property="og:url" fileContent=""/>
+	<meta property="og:site_name" fileContent=""/>
+	<meta property="og:description" fileContent=""/>
+	<meta name="twitter:title" fileContent="" />
+	<meta name="twitter:image" fileContent="" />
+	<meta name="twitter:url" fileContent="" />
+	<meta name="twitter:card" fileContent="" />
 
 	<!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">	 -->
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
@@ -159,7 +159,7 @@
 	  	</div>
 	</aside>
 
-	<div id="fh5co-content">
+	<div id="fh5co-fileContent">
 		<div class="video fh5co-video" style="background-image: url(images/video.jpg);">
 			<a href="https://vimeo.com/channels/staffpicks/93951774" class="popup-vimeo"><i class="icon-video2"></i></a>
 			<div class="overlay"></div>
@@ -408,6 +408,16 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
+
+	<script th:fragment="dropdown-jquery">
+        jQuery(document).ready(function($) {
+            $('#dropdown').selectstyle({
+                width  : 400,
+                theme  : 'light',
+                onchange : function(val){}
+            });
+        });
+	</script>
 
 	<div class="scripts"  th:fragment="scripts">
 		<!-- jQuery -->

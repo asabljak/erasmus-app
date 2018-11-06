@@ -8,15 +8,12 @@
 <div th:replace="template :: navigation"></div>
 
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#multi-select').multiselect();
-        });
-    </script>
-
-    <h2>Kreiranje novog tipa dokumenta</h2>
+    <h2>Kreiranje novog dokumenta</h2>
     <br>
-    <form class="form-horizontal" action="#" th:action="@{/documentTypes/create}" th:object="${documentType}" method="post">
+
+    <script th:replace="template :: dropdown-jquery"></script>
+
+    <form class="form-horizontal" action="#" th:action="@{/documents/create}" th:object="${document}" enctype="multipart/form-data" method="post">
         <div class="form-group">
             <label class="col-sm-2 control-label">Ime:</label>
             <div class="col-sm-5">
@@ -30,12 +27,18 @@
             </div>
         </div>
         <div class="form-group ">
-            <label class="col-sm-2 control-label">Faza:</label>
+            <label class="col-sm-2 control-label">Dokument:</label>
             <div class="col-sm-5">
-                <select id="multi-select" th:field="*{phases}" size="10" multiple="multiple" required>
-                    <option th:each="phase : ${phaseList}"
-                            th:value="${{phase}}"
-                            th:text="${phase.name}">
+                <input type="file" name="file" class="form-control-file"  required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Tip dokumenta:</label>
+            <div class="col-sm-5">
+                <select id="dropdown" class="form-control"  th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
+                    <option th:each="documentType : ${documentTypeList}"
+                            th:value="${{documentType}}"
+                            th:text="${documentType.name}">
                     </option>
                 </select>
             </div>
@@ -44,12 +47,14 @@
         <div class="form-group">
             <div class="row">
                 <button type="submit" class="btn btn-primary">Spremi</button>
-                <a th:href="${'/documentTypes/'}" class="btn btn-default">Otkaži</a>
+                <a th:href="${'/documents/'}" class="btn btn-default">Otkaži</a>
             </div>
         </div>
     </form>
 </div>
 
 <div th:replace="template :: footer"></div>
+<div th:replace="template :: scripts"></div>
+
 </body>
 </html>

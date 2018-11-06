@@ -8,28 +8,30 @@
 <div th:replace="template :: navigation"></div>
 
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
-    <h2>Tipovi dokumenta</h2>
+    <h2>Dokumenti</h2>
     <br>
     <form method="get" id="forma" class="text-center">
-        <table id="documentTypes" class="table table-striped table-hover">
+        <table id="documents" class="table table-striped table-hover">
             <thead>
             <tr>
+                <td>Id</td>
                 <td>Ime</td>
                 <td>Opis</td>
                 <!--<th>Delete</th>-->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="documentType : ${documentTypes}" th:onclick="'javascript:rowClicked(\'/documentTypes/details/' + ${documentType.getId()} + '\');'">
-                <td th:text="${documentType.getName()}" class="row-pointer"></td>
-                <td th:text="${documentType.getDescription()}" class="row-pointer"></td>
-                <!--<td><a th:href="${'/documentTypes/delete/' + documentType.getId()}" class="btn btn-danger">Delete</a></td>-->
+            <tr th:each="document : ${documents}" th:onclick="'javascript:rowClicked(\'/documents/details/' + ${document.getId()} + '\');'">
+                <td th:text="${document.getId()}" class="row-pointer"></td>
+                <td th:text="${document.getName()}" class="row-pointer"></td>
+                <td th:text="${document.getDescription()}" class="row-pointer"></td>
+                <!--<td><a th:href="${'/documents/delete/' + document.getId()}" class="btn btn-danger">Delete</a></td>-->
             </tr>
             </tbody>
         </table>
     </form>
     <br><br>
-    <a th:href="${'/documentTypes/create/'}" class="btn btn-primary">Kreiraj novo</a>
+    <a th:href="${'/documents/create/'}" class="btn btn-primary">Kreiraj novi dokument</a>
 </div>
 
 <div th:replace="template :: footer"></div>
