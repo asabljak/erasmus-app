@@ -2,10 +2,10 @@ package hr.tvz.master.erasmus.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Entity
@@ -25,6 +25,30 @@ public class AppUser extends AbstractErasmusEntity{
     private Course homeCourse;
 
     private Integer yearOfStudy;
+
+    private int active;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "appUser.id"), inverseJoinColumns = @JoinColumn(name = "role.id"))   //TODO popraviti join
+    private Set<Role> roles;
+
+    public AppUser() {
+    }
+
+    public AppUser(AppUser appUser) {
+        this.name = appUser.getName();
+        this.surname = appUser.getSurname();
+        this.email = appUser.getEmail();
+        this.password = appUser.getPassword();
+        this.jmbag = appUser.getJmbag();
+        this.birthday = appUser.getBirthday();
+        this.phone = appUser.getPhone();
+        this.homeCourse = appUser.getHomeCourse();
+        this.yearOfStudy = appUser.getYearOfStudy();
+        this.active = appUser.getActive();
+        this.roles = appUser.getRoles();
+    }
+
 
     public String getName() {
         return name;
@@ -96,6 +120,22 @@ public class AppUser extends AbstractErasmusEntity{
 
     public void setYearOfStudy(Integer yearOfStudy) {
         this.yearOfStudy = yearOfStudy;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
-//TODO dovršiti edit
+//TODO dovršiti edit i fixati prikaz liste
 @Controller
 public class ApprovalController {
 
