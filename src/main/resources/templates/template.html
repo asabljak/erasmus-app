@@ -419,6 +419,12 @@
         });
 	</script>
 
+    <script type="text/javascript" th:fragment="multiselect">
+        $(document).ready(function() {
+            $('#multi-select').multiselect();
+        });
+    </script>
+
 	<div class="scripts"  th:fragment="scripts">
 		<!-- jQuery -->
 		<!--<script type="application/javascript" th:src="@{/js/jquery.min.js}"></script>-->

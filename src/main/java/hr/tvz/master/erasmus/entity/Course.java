@@ -14,7 +14,7 @@ public class Course extends AbstractErasmusEntity {
     private String name;
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Field> fields = new ArrayList<>();
 
     @OneToOne(targetEntity = Institution.class)

@@ -1339,4 +1339,8 @@ h1, h2, h3, h4, h5, h6, figure {
     font-size: 18px;
     padding-left: 18px;
 }
+
+#img-uploads {
+  display: none;
+}
 /*# sourceMappingURL=style.css.map */

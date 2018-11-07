@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.Student;
+import hr.tvz.master.erasmus.entity.AppUser;
 import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.StudentRepository;
 import javassist.NotFoundException;
@@ -26,7 +26,7 @@ public class StudentController {
 
     @GetMapping("/students")
     public String getAll(Model model) {
-        List<Student> list = studentRepository.findAll();
+        List<AppUser> list = studentRepository.findAll();
         model.addAttribute("students", list);
         return "students/list";
     }
@@ -40,21 +40,21 @@ public class StudentController {
     @GetMapping("/students/create")
     public String getEmpty(Model model){
         //TODO dohvat smjerova samo s TVZ-a
-        model.addAttribute("student", new Student());
+        model.addAttribute("student", new AppUser());
         model.addAttribute("homeCourseList", courseRepository.findAll());
         return "students/create";
     }
 
     @PostMapping("/students/create")
-    public String create(@ModelAttribute Student student) {
-        Student createdStudent = studentRepository.save(student);
+    public String create(@ModelAttribute AppUser student) {
+        AppUser createdStudent = studentRepository.save(student);
         return "redirect:/students/details/" + createdStudent.getId();
     }
 
     @GetMapping("/students/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
-        Optional<Student> student = studentRepository.findById(id);
+        Optional<AppUser> student = studentRepository.findById(id);
 
         if (!student.isPresent()) {
             throw new NotFoundException("Student not found");
@@ -67,12 +67,12 @@ public class StudentController {
     }
 
     @PostMapping("/students/edit")
-    public String edit(@ModelAttribute Student newStudent) {
+    public String edit(@ModelAttribute AppUser newStudent) {
         if(!newStudent.isValid()) {
             throw new IllegalStateException("Sva polja nisu pravilno postavljena");
         }
 
-        Student oldStudent = studentRepository.getOne(newStudent.getId());
+        AppUser oldStudent = studentRepository.getOne(newStudent.getId());
         oldStudent.setJmbag(newStudent.getJmbag());
         oldStudent.setEmail(newStudent.getEmail());
         oldStudent.setName(newStudent.getName());

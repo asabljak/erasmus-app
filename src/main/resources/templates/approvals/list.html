@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="col-md-8 col-md-offset-2 fh5co-heading">
+    <h2>Odobrenja</h2>
+    <br>
+    <form method="get" id="forma" class="text-center">
+        <table id="approval" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Jmbag studenta</th>
+                <th>Student</th>
+                <th>Koordinator</th>
+                <th>Tip odobrenja</th>
+                <th>Datum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="approval : ${approvalList}" th:onclick="'javascript:rowClicked(\'/approvals/details/' + ${approval.getId()} + '\');'">
+                <td th:if="${approval.getStudent() != null}" th:text="${approval.getStudent().getJmbag()}" class="row-pointer"></td>
+                <td th:if="${approval.getStudent() != null}" th:text="${approval.getStudent().getName() + ' ' + approval.getStudent().getSurname()}" class="row-pointer"></td>
+                <td th:if="${approval.getCoordinator() != null}" th:text="${approval.getCoordinator().getName() + ' ' + approval.getCoordinator().getSurname()}" class="row-pointer"></td>
+                <td th:if="${approval.getApprovalType() != null}" th:text="${approval.getApprovalType().getName()}" class="row-pointer"></td>
+                <td th:text="${#temporals.format(approval.getCreated(), 'dd.MM.yyyy.')}" class="row-pointer"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <br><br>
+    <a th:href="${'/approvals/create/'}" class="btn btn-primary">Kreiraj novo</a>
+</div>
+
+<div th:replace="template :: footer"></div>
+<div th:replace="template :: scripts"></div>
+
+</body>
+</html>

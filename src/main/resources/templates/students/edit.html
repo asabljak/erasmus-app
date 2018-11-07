@@ -67,7 +67,7 @@
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Smjer:</label>
                 <div class="col-sm-5">
-                    <select id="multi-select" th:field="*{homeCourse}" size="10" multiple="multiple" required>
+                    <select id="multi-select" th:field="*{homeCourse}" size="10" required>
                         <option th:each="course : ${homeCourseList}"
                                 th:value="${{course}}"
                                 th:text="${course.name}">

@@ -1,3 +1,4 @@
+/*
 package hr.tvz.master.erasmus.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,8 +12,10 @@ import java.util.stream.Stream;
 @Entity
 public class Student extends AppUser {
     private String jmbag;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
+
     private String phone;
 
     @OneToOne(targetEntity = Course.class)
@@ -34,14 +37,6 @@ public class Student extends AppUser {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
-
-//    public String getBirthday() {
-//        return birthday;
-//    }
-//
-//    public void setBirthday(String birthday) {
-//        this.birthday = birthday;
-//    }
 
     public String getPhone() {
         return phone;
@@ -74,3 +69,4 @@ public class Student extends AppUser {
                 .noneMatch(Objects::isNull);
     }
 }
+*/

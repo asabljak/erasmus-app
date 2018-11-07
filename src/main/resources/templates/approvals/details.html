@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Detalji odobrenja</h2>
+    <br>
+    <div>
+        <div class="row details-text" th:if="${approval.getApprovalType() != null}"><span><b>Tip odobrenja: </b></span><span th:text="${approval.getApprovalType().getName()}"></span></div>
+        <div class="row details-text" th:if="${approval.getStudent() != null}"><span><b>Jmbag studenta: </b></span><span th:text="${approval.getStudent().getJmbag()}"></span></div>
+        <div class="row details-text" th:if="${approval.getStudent() != null}"><span><b>Student: </b></span><span th:text="${approval.getStudent().getName() + ' ' + approval.getStudent().getSurname()}"></span></div>
+        <div class="row details-text" th:if="${approval.getCoordinator() != null}"><span><b>Koordinator: </b></span><span th:text="${approval.getCoordinator().getName() + ' ' + approval.getCoordinator().getSurname()}"></span></div>
+        <div class ="row details-text">
+            <span><b>Dokumenti: </b>
+                <span th:each="document : ${approval.getDocuments()}">
+                    <span th:text="${document.getName()}"></span>
+                </span>
+            </span>
+        </div>
+        <div class ="row details-text" th:if="${approval.getComment() != null && approval.getComment().length() > 0}"><span><b>Komentar: </b></span><span th:text="${approval.getComment()}"></span></div>
+        <div class ="row details-text"><span><b>Datum: </b></span><span th:text="${#temporals.format(approval.getCreated(), 'dd.MM.yyyy.')}"></span></div> <!--TODO formatirati datum-->
+        <br>
+        <form>
+            <td><a th:href="${'/approvals/edit/' + approval.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a th:href="${'/approvals/delete/' + approval.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/approvals/'}" class="btn btn-default">Povratak</a></td>
+        </form>
+        <br><br>
+    </div>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

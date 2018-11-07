@@ -18,7 +18,7 @@ import java.util.*;
 
 //TODO provjeriti ispis više smjerova
 @Controller
-public class InstitutioController {
+public class InstitutionController {
 
     @Autowired
     InstitutionRepository institutionRepository;

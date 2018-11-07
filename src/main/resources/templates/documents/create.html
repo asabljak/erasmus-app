@@ -13,7 +13,31 @@
 
     <script th:replace="template :: dropdown-jquery"></script>
 
+ <!--   <script>
+        function replaceComponents(elem){
+            if(elem.value == 64) {
+                document.getElementById('img-uploads').style.display = "block";
+                document.getElementById('file-upload').style.display = "none";
+            } else {
+                document.getElementById('img-uploads').style.display = "none";
+                document.getElementById('file-upload').style.display = "block";
+            }
+
+        }
+    </script>-->
+
     <form class="form-horizontal" action="#" th:action="@{/documents/create}" th:object="${document}" enctype="multipart/form-data" method="post">
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Tip dokumenta:</label>
+            <div class="col-sm-5">
+                <select id="dropdown" class="form-control" onchange="replaceComponents(this)" th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
+                    <option th:each="documentType : ${documentTypeList}"
+                            th:value="${{documentType}}"
+                            th:text="${documentType.name}">
+                    </option>
+                </select>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Ime:</label>
             <div class="col-sm-5">
@@ -26,22 +50,21 @@
                 <input type="text" class="form-control" th:field="*{description}" required/>
             </div>
         </div>
-        <div class="form-group ">
+        <div class="form-group" id="file-upload">
             <label class="col-sm-2 control-label">Dokument:</label>
             <div class="col-sm-5">
                 <input type="file" name="file" class="form-control-file"  required/>
             </div>
         </div>
-        <div class="form-group ">
-            <label class="col-sm-2 control-label">Tip dokumenta:</label>
-            <div class="col-sm-5">
-                <select id="dropdown" class="form-control"  th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
-                    <option th:each="documentType : ${documentTypeList}"
-                            th:value="${{documentType}}"
-                            th:text="${documentType.name}">
-                    </option>
-                </select>
-            </div>
+        <div class="form-group" id="img-uploads">
+            <!--<label class="col-sm-2 control-label" >Slika:</label>-->
+
+            <th:block th:each="iter: ${#numbers.sequence(1, 10)}">
+                <label class="col-sm-2 control-label" th:text="Slika + ${iter}">Slika:</label>
+                <div class="">
+                    <input type="file" name="file" class="form-control-file"  required/>
+                </div>
+            </th:block>
         </div>
         <br>
         <div class="form-group">

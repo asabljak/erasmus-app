@@ -3,7 +3,7 @@ package hr.tvz.master.erasmus.entity;
 import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.stream.Stream;
-
+//TODO dodati Course
 @Entity
 public class Subject extends AbstractErasmusEntity {
     private String name;
