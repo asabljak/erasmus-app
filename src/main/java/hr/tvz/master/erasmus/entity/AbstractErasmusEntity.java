@@ -5,7 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
+//TODO postaviti timestamp deleted i overrideati repostorye
 @MappedSuperclass
 public abstract class AbstractErasmusEntity {
     @Id

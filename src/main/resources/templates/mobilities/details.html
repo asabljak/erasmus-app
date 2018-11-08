@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Detalji mobilnosti</h2>
+    <br>
+    <div>
+        <div class="row details-text" th:if="${mobility.getStudent() != null}"><span><b>Jmbag studenta: </b></span><span th:text="${mobility.getStudent().getJmbag()}"></span></div>
+        <div class="row details-text" th:if="${mobility.getStudent() != null}"><span><b>Student: </b></span><span th:text="${mobility.getStudent().getName() + ' ' + mobility.getStudent().getSurname()}"></span></div>
+        <div class="row details-text" th:if="${mobility.getMobilityStatus() != null}"><span><b>Tip mobilnosti: </b></span><span th:text="${mobility.getMobilityStatus().getName()}"></span></div>
+        <div class="row details-text" th:if="${mobility.getInstitution() != null}"><span><b>Institucija: </b></span><span th:text="${mobility.getInstitution().getCode() + ' - ' + mobility.getInstitution().getName()}"></span></div>
+        <div class="row details-text"><span><b>Početak mobilnosti: </b></span><span th:text="${#temporals.format(mobility.getMobilityStart(), 'dd.MM.yyyy.')}"></span></div>
+        <div class="row details-text"><span><b>Završetak mobilnosti: </b></span><span th:text="${#temporals.format(mobility.getMobilityEnd(), 'dd.MM.yyyy.')}"></span></div>
+
+        <div class ="row details-text">
+            <span><b>Odobrenja: </b>
+                <span th:each="approval : ${mobility.getApprovals()}">
+                    <span th:text="${approval.getApprovalType().getName()}"></span> <!--TODO Link na approval-->
+                </span>
+            </span>
+        </div>
+        <br>
+        <form>
+            <td><a th:href="${'/mobilities/edit/' + mobility.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a th:href="${'/mobilities/delete/' + mobility.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/mobilities/'}" class="btn btn-default">Povratak</a></td>
+        </form>
+        <br><br>
+    </div>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

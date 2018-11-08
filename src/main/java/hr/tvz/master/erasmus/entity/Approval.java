@@ -5,7 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
-
+//TODO dodati mobility
 @Entity
 public class Approval extends AbstractErasmusEntity {
 

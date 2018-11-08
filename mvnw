@@ -183,7 +183,7 @@ find_maven_basedir() {
     if [ -d "${wdir}" ]; then
       wdir=`cd "$wdir/.."; pwd`
     fi
-    # end of workaround
+    # mobilityEnd of workaround
   done
   echo "${basedir}"
 }
