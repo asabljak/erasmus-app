@@ -23,8 +23,8 @@
             </thead>
             <tbody>
             <tr th:each="approval : ${approvalList}" th:onclick="'javascript:rowClicked(\'/approvals/details/' + ${approval.getId()} + '\');'">
-                <td th:if="${approval.getStudent() != null}" th:text="${approval.getStudent().getJmbag()}" class="row-pointer"></td> <td th:if="${approval.getStudent() == null}" class="row-pointer"></td>
-                <td th:if="${approval.getStudent() != null}" th:text="${approval.getStudent().getName() + ' ' + approval.getStudent().getSurname()}" class="row-pointer"></td> <td th:if="${approval.getStudent() == null}" class="row-pointer"></td>
+                <td th:if="${approval.getMobility().getStudent() != null}" th:text="${approval.getMobility().getStudent().getJmbag()}" class="row-pointer"></td> <td th:if="${approval.getMobility().getStudent() == null}" class="row-pointer"></td>
+                <td th:if="${approval.getMobility().getStudent() != null}" th:text="${approval.getMobility().getStudent().getName() + ' ' + approval.getMobility().getStudent().getSurname()}" class="row-pointer"></td> <td th:if="${approval.getMobility().getStudent() == null}" class="row-pointer"></td>
                 <td th:if="${approval.getCoordinator() != null}" th:text="${approval.getCoordinator().getName() + ' ' + approval.getCoordinator().getSurname()}" class="row-pointer"></td> <td th:if="${approval.getCoordinator() == null}" class="row-pointer"></td>
                 <td th:if="${approval.getApprovalType() != null}" th:text="${approval.getApprovalType().getName()}" class="row-pointer"></td> <td th:if="${approval.getApprovalType() == null}" class="row-pointer"></td>
                 <td th:text="${#temporals.format(approval.getCreated(), 'dd.MM.yyyy.')}" class="row-pointer"></td>

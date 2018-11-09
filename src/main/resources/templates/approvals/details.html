@@ -12,8 +12,8 @@
     <br>
     <div>
         <div class="row details-text" th:if="${approval.getApprovalType() != null}"><span><b>Tip odobrenja: </b></span><span th:text="${approval.getApprovalType().getName()}"></span></div>
-        <div class="row details-text" th:if="${approval.getStudent() != null}"><span><b>Jmbag studenta: </b></span><span th:text="${approval.getStudent().getJmbag()}"></span></div>
-        <div class="row details-text" th:if="${approval.getStudent() != null}"><span><b>Student: </b></span><span th:text="${approval.getStudent().getName() + ' ' + approval.getStudent().getSurname()}"></span></div>
+        <div class="row details-text" th:if="${approval.getMobility().getStudent() != null}"><span><b>Jmbag studenta: </b></span><span th:text="${approval.getMobility().getStudent().getJmbag()}"></span></div>
+        <div class="row details-text" th:if="${approval.getMobility().getStudent() != null}"><span><b>Student: </b></span><span th:text="${approval.getMobility().getStudent().getName() + ' ' + approval.getMobility().getStudent().getSurname()}"></span></div>
         <div class="row details-text" th:if="${approval.getCoordinator() != null}"><span><b>Koordinator: </b></span><span th:text="${approval.getCoordinator().getName() + ' ' + approval.getCoordinator().getSurname()}"></span></div>
         <div class ="row details-text">
             <span><b>Dokumenti: </b>

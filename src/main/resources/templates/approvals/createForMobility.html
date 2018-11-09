@@ -8,6 +8,7 @@
 <div th:replace="template :: navigation"></div>
 
 <!--TODO promijeniti id na drupdornu s trazilicom u class, includati script tagove i pobrisati kopirane-->
+<!--TODO dodati komentar -->
 
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
     <script th:replace="template :: multiselect"></script>
@@ -24,18 +25,14 @@
 
     <h2>Kreiranje novog odobrenja</h2>
     <br>
-    <form class="form-horizontal" action="#" th:action="@{/approvals/create}" th:object="${approval}" method="post">
-        <div class="form-group ">
-            <label class="col-sm-2 control-label">Mobilnost:</label>
-            <div class="col-sm-5">
-                <select class="form-control dropdown-searchable"  th:field="*{mobility}" placeholder="Odaberite mobilnost..." data-search="true" required>
-                    <option th:each="mobility : ${mobilityList}"
-                            th:value="${{mobility}}"
-                            th:text="${mobility.getStudent().getJmbag() + ' - ' + mobility.getStudent().getName() + ' ' + mobility.getStudent().getSurname() + ' - ' + mobility.getInstitution().getCode()}">
-                    </option>
-                </select>
-            </div>
-        </div>
+    <form class="form-horizontal" action="#" th:action="@{/approvals/createForMobility/} + ${mobility.getId()}" th:object="${approval}" method="post">
+        <div class="row details-text" th:if="${mobility.getStudent() != null}"><span><b>Mobilnost: </b></span><span th:text="${mobility.getStudent().getJmbag() + ' - ' + mobility.getStudent().getName() + ' ' + mobility.getStudent().getSurname() + ' - ' + mobility.getInstitution().getCode()}"></span></div>
+        <!--<div class="form-group">-->
+            <!--<div class="col-sm-5">-->
+                <!--<input type="hidden" class="form-control" th:field="*{approval}"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <br>
         <div class="form-group ">
             <label class="col-sm-2 control-label">Tip odobrenja:</label>
             <div class="col-sm-5">

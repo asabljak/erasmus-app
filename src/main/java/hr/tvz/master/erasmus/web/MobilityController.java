@@ -1,10 +1,7 @@
 package hr.tvz.master.erasmus.web;
 
 import hr.tvz.master.erasmus.entity.Mobility;
-import hr.tvz.master.erasmus.repository.InstitutionRepository;
-import hr.tvz.master.erasmus.repository.MobilityRepository;
-import hr.tvz.master.erasmus.repository.MobilityStatusRepository;
-import hr.tvz.master.erasmus.repository.StudentRepository;
+import hr.tvz.master.erasmus.repository.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +29,9 @@ public class MobilityController {
     @Autowired
     InstitutionRepository institutionRepository;
 
+    @Autowired
+    ApprovalRepository approvalRepository;
+
     @GetMapping("/mobilities")
     public String getAllActive(Model model) {
         List<Mobility> list = mobilityRepository.findAll(); //TODO find po statusu
@@ -41,7 +41,10 @@ public class MobilityController {
 
     @GetMapping(path = "mobilities/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
-        model.addAttribute("mobility", mobilityRepository.getOne(id));
+        Mobility mobility = mobilityRepository.getOne(id);
+        model.addAttribute("mobility", mobility);
+        model.addAttribute("approvalList", approvalRepository.findByMobility_Id(id));
+
         return "mobilities/details";
     }
 

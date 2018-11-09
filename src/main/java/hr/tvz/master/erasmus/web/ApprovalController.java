@@ -1,6 +1,8 @@
 package hr.tvz.master.erasmus.web;
 
+import hr.tvz.master.erasmus.entity.AppUser;
 import hr.tvz.master.erasmus.entity.Approval;
+import hr.tvz.master.erasmus.entity.Mobility;
 import hr.tvz.master.erasmus.repository.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
-//TODO dovršiti edit i fixati prikaz liste
+
 @Controller
 public class ApprovalController {
 
@@ -23,11 +25,17 @@ public class ApprovalController {
     @Autowired
     ApprovalTypeRepository approvalTypeRepository;
 
-    @Autowired
-    StudentRepository studentRepository;
+//    @Autowired
+//    StudentRepository studentRepository;
 
     @Autowired
     DocumentRepository documentRepository;
+
+    @Autowired
+    MobilityRepository mobilityRepository;
+
+    @Autowired
+    AppUsertRepository appUsertRepository;
 
     @GetMapping("/approvals")
     public String getAll(Model model) {
@@ -46,8 +54,9 @@ public class ApprovalController {
     public String getEmpty(Model model){
         model.addAttribute("approval", new Approval());
         model.addAttribute("approvalTypeList", approvalTypeRepository.findAll());
-        model.addAttribute("studentList", studentRepository.findAll()); //TODO izmjeniti u findByID
+//        model.addAttribute("studentList", studentRepository.findAll()); //TODO izmjeniti u findByID
         model.addAttribute("documentList", documentRepository.findAll()); //TODO getDocumentsForUser
+        model.addAttribute("mobilityList", mobilityRepository.findAll());
 
         return "approvals/create";
     }
@@ -55,6 +64,29 @@ public class ApprovalController {
     @PostMapping("/approvals/create")
     public String create(@ModelAttribute Approval approval) {
         Approval createdApproval = approvalRepository.save(approval);
+        return "redirect:/approvals/details/" + createdApproval.getId();
+    }
+
+    @GetMapping("/approvals/create/{mobilityId}")
+    public String getEmptyForApproval(Model model, @PathVariable Long mobilityId){
+        Mobility mobility = mobilityRepository.getOne(mobilityId);
+
+        model.addAttribute("approval", new Approval());
+        model.addAttribute("approvalTypeList", approvalTypeRepository.findAll());
+        model.addAttribute("documentList", documentRepository.findByOwner(mobility.getStudent()));
+        model.addAttribute("mobility", mobilityRepository.getOne(mobilityId));
+
+        return "approvals/createForMobility";
+    }
+
+    @PostMapping("/approvals/createForMobility/{mobilityId}")
+    public String createForMobility(@ModelAttribute Approval approval, @PathVariable Long mobilityId) {
+        AppUser coordinator = appUsertRepository.getOne(87L); //TODO dohvat ulogiranog usera
+
+        approval.setCoordinator(coordinator);
+        approval.setMobility(mobilityRepository.getOne(mobilityId));
+        Approval createdApproval = approvalRepository.save(approval);
+
         return "redirect:/approvals/details/" + createdApproval.getId();
     }
 
@@ -70,6 +102,7 @@ public class ApprovalController {
         model.addAttribute("approval", approval.get());
         model.addAttribute("approvalTypeList", approvalTypeRepository.findAll());
         model.addAttribute("documentList", documentRepository.findAll());
+        model.addAttribute("mobilityList", mobilityRepository.findAll());
 
         return "approvals/edit";
     }

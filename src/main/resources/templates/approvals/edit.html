@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:replace="template :: navigation"></div>
-
+<!--TODO ovo se krši - prilagoditi-->
 <div class="container">
     <h2>Izmjena detalja odobrenja</h2>
     <br>
@@ -17,27 +17,15 @@
                     <input type="hidden" class="form-control" th:field="*{id}"/>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-5">
-                    <input type="hidden" class="form-control" th:field="*{created}"/>
-                </div>
-            </div>
             <div class="form-group ">
-                <label class="col-sm-2 control-label">Kod:</label>
+                <label class="col-sm-2 control-label">Status mobilnosti:</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="*{code}" required/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Ime:</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="*{name}" required/>
-                </div>
-            </div>
-            <div class="form-group ">
-                <label class="col-sm-2 control-label">Opis:</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="*{description}" required/>
+                    <select id="dropdown" class="form-control"  th:field="*{mobilityStatus}" placeholder="Odaberite instituciju..." data-search="true"  required>
+                        <option th:each="mobilityStatus : ${mobilityStatusList}"
+                                th:value="${{mobilityStatus}}"
+                                th:text="${mobilityStatus.getName()}">
+                        </option>
+                    </select>
                 </div>
             </div>
             <br>

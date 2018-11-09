@@ -7,7 +7,11 @@ import java.util.stream.Stream;
 @Entity
 public class Document extends AbstractErasmusEntity{
     private String name;
+
     private String description;
+
+    @OneToOne(targetEntity = AppUser.class)
+    AppUser owner;
 
     @OneToOne(targetEntity = DocumentType.class)
     private DocumentType documentType;
@@ -16,7 +20,10 @@ public class Document extends AbstractErasmusEntity{
     private byte[] fileContent;
 
     private String fileName;
+
     private String fileContentType;
+
+    //Getters and setters
 
     public String getName() {
         return name;
@@ -32,6 +39,14 @@ public class Document extends AbstractErasmusEntity{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public AppUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(AppUser owner) {
+        this.owner = owner;
     }
 
     public DocumentType getDocumentType() {

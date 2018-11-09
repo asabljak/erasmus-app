@@ -5,7 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
-//TODO dodati mobility
+
 @Entity
 public class Approval extends AbstractErasmusEntity {
 
@@ -15,13 +15,18 @@ public class Approval extends AbstractErasmusEntity {
     @OneToOne(targetEntity = AppUser.class)
     private AppUser coordinator;
 
-    @OneToOne(targetEntity = AppUser.class)
-    private AppUser student;
+//    @OneToOne(targetEntity = AppUser.class)
+//    private AppUser student;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Document> documents;
 
+    @OneToOne
+    private Mobility mobility;
+
     private String comment;
+
+    //Getters and setters
 
     public ApprovalType getApprovalType() {
         return approvalType;
@@ -39,13 +44,13 @@ public class Approval extends AbstractErasmusEntity {
         this.coordinator = coordinator;
     }
 
-    public AppUser getStudent() {
-        return student;
-    }
-
-    public void setStudent(AppUser student) {
-        this.student = student;
-    }
+//    public AppUser getStudent() {
+//        return student;
+//    }
+//
+//    public void setStudent(AppUser student) {
+//        this.student = student;
+//    }
 
     public List<Document> getDocuments() {
         return documents;
@@ -53,6 +58,14 @@ public class Approval extends AbstractErasmusEntity {
 
     public void setDocuments(List<Document> documents) {
         this.documents = documents;
+    }
+
+    public Mobility getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(Mobility mobility) {
+        this.mobility = mobility;
     }
 
     public String getComment() {
