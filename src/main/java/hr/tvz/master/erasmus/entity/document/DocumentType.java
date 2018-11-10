@@ -1,4 +1,7 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.document;
+
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
+import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

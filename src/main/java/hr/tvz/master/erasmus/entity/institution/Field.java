@@ -1,11 +1,13 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.institution;
+
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 
 import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Entity
-public class Field extends AbstractErasmusEntity{
+public class Field extends AbstractErasmusEntity {
     private String code;
     private String name;
 

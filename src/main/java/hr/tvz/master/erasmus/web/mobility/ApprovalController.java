@@ -1,8 +1,8 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.AppUser;
-import hr.tvz.master.erasmus.entity.Approval;
-import hr.tvz.master.erasmus.entity.Mobility;
+import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.entity.mobility.Approval;
+import hr.tvz.master.erasmus.entity.mobility.Mobility;
 import hr.tvz.master.erasmus.repository.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

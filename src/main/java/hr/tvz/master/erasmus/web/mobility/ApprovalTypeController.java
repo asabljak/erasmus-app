@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.ApprovalType;
+import hr.tvz.master.erasmus.entity.mobility.ApprovalType;
 import hr.tvz.master.erasmus.repository.ApprovalTypeRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

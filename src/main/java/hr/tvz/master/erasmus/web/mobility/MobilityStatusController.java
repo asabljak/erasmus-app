@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.MobilityStatus;
+import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.repository.MobilityStatusRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,6 @@ public class MobilityStatusController {
         }
 
         MobilityStatus oldMobilityStatus = mobilityStatusRepository.getOne(newMobilityStatus.getId());
-        oldMobilityStatus.setCode(newMobilityStatus.getCode());
         oldMobilityStatus.setName(newMobilityStatus.getName());
         oldMobilityStatus.setDescription(newMobilityStatus.getDescription());
         mobilityStatusRepository.save(oldMobilityStatus);

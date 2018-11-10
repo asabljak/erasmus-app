@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.Field;
+import hr.tvz.master.erasmus.entity.institution.Field;
 import hr.tvz.master.erasmus.repository.FieldRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

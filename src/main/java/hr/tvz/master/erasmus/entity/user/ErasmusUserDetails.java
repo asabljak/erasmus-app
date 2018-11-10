@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

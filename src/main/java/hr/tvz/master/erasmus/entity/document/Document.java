@@ -1,11 +1,14 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.document;
+
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
+import hr.tvz.master.erasmus.entity.user.AppUser;
 
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Entity
-public class Document extends AbstractErasmusEntity{
+public class Document extends AbstractErasmusEntity {
     private String name;
 
     private String description;

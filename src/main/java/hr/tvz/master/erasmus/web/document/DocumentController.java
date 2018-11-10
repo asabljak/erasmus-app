@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.Document;
+import hr.tvz.master.erasmus.entity.document.Document;
 import hr.tvz.master.erasmus.repository.DocumentRepository;
 import hr.tvz.master.erasmus.repository.DocumentTypeRepository;
 import javassist.NotFoundException;

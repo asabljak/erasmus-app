@@ -1,5 +1,8 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.mobility;
 
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
+import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.entity.institution.Institution;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;

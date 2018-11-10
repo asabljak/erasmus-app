@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.Course;
+import hr.tvz.master.erasmus.entity.institution.Course;
 import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.FieldRepository;
 import hr.tvz.master.erasmus.repository.InstitutionRepository;

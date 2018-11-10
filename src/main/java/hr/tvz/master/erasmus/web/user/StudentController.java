@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.web;
 
-import hr.tvz.master.erasmus.entity.AppUser;
+import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.StudentRepository;
 import javassist.NotFoundException;

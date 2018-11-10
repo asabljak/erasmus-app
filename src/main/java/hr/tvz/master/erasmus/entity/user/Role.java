@@ -1,4 +1,6 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.user;
+
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 
 import javax.persistence.*;
 

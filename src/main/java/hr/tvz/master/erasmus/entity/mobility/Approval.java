@@ -1,4 +1,8 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.mobility;
+
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
+import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.entity.document.Document;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

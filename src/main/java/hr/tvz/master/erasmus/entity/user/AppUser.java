@@ -1,5 +1,7 @@
-package hr.tvz.master.erasmus.entity;
+package hr.tvz.master.erasmus.entity.user;
 
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
+import hr.tvz.master.erasmus.entity.institution.Course;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 @Entity
-public class AppUser extends AbstractErasmusEntity{
+public class AppUser extends AbstractErasmusEntity {
     private String name;
     private String surname;
     private String email;

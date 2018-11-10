@@ -1,7 +1,7 @@
 package hr.tvz.master.erasmus.service;
 
-import hr.tvz.master.erasmus.entity.AppUser;
-import hr.tvz.master.erasmus.entity.ErasmusUserDetails;
+import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.entity.user.ErasmusUserDetails;
 import hr.tvz.master.erasmus.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
