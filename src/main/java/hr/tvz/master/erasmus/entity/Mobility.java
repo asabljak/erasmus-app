@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
-//TODO relation mobility deos not exists?
+
 @Entity
 public class Mobility extends AbstractErasmusEntity {
 

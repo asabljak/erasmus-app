@@ -19,6 +19,7 @@
                 <td>Opis</td>
                 <td>Ects</td>
                 <td>Jezik</td>
+                <td>Institucija</td>
                 <!--<th>Delete</th>-->
             </tr>
             </thead>
@@ -29,6 +30,7 @@
                 <td th:text="${subject.getDescription()}" class="row-pointer"></td>
                 <td th:text="${subject.getEctsValue()}" class="row-pointer"></td>
                 <td th:text="${subject.getLanguage()}" class="row-pointer"></td>
+                <td th:text="${subject.getCourse().getInstitution().getName()}" class="row-pointer"></td>
                 <!--<td><a th:href="${'/subjects/delete/' + subject.getId()}" class="btn btn-danger">Delete</a></td>-->
             </tr>
             </tbody>

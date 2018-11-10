@@ -1,15 +1,25 @@
 package hr.tvz.master.erasmus.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import java.util.Objects;
 import java.util.stream.Stream;
-//TODO dodati Course
+
 @Entity
 public class Subject extends AbstractErasmusEntity {
     private String name;
+
     private String description;
+
     private Integer ectsValue;
+
     private String language;
+
+    @OneToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
+    private Course course;
+
+    //Getters and setters
 
     public String getName() {
         return name;
@@ -31,7 +41,7 @@ public class Subject extends AbstractErasmusEntity {
         return ectsValue;
     }
 
-    public void setEctsValue(int ectsValue) {
+    public void setEctsValue(Integer ectsValue) {
         this.ectsValue = ectsValue;
     }
 
@@ -41,6 +51,14 @@ public class Subject extends AbstractErasmusEntity {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public boolean isValid() {

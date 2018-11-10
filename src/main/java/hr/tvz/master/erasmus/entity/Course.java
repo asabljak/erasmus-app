@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 @Entity
 public class Course extends AbstractErasmusEntity {
     private String name;
+
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -19,6 +20,8 @@ public class Course extends AbstractErasmusEntity {
 
     @OneToOne(targetEntity = Institution.class)
     private  Institution institution;
+
+    //Getters and setters
 
     public String getName() {
         return this.name;

@@ -8,13 +8,15 @@
 <div th:replace="template :: navigation"></div>
 
 <div class="container">
-    <h2>Detalji</h2>
+    <h2>Detalji predmeta</h2>
     <br>
     <div>
         <div class="row details-text"><span><b>Ime: </b></span><span th:text="${subject.getName()}"></span></div>
         <div class ="row details-text"><span><b>Opis: </b></span><span th:text="${subject.getDescription()}"></span></div>
         <div class ="row details-text"><span><b>Ects: </b></span><span th:text="${subject.getEctsValue()}"></span></div>
         <div class ="row details-text"><span><b>Jezik: </b></span><span th:text="${subject.getLanguage()}"></span></div>
+        <div class ="row details-text" th:if="${subject.getCourse().getInstitution() != null}" ><span><b>Institucija: </b></span><span th:text="${subject.getCourse().getInstitution().getName()}"></span></div>
+        <div class ="row details-text" th:if="${subject.getCourse() != null}" ><span><b>Smjer: </b></span><span th:text="${subject.getCourse().getName()}"></span></div>
         <br>
         <form>
             <td><a th:href="${'/subjects/edit/' + subject.getId()}" class="btn btn-primary">Izmjeni</a></td>

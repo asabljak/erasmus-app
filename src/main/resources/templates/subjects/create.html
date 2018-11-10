@@ -6,6 +6,7 @@
 </head>
 <body>
 <div th:replace="template :: navigation"></div>
+<div th:replace="template :: dropdown-jquery"></div>
 
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
     <h2>Kreiranje novog predmeta</h2>
@@ -33,6 +34,17 @@
             <label class="col-sm-2 control-label">Jezik:</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" th:field="*{language}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Smjer:</label>
+            <div class="col-sm-5">
+                <select id="dropdown" class="form-control"  th:field="*{course}" placeholder="Odaberite smjer..." data-search="true" required>
+                    <option th:each="course : ${courseList}"
+                            th:value="${{course}}"
+                            th:text="${course.getInstitution().getCode() + ' - ' + course.getName()}">
+                    </option>
+                </select>
             </div>
         </div>
         <br>

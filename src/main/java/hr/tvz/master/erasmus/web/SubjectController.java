@@ -1,6 +1,7 @@
 package hr.tvz.master.erasmus.web;
 
 import hr.tvz.master.erasmus.entity.Subject;
+import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.SubjectRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class SubjectController {
     @Autowired
     SubjectRepository subjectRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     @GetMapping("/subjects")
     public String getAll(Model model) {
         List<Subject> list = subjectRepository.findAll();
@@ -29,6 +33,7 @@ public class SubjectController {
 
     @GetMapping(path = "subjects/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
+        Subject s = subjectRepository.getOne(id);
         model.addAttribute("subject", subjectRepository.getOne(id));
         return "subjects/details";
     }
@@ -36,6 +41,7 @@ public class SubjectController {
     @GetMapping("/subjects/create")
     public String getEmpty(Model model){
         model.addAttribute("subject", new Subject());
+        model.addAttribute("courseList", courseRepository.findAll());
         return "subjects/create";
     }
 
@@ -55,6 +61,7 @@ public class SubjectController {
         }
 
         model.addAttribute("subject", subject.get());
+        model.addAttribute("courseList", courseRepository.findAll());
 
         return "subjects/edit";
     }
@@ -70,6 +77,7 @@ public class SubjectController {
         oldSubject.setDescription(newSubject.getDescription());
         oldSubject.setEctsValue(newSubject.getEctsValue());
         oldSubject.setLanguage(newSubject.getLanguage());
+        oldSubject.setCourse(newSubject.getCourse());
         subjectRepository.save(oldSubject);
 
         return "redirect:/subjects/details/" + oldSubject.getId();
