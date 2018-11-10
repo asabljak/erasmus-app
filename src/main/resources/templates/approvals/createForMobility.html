@@ -23,20 +23,24 @@
         });
     </script>
 
+    <script>
+        function setRequired(elem){
+            if(elem.value % 2 == 0)
+                document.getElementById("comment-text").required = true;
+            else
+                document.getElementById("comment-text").required = false;
+        }
+    </script>
+
     <h2>Kreiranje novog odobrenja</h2>
     <br>
     <form class="form-horizontal" action="#" th:action="@{/approvals/createForMobility/} + ${mobility.getId()}" th:object="${approval}" method="post">
         <div class="row details-text" th:if="${mobility.getStudent() != null}"><span><b>Mobilnost: </b></span><span th:text="${mobility.getStudent().getJmbag() + ' - ' + mobility.getStudent().getName() + ' ' + mobility.getStudent().getSurname() + ' - ' + mobility.getInstitution().getCode()}"></span></div>
-        <!--<div class="form-group">-->
-            <!--<div class="col-sm-5">-->
-                <!--<input type="hidden" class="form-control" th:field="*{approval}"/>-->
-            <!--</div>-->
-        <!--</div>-->
         <br>
         <div class="form-group ">
             <label class="col-sm-2 control-label">Tip odobrenja:</label>
             <div class="col-sm-5">
-                <select class="form-control dropdown-searchable"  th:field="*{approvalType}" placeholder="Odaberite tip odobrenja..." required>
+                <select class="form-control dropdown-searchable"  th:field="*{approvalType}" placeholder="Odaberite tip odobrenja..." onchange="setRequired(this)" required>
                     <option th:each="approvalType : ${approvalTypeList}"
                             th:value="${{approvalType}}"
                             th:text="${approvalType.getName()}">
@@ -53,6 +57,12 @@
                             th:text="${document.getName() + ' (' + document.getDocumentType().getCode() + ')'}">
                     </option>
                 </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Komentar:</label>
+            <div class="col-sm-5">
+                <textarea id="comment-text" class="form-control" th:field="*{comment}" rows="4" ></textarea>
             </div>
         </div>
         <br>

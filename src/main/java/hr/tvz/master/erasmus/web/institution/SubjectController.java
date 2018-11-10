@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.institution;
 
 import hr.tvz.master.erasmus.entity.institution.Subject;
 import hr.tvz.master.erasmus.repository.CourseRepository;

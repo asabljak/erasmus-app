@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.institution;
 
 import hr.tvz.master.erasmus.entity.institution.Course;
 import hr.tvz.master.erasmus.entity.institution.Field;

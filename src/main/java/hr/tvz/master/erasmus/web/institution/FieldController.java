@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.institution;
 
 import hr.tvz.master.erasmus.entity.institution.Field;
 import hr.tvz.master.erasmus.repository.FieldRepository;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
-//TODO dodati validate()
 
 @Controller
 public class FieldController {

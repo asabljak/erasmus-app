@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.user;
 
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.repository.CourseRepository;

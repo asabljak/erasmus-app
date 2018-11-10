@@ -22,6 +22,15 @@
         });
     </script>
 
+    <script>
+        function setRequired(elem){
+            if(elem.value % 2 == 0)
+                document.getElementById("comment-text").required = true;
+            else
+                document.getElementById("comment-text").required = false;
+        }
+    </script>
+
     <h2>Kreiranje novog odobrenja</h2>
     <br>
     <form class="form-horizontal" action="#" th:action="@{/approvals/create}" th:object="${approval}" method="post">
@@ -56,6 +65,12 @@
                             th:text="${document.getName() + ' (' + document.getDocumentType().getCode() + ')'}">
                     </option>
                 </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Komentar:</label>
+            <div class="col-sm-5">
+                <textarea id="comment-text" class="form-control" th:field="*{comment}" rows="4" ></textarea>
             </div>
         </div>
         <br>

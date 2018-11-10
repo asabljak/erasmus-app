@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.document;
 
 import hr.tvz.master.erasmus.entity.document.Document;
 import hr.tvz.master.erasmus.repository.DocumentRepository;

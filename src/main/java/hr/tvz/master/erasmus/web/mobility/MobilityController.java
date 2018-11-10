@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.mobility;
 
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
 import hr.tvz.master.erasmus.repository.*;
