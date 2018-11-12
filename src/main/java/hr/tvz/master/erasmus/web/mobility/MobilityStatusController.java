@@ -33,17 +33,17 @@ public class MobilityStatusController {
         return "mobilityStatus/details";
     }
 
-    @GetMapping("/mobilityStatus/create")
-    public String getEmpty(Model model){
-        model.addAttribute("mobilityStatus", new MobilityStatus());
-        return "mobilityStatus/create";
-    }
-
-    @PostMapping("/mobilityStatus/create")
-    public String create(@ModelAttribute MobilityStatus mobilityStatus) {
-        MobilityStatus createdMobilityStatus = mobilityStatusRepository.save(mobilityStatus);
-        return "redirect:/mobilityStatus/details/" + createdMobilityStatus.getId();
-    }
+//    @GetMapping("/mobilityStatus/create")
+//    public String getEmpty(Model model){
+//        model.addAttribute("mobilityStatus", new MobilityStatus());
+//        return "mobilityStatus/create";
+//    }
+//
+//    @PostMapping("/mobilityStatus/create")
+//    public String create(@ModelAttribute MobilityStatus mobilityStatus) {
+//        MobilityStatus createdMobilityStatus = mobilityStatusRepository.save(mobilityStatus);
+//        return "redirect:/mobilityStatus/details/" + createdMobilityStatus.getId();
+//    }
 
     @GetMapping("/mobilityStatus/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
@@ -73,9 +73,9 @@ public class MobilityStatusController {
         return "redirect:/mobilityStatus/details/" + oldMobilityStatus.getId();
     }
 
-    @GetMapping(path = "/mobilityStatus/delete/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
-        mobilityStatusRepository.deleteById(id);
-        return "redirect:/mobilityStatus";
-    }
+//    @GetMapping(path = "/mobilityStatus/delete/{id}")
+//    public String deleteProduct(@PathVariable(name = "id") Long id) {
+//        mobilityStatusRepository.deleteById(id);
+//        return "redirect:/mobilityStatus";
+//    }
 }

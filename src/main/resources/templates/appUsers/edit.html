@@ -8,16 +8,44 @@
 <div th:replace="template :: navigation"></div>
 
 <div class="container">
-    <script type="text/javascript">
+    <div th:replace="template :: dropdown-jquery"></div>
+    <script>
+        function setRequireds() {
+            var roles = document.getElementById("roles");
+
+            if(roles.value == 4) {
+                document.getElementById("jmbag").required = true;
+                document.getElementById("phone").required = true;
+                document.getElementById("birthday").required = true;
+                document.getElementById("dropdown").required = true;
+                document.getElementById("yearOfStudy").required = true;
+            } else {
+                document.getElementById("jmbag").required = false;
+                document.getElementById("phone").required = false;
+                document.getElementById("birthday").required = false;
+                document.getElementById("dropdown").required = false;
+                document.getElementById("yearOfStudy").required = false;
+            }
+        }
+
         $(document).ready(function() {
-            $('#multi-select').multiselect();
+            setRequireds();
         });
     </script>
 
-    <h2>Izmjena detalja studenta</h2>
+    <h2>Izmjena detalja korisnika</h2>
     <br>
     <div>
-        <form class="form-horizontal" th:object="${student}" th:action="@{/students/edit}" method="post">
+        <form class="form-horizontal" th:object="${appUser}" th:action="@{/appUsers/edit}" method="post">
+            <label class="col-sm-2 control-label">Rola:</label>
+            <div class="col-sm-5">
+                <select id="roles" class="form-control" th:field="*{roles}" onchange="setRequireds()" >
+                    <option th:each="role : ${roles}"
+                            th:value="${{role}}"
+                            th:text="${role.getRole()}">
+                    </option>
+                </select>
+            </div>
             <div class="form-group">
                 <div class="col-sm-5">
                     <input type="hidden" class="form-control" th:field="*{id}"/>
@@ -43,7 +71,7 @@
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Jmbag:</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" th:field="*{jmbag}" required/>
+                    <input type="text" id="jmbag" class="form-control" th:field="*{jmbag}" />
                 </div>
             </div>
             <div class="form-group ">
@@ -55,19 +83,19 @@
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Datum rođenja:</label>
                 <div class="col-sm-5">
-                    <input type="date" class="form-control" th:field="*{birthday}" required/>
+                    <input type="date" id="birthday" class="form-control" th:field="*{birthday}"/>
                 </div>
             </div>
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Broj mobitela:</label>
                 <div class="col-sm-5">
-                    <input type="tel" pattern="([+]?)[0-9]{6,12}" class="form-control" th:field="*{phone}" required/>
+                    <input type="tel" id="phone" pattern="([+]?)[0-9]{6,12}" class="form-control" th:field="*{phone}" />
                 </div>
             </div>
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Smjer:</label>
                 <div class="col-sm-5">
-                    <select id="multi-select" th:field="*{homeCourse}" size="10" required>
+                    <select id="dropdown" class="form-control"  th:field="*{homeCourse}" placeholder="Odaberite smjer..." data-search="true">
                         <option th:each="course : ${homeCourseList}"
                                 th:value="${{course}}"
                                 th:text="${course.name}">
@@ -78,14 +106,20 @@
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Godina studija:</label>
                 <div class="col-sm-5">
-                    <input type="number" class="form-control" th:field="*{yearOfStudy}" required/>
+                    <input type="number" id="yearOfStudy" class="form-control" th:field="*{yearOfStudy}" />
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Aktivan:</label>
+                <div class="col-sm-5">
+                    <input type="checkbox" value="true" class="form-control" th:field="*{enabled}" />
                 </div>
             </div>
             <br>
             <div class="form-group">
                 <div class="row">
                     <button type="submit" class="btn btn-primary">Spremi</button>
-                    <a th:href="${'/students/details/' + student.getId()}" class="btn btn-default">Otkaži</a>
+                    <a th:href="${'/appUsers/details/' + appUser.getId()}" class="btn btn-default">Otkaži</a>
                 </div>
             </div>
         </form>

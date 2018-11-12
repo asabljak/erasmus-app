@@ -1,6 +1,7 @@
 package hr.tvz.master.erasmus.web.mobility;
 
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
+import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,16 @@ public class MobilityController {
     MobilityStatusRepository mobilityStatusRepository;
 
     @Autowired
-    StudentRepository studentRepository;
+    AppUserRepository appUserRepository;
 
     @Autowired
     InstitutionRepository institutionRepository;
 
     @Autowired
     ApprovalRepository approvalRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @GetMapping("/mobilities")
     public String getAllActive(Model model) {
@@ -50,9 +54,11 @@ public class MobilityController {
 
     @GetMapping("/mobilities/create")
     public String getEmpty(Model model){
+        Role erasmusStudent = roleRepository.getOne(Role.ROLE_ERASMUS_STUDENT);
+
         model.addAttribute("mobility", new Mobility());
         model.addAttribute("mobilityStatusList", mobilityStatusRepository.findAll());
-        model.addAttribute("studentList", studentRepository.findAll());
+        model.addAttribute("studentList", appUserRepository.findAllByRoles(erasmusStudent));
         model.addAttribute("institutionList", institutionRepository.findAll());
         
         return "mobilities/create";

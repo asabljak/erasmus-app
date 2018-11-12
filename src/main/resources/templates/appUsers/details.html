@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<div class="container">
+    <h2>Detalji korisnika</h2>
+    <br>
+    <div>
+        <div th:if="${appUser.getName() != null && appUser.getName().length() > 0}" class="row details-text"><span><b>Ime: </b></span><span th:text="${appUser.getName()}"></span></div>
+        <div th:if="${appUser.getSurname() != null && appUser.getSurname().length() > 0}" class ="row details-text"><span><b>Prezime: </b></span><span th:text="${appUser.getSurname()}"></span></div>
+        <div th:if="${appUser.getJmbag() != null && appUser.getJmbag().length() > 0}" class ="row details-text"><span><b>Jmbag: </b></span><span th:text="${appUser.getJmbag()}"></span></div>
+        <div th:if="${appUser.getEmail() != null && appUser.getEmail().length() > 0}" class ="row details-text"><span><b>Email: </b></span><span th:text="${appUser.getEmail()}"></span></div>
+        <div th:if="${appUser.getBirthday() != null}" class ="row details-text"><span><b>Datum rođenja: </b></span><span th:text="${#dates.format(appUser.getBirthday(), 'dd.MM.yyyy.')}"></span></div>
+        <div th:if="${appUser.getPhone() != null && appUser.getPhone().length() > 0}" class ="row details-text"><span><b>Broj mobitela: </b></span><span th:text="${appUser.getPhone()}"></span></div>
+        <div th:if="${appUser.getHomeCourse() != null}" class ="row details-text"><span><b>Smjer: </b></span><span th:text="${appUser.getHomeCourse().getName()}"></span></div>
+        <div th:if="${appUser.getYearOfStudy() != null}" class ="row details-text"><span><b>Godina studija: </b></span><span th:text="${appUser.getYearOfStudy()}"></span></div>
+        <br>
+        <form>
+            <td><a th:href="${'/appUsers/edit/' + appUser.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a th:href="${'/appUsers/delete/' + appUser.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/appUsers/'}" class="btn btn-default">Povratak</a></td>
+        </form>
+        <br><br>
+    </div>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

@@ -11,13 +11,12 @@
     <h2>Detalji statusa mobilnosti</h2>
     <br>
     <div>
-        <!--<div class ="row details-text"><span><b>Ects: </b></span><span th:text="${mobilityStatus.getCode()}"></span></div>-->
         <div class="row details-text"><span><b>Status: </b></span><span th:text="${mobilityStatus.getName()}"></span></div>
         <div class ="row details-text"><span><b>Opis: </b></span><span th:text="${mobilityStatus.getDescription()}"></span></div>
         <br>
         <form>
             <td><a th:href="${'/mobilityStatus/edit/' + mobilityStatus.getId()}" class="btn btn-primary">Izmjeni</a></td>
-            <td><a th:href="${'/mobilityStatus/delete/' + mobilityStatus.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <!--<td><a th:href="${'/mobilityStatus/delete/' + mobilityStatus.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>-->
             <td><a th:href="${'/mobilityStatus/'}" class="btn btn-default">Povratak</a></td>
         </form>
         <br><br>

@@ -3,21 +3,8 @@
 <head th:include="template :: htmlHeader">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
-
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>-->
-
 </head>
 <body>
-<script>
-    $("input").on("change", function() {
-        this.setAttribute(
-            "data-date",
-            moment(this.value, "YYYY-MM-DD")
-                .format( this.getAttribute("data-date-format") )
-        )
-    }).trigger("change")
-</script>
-
 <div th:replace="template :: navigation"></div>
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
     <h2>Kreiranje novog studenta</h2>

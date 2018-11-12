@@ -25,9 +25,6 @@ public class ApprovalController {
     @Autowired
     ApprovalTypeRepository approvalTypeRepository;
 
-//    @Autowired
-//    StudentRepository studentRepository;
-
     @Autowired
     DocumentRepository documentRepository;
 
@@ -35,7 +32,7 @@ public class ApprovalController {
     MobilityRepository mobilityRepository;
 
     @Autowired
-    AppUsertRepository appUsertRepository;
+    AppUserRepository appUserRepository;
 
     @GetMapping("/approvals")
     public String getAll(Model model) {
@@ -54,7 +51,7 @@ public class ApprovalController {
     public String getEmpty(Model model){
         model.addAttribute("approval", new Approval());
         model.addAttribute("approvalTypeList", approvalTypeRepository.findAll());
-//        model.addAttribute("studentList", studentRepository.findAll()); //TODO izmjeniti u findByID
+//        model.addAttribute("studentList", appUserRepository.findAll()); //TODO izmjeniti u findByID
         model.addAttribute("documentList", documentRepository.findAll()); //TODO getDocumentsForUser
         model.addAttribute("mobilityList", mobilityRepository.findAll());
 
@@ -81,7 +78,7 @@ public class ApprovalController {
 
     @PostMapping("/approvals/createForMobility/{mobilityId}")
     public String createForMobility(@ModelAttribute Approval approval, @PathVariable Long mobilityId) {
-        AppUser coordinator = appUsertRepository.getOne(87L); //TODO dohvat ulogiranog usera
+        AppUser coordinator = appUserRepository.getOne(87L); //TODO dohvat ulogiranog usera
 
         approval.setCoordinator(coordinator);
         approval.setMobility(mobilityRepository.getOne(mobilityId));

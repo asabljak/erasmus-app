@@ -28,7 +28,7 @@ public class AppUser extends AbstractErasmusEntity {
 
     private Integer yearOfStudy;
 
-    private Integer active;
+    private Boolean enabled;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "appUser.id"), inverseJoinColumns = @JoinColumn(name = "role.id"))
@@ -47,7 +47,7 @@ public class AppUser extends AbstractErasmusEntity {
         this.phone = appUser.getPhone();
         this.homeCourse = appUser.getHomeCourse();
         this.yearOfStudy = appUser.getYearOfStudy();
-        this.active = appUser.getActive();
+        this.enabled = appUser.isEnabled();
         this.roles = appUser.getRoles();
     }
 
@@ -124,12 +124,12 @@ public class AppUser extends AbstractErasmusEntity {
         this.yearOfStudy = yearOfStudy;
     }
 
-    public int getActive() {
-        return active;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setActive(int active) {
-        this.active = active;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<Role> getRoles() {
@@ -142,7 +142,7 @@ public class AppUser extends AbstractErasmusEntity {
 
     @Override
     public boolean isValid() {
-        return Stream.of(name, surname, email)
+        return Stream.of(name, surname, email, roles)
                 .noneMatch(Objects::isNull);
     }
 }

@@ -33,17 +33,17 @@ public class ApprovalTypeController {
         return "approvalTypes/details";
     }
 
-    @GetMapping("/approvalTypes/create")
-    public String getEmpty(Model model){
-        model.addAttribute("approvalType", new ApprovalType());
-        return "approvalTypes/create";
-    }
-
-    @PostMapping("/approvalTypes/create")
-    public String create(@ModelAttribute ApprovalType approvalType) {
-        ApprovalType createdApprovalType = approvalTypeRepository.save(approvalType);
-        return "redirect:/approvalTypes/details/" + createdApprovalType.getId();
-    }
+//    @GetMapping("/approvalTypes/create")
+//    public String getEmpty(Model model){
+//        model.addAttribute("approvalType", new ApprovalType());
+//        return "approvalTypes/create";
+//    }
+//
+//    @PostMapping("/approvalTypes/create")
+//    public String create(@ModelAttribute ApprovalType approvalType) {
+//        ApprovalType createdApprovalType = approvalTypeRepository.save(approvalType);
+//        return "redirect:/approvalTypes/details/" + createdApprovalType.getId();
+//    }
 
     @GetMapping("/approvalTypes/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
@@ -73,9 +73,9 @@ public class ApprovalTypeController {
         return "redirect:/approvalTypes/details/" + oldApprovalType.getId();
     }
 
-    @GetMapping(path = "/approvalTypes/delete/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
-        approvalTypeRepository.deleteById(id);
-        return "redirect:/approvalTypes";
-    }
+//    @GetMapping(path = "/approvalTypes/delete/{id}")
+//    public String deleteProduct(@PathVariable(name = "id") Long id) {
+//        approvalTypeRepository.deleteById(id);
+//        return "redirect:/approvalTypes";
+//    }
 }

@@ -1,6 +1,6 @@
 package hr.tvz.master.erasmus.config;
 
-import hr.tvz.master.erasmus.repository.AppUsertRepository;
+import hr.tvz.master.erasmus.repository.AppUserRepository;
 import hr.tvz.master.erasmus.service.ErasmusUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-@EnableJpaRepositories(basePackageClasses = AppUsertRepository.class)
+@EnableJpaRepositories(basePackageClasses = AppUserRepository.class)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.authorizeRequests()
-//                .antMatchers("/").authenticated()
+                .antMatchers("/").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll();
