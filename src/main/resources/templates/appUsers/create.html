@@ -6,10 +6,59 @@
 </head>
 <body>
 <div th:replace="template :: navigation"></div>
+<div th:replace="template :: dropdown-jquery"></div>
+
+<script>
+    function setRequireds() {
+        var roles = document.getElementById("roles");
+
+        if(roles.value == 4) {
+            document.getElementById("jmbag").required = true;
+            document.getElementById("phone").required = true;
+            document.getElementById("birthday").required = true;
+            document.getElementById("dropdown").required = true;
+            document.getElementById("yearOfStudy").required = true;
+        } else {
+            document.getElementById("jmbag").required = false;
+            document.getElementById("phone").required = false;
+            document.getElementById("birthday").required = false;
+            document.getElementById("dropdown").required = false;
+            document.getElementById("yearOfStudy").required = false;
+        }
+    }
+
+    $(document).ready(function() {
+        setRequireds();
+    });
+
+    function validatePassword(){
+        var password = document.getElementById("password")
+            , confirm_password = document.getElementById("confirm_password");
+
+        if(password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+
+</script>
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
-    <h2>Kreiranje novog studenta</h2>
+    <h2>Kreiranje novog korisnika</h2>
     <br>
-    <form class="form-horizontal" action="#" th:action="@{/students/create}" th:object="${student}" method="post">
+    <form class="form-horizontal" action="#" th:action="@{/appUsers/create}" th:object="${appUser}" method="post">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Rola:</label>
+            <div class="col-sm-5">
+                <select id="roles" class="form-control" th:field="*{roles}" onchange="setRequireds()" >
+                    <option th:each="role : ${roles}"
+                            th:value="${{role}}"
+                            th:text="${role.getRole()}">
+                    </option>
+                </select>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Ime:</label>
             <div class="col-sm-5">
@@ -32,6 +81,18 @@
             <label class="col-sm-2 control-label">Email:</label>
             <div class="col-sm-5">
                 <input type="email" class="form-control" th:field="*{email}" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Lozinka:</label>
+            <div class="col-sm-5">
+                <input type="password" id="password" class="form-control" th:field="*{password}" onchange="validatePassword()" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 control-label">Ponovno upišite lozinku:</label>
+            <div class="col-sm-5">
+                <input type="password" id="confirm_password" class="form-control" onchange="validatePassword()" required/>
             </div>
         </div>
         <div class="form-group ">
@@ -67,7 +128,7 @@
         <div class="form-group">
             <div class="row">
                 <button type="submit" class="btn btn-primary">Spremi</button>
-                <a th:href="${'/students/'}" class="btn btn-default">Otkaži</a>
+                <a th:href="${'/appUsers/'}" class="btn btn-default">Otkaži</a>
             </div>
         </div>
     </form>

@@ -53,20 +53,21 @@ public class AppUserController {
         return "appUsers/details";
     }
 
-//    @GetMapping("/appUsers/create")
-//    public String getEmpty(Model model){
-//        //TODO dohvat smjerova samo s TVZ-a
-//        model.addAttribute("appUser", new AppUser());
-//        model.addAttribute("roles", roleRepository.findAll());
-//        model.addAttribute("homeCourseList", courseRepository.findAll());
-//        return "appUsers/create";
-//    }
-//
-//    @PostMapping("/appUsers/create")
-//    public String create(@ModelAttribute AppUser appUser) {
-//        AppUser createdStudent = appUserRepository.save(appUser);
-//        return "redirect:/appUsers/details/" + createdStudent.getId();
-//    }
+    @GetMapping("/appUsers/create")
+    public String getEmpty(Model model){
+        //TODO dohvat smjerova samo s TVZ-a
+        model.addAttribute("appUser", new AppUser());
+        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("homeCourseList", courseRepository.findAll());
+        return "appUsers/create";
+    }
+
+    @PostMapping("/appUsers/create")
+    public String create(@ModelAttribute AppUser appUser) {
+        appUser.setEnabled(true);
+        AppUser createdStudent = appUserRepository.save(appUser);
+        return "redirect:/appUsers/details/" + createdStudent.getId();
+    }
 
     @GetMapping("/appUsers/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
