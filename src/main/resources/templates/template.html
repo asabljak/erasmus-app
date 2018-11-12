@@ -73,7 +73,6 @@
 	<script type="application/javascript" th:src="@{/js/bootstrap.min.js}"></script>
     <script type="application/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
     <script type="application/javascript" th:src="@{/js/selectstyle.js}"></script>
-
 	</head>
 	<body>
 		
@@ -115,7 +114,16 @@
                             </li>
                             <li><a th:href="${'/appUsers/'}">Korisnici</a></li>
                             <!--<li><a href="about.html">About</a></li>-->
-							<li class="btn-cta"><a href="#"><span>Login</span></a></li>
+							<!--<li class="btn-cta"><a th:href="${'/logout/'}"><span>Logout</span></a></li>-->
+							<li class="btn-cta"><span>
+							<li class="btn-cta">
+								<form id="logout_form" th:action="@{/logout}" method="post">
+									<input class="btn btn-primary" type="submit" value="Log out"/>
+								</form>
+							</li>
+							</span></li>
+
+
 						</ul>
 					</div>
 				</div>

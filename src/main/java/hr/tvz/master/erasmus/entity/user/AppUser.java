@@ -1,7 +1,7 @@
 package hr.tvz.master.erasmus.entity.user;
 
 import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
-import hr.tvz.master.erasmus.entity.institution.Course;
+import hr.tvz.master.erasmus.entity.institution.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,8 +23,8 @@ public class AppUser extends AbstractErasmusEntity {
 
     private String phone;
 
-    @OneToOne(targetEntity = Course.class)
-    private Course homeCourse;
+    @OneToOne(targetEntity = Field.class)
+    private Field homeCourse;
 
     private Integer yearOfStudy;
 
@@ -108,11 +108,11 @@ public class AppUser extends AbstractErasmusEntity {
         this.phone = phone;
     }
 
-    public Course getHomeCourse() {
+    public Field getHomeCourse() {
         return homeCourse;
     }
 
-    public void setHomeCourse(Course homeCourse) {
+    public void setHomeCourse(Field homeCourse) {
         this.homeCourse = homeCourse;
     }
 

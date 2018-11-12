@@ -22,3 +22,9 @@ insert into role (id, role, created, version) values (4,'ROLE_ERASMUS_STUDENT', 
 insert into role (id, role, created, version) values (5,'ROLE_VISITOR', now(), 1);
 
 insert into institution(	id, created, version, city, name, code, country, web_url) values (-1, now(), 1, 'Zagreb', 'Tehničko veleučilište u Zagrebu', 'TVZ', 'Croatia', 'http://www.tvz.hr');
+
+insert into field(id, code, name, created, version)	values (1, 'RAČ', 'Računarstvo', now(), 1);
+insert into field(id, code, name, created, version)	values (2, 'INFO', 'Informatika', now(), 1);
+insert into field(id, code, name, created, version)	values (3, 'ELO', 'Elektrotehnika', now(), 1);
+insert into field(id, code, name, created, version)	values (4, 'STRO', 'Strojarstvo', now(), 1);
+insert into field(id, code, name, created, version)	values (5, 'MEH', 'Mehatronika', now(), 1);
