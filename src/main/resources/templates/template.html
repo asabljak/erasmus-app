@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	<head th:fragment="htmlHeader">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" fileContent="IE=edge">
@@ -124,7 +124,16 @@
 		</div>
 	</nav>
 
-	<aside id="fh5co-hero" class="js-fullheight">
+		<!--<div sec:authorize="hasAuthority('ERASMUS_STUDENT')" > Has Authority ERASMUS_STUDENT </div>-->
+		<!--<div sec:authorize="hasAuthority('ADMIN')" > Has Authority ADMIN </div>-->
+		<!--<div sec:authorize="hasRole('ERASMUS_STUDENT')" > Has Role ERASMUS_STUDENT </div>-->
+		<!--<div sec:authorize="hasRole('ADMIN')" > Has Role ADMIN </div>-->
+		<!--<div sec:authorize="hasRole('ROLE_ADMIN')">Has Role ROLE_ADMIN</div>-->
+		<!--<div sec:authorize="hasRole('ROLE_ERASMUS_STUDENT')">Has Role ROLE_ERASMUS_STUDENT</div>-->
+		<!--<div sec:authorize="hasAuthority('ROLE_ERASMUS_STUDENT')" > Has Authority ROLE_ERASMUS_STUDENT </div>-->
+		<!--<div sec:authorize="hasAuthority('ROLE_ADMIN')" > Has Authority ROLE_ADMIN </div>-->
+
+		<aside id="fh5co-hero" class="js-fullheight">
 		<div class="flexslider js-fullheight">
 			<ul class="slides">
 		   	<li style="background-image: url(/images/img_bg_1.jpg);">

@@ -20,3 +20,5 @@ insert into role (id, role, created, version) values (2,'ROLE_COORDINATOR', now(
 insert into role (id, role, created, version) values (3,'ROLE_SUBJECT_COORDINATOR', now(), 1);
 insert into role (id, role, created, version) values (4,'ROLE_ERASMUS_STUDENT', now(), 1);
 insert into role (id, role, created, version) values (5,'ROLE_VISITOR', now(), 1);
+
+insert into institution(	id, created, version, city, name, code, country, web_url) values (-1, now(), 1, 'Zagreb', 'Tehničko veleučilište u Zagrebu', 'TVZ', 'Croatia', 'http://www.tvz.hr');
