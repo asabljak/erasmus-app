@@ -3,10 +3,12 @@ package hr.tvz.master.erasmus.web.user;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.AppUserRepository;
-import hr.tvz.master.erasmus.repository.CourseRepository;
+import hr.tvz.master.erasmus.repository.FieldRepository;
 import hr.tvz.master.erasmus.repository.RoleRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +26,16 @@ public class AppUserController {
     AppUserRepository appUserRepository;
 
     @Autowired
-    CourseRepository courseRepository;
+    FieldRepository fieldRepository;
     
     @Autowired
     RoleRepository roleRepository;
 
     @GetMapping("/appUsers")
     public String getAll(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+
         model.addAttribute("appUsers", appUserRepository.findAll());
         model.addAttribute("roles", roleRepository.findAll());
         return "appUsers/list";
@@ -47,6 +52,7 @@ public class AppUserController {
         return "appUsers/list";
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "appUsers/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("appUser", appUserRepository.getOne(id));
@@ -58,7 +64,7 @@ public class AppUserController {
         //TODO dohvat smjerova samo s TVZ-a
         model.addAttribute("appUser", new AppUser());
         model.addAttribute("roles", roleRepository.findAll());
-        model.addAttribute("homeCourseList", courseRepository.findAll());
+        model.addAttribute("homeCourseList", fieldRepository.findAll());
         return "appUsers/create";
     }
 
@@ -80,7 +86,7 @@ public class AppUserController {
 
         model.addAttribute("appUser", appUser.get());
         model.addAttribute("roles", roleRepository.findAll());
-        model.addAttribute("homeCourseList", courseRepository.findAll());
+        model.addAttribute("homeCourseList", fieldRepository.findAll());
 
         return "appUsers/edit";
     }

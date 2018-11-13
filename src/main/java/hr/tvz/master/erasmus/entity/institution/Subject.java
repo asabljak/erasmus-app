@@ -2,9 +2,7 @@ package hr.tvz.master.erasmus.entity.institution;
 
 import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -17,6 +15,11 @@ public class Subject extends AbstractErasmusEntity {
     private Integer ectsValue;
 
     private String language;
+
+    private Integer year;
+
+    @ManyToOne(targetEntity = SemesterType.class)
+    private SemesterType semesterType;
 
     @OneToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     private Course course;
@@ -53,6 +56,22 @@ public class Subject extends AbstractErasmusEntity {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public SemesterType getSemesterType() {
+        return semesterType;
+    }
+
+    public void setSemesterType(SemesterType semesterType) {
+        this.semesterType = semesterType;
     }
 
     public Course getCourse() {

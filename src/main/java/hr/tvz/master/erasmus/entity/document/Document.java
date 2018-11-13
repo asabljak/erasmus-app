@@ -4,6 +4,7 @@ import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -25,6 +26,8 @@ public class Document extends AbstractErasmusEntity {
     private String fileName;
 
     private String fileContentType;
+
+    private LocalDateTime seen;
 
     //Getters and setters
 
@@ -82,6 +85,14 @@ public class Document extends AbstractErasmusEntity {
 
     public void setFileContentType(String fileContentType) {
         this.fileContentType = fileContentType;
+    }
+
+    public LocalDateTime getSeen() {
+        return seen;
+    }
+
+    public void setSeen(LocalDateTime seen) {
+        this.seen = seen;
     }
 
     @Override

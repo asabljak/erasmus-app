@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:replace="template :: navigation"></div>
-<div th:replace="template :: dropdown-jquery"></div>
+<!--<div th:replace="template :: dropdown-jquery"></div>-->
 
 <div class="container">
     <h2>Izmjena detalja</h2>
@@ -61,6 +61,23 @@
                         <option th:each="course : ${courseList}"
                                 th:value="${{course}}"
                                 th:text="${course.getName()}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Godina:</label>
+                <div class="col-sm-5">
+                    <input type="number" class="form-control" th:field="*{year}" required/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">Semestar:</label>
+                <div class="col-sm-5">
+                    <select class="form-control"  th:field="*{semesterType}" required>
+                        <option th:each=" semesterType : ${semesterTypes}"
+                                th:value="${{semesterType}}"
+                                th:text="${semesterType.getName()}">
                         </option>
                     </select>
                 </div>

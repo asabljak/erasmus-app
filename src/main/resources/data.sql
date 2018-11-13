@@ -15,6 +15,9 @@ insert into approval_type (id, name, description, created, version) values (6,'D
 insert into approval_type (id, name, description, created, version) values (7,'Documentation after delivered successfully', 'Sva porebna dokumentacija nakon mobilnosti je dostavljena', now(), 1);
 insert into approval_type (id, name, description, created, version) values (8,'Documentation after delivered unsuccessfully', 'Sva porebna dokumentacija nakon mobilnosti nije uredno dostavljena', now(), 1);
 
+insert into semester_type(id, created, version, code, name) values (1, now(), 1, 'SUMMER', 'Ljetni');
+insert into semester_type(id, created, version, code, name) values (2, now(), 1, 'WINTER', 'Zimski');
+
 insert into role (id, role, created, version) values (1,'ROLE_ADMIN', now(), 1);
 insert into role (id, role, created, version) values (2,'ROLE_COORDINATOR', now(), 1);
 insert into role (id, role, created, version) values (3,'ROLE_SUBJECT_COORDINATOR', now(), 1);

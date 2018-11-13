@@ -96,9 +96,9 @@
                 <label class="col-sm-2 control-label">Smjer:</label>
                 <div class="col-sm-5">
                     <select id="dropdown" class="form-control"  th:field="*{homeCourse}" placeholder="Odaberite smjer..." data-search="true">
-                        <option th:each="course : ${homeCourseList}"
-                                th:value="${{course}}"
-                                th:text="${course.name}">
+                        <option th:each="field : ${homeCourseList}"
+                                th:value="${{field}}"
+                                th:text="${field.name}">
                         </option>
                     </select>
                 </div>

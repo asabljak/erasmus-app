@@ -59,7 +59,7 @@
                 <td th:text="${appUser.getJmbag()}" class="row-pointer"></td>
                 <td th:text="${appUser.getName()}" class="row-pointer"></td>
                 <td th:text="${appUser.getSurname()}" class="row-pointer"></td>
-                <td th:text="${appUser.getHomeCourse().getName()}" class="row-pointer"></td>
+                <td th:if="${appUser.getHomeCourse() != null}" th:text="${appUser.getHomeCourse().getName()}" class="row-pointer"></td>
                 <!--<td><a th:href="${'/appUsers/delete/' + appUser.getId()}" class="btn btn-danger">Delete</a></td>-->
             </tr>
             </tbody>

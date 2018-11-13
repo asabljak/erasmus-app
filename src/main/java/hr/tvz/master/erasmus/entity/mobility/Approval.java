@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -19,9 +20,6 @@ public class Approval extends AbstractErasmusEntity {
     @OneToOne(targetEntity = AppUser.class)
     private AppUser coordinator;
 
-//    @OneToOne(targetEntity = AppUser.class)
-//    private AppUser student;
-
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Document> documents;
 
@@ -29,6 +27,8 @@ public class Approval extends AbstractErasmusEntity {
     private Mobility mobility;
 
     private String comment;
+
+    private LocalDateTime seen;
 
     //Getters and setters
 
@@ -47,14 +47,6 @@ public class Approval extends AbstractErasmusEntity {
     public void setCoordinator(AppUser coordinator) {
         this.coordinator = coordinator;
     }
-
-//    public AppUser getStudent() {
-//        return student;
-//    }
-//
-//    public void setStudent(AppUser student) {
-//        this.student = student;
-//    }
 
     public List<Document> getDocuments() {
         return documents;
@@ -78,6 +70,14 @@ public class Approval extends AbstractErasmusEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public LocalDateTime getSeen() {
+        return seen;
+    }
+
+    public void setSeen(LocalDateTime seen) {
+        this.seen = seen;
     }
 
     @Override

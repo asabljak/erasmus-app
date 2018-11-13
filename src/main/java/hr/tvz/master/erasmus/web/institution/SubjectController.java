@@ -2,6 +2,7 @@ package hr.tvz.master.erasmus.web.institution;
 
 import hr.tvz.master.erasmus.entity.institution.Subject;
 import hr.tvz.master.erasmus.repository.CourseRepository;
+import hr.tvz.master.erasmus.repository.SemesterTypeRepository;
 import hr.tvz.master.erasmus.repository.SubjectRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class SubjectController {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    SemesterTypeRepository semesterTypeRepository;
+
     @GetMapping("/subjects")
     public String getAll(Model model) {
         List<Subject> list = subjectRepository.findAll();
@@ -42,6 +46,7 @@ public class SubjectController {
     public String getEmpty(Model model){
         model.addAttribute("subject", new Subject());
         model.addAttribute("courseList", courseRepository.findAll());
+        model.addAttribute("semesterTypes", semesterTypeRepository.findAll());
         return "subjects/create";
     }
 
@@ -62,6 +67,7 @@ public class SubjectController {
 
         model.addAttribute("subject", subject.get());
         model.addAttribute("courseList", courseRepository.findAll());
+        model.addAttribute("semesterTypes", semesterTypeRepository.findAll());
 
         return "subjects/edit";
     }
@@ -77,6 +83,8 @@ public class SubjectController {
         oldSubject.setDescription(newSubject.getDescription());
         oldSubject.setEctsValue(newSubject.getEctsValue());
         oldSubject.setLanguage(newSubject.getLanguage());
+        oldSubject.setYear(newSubject.getYear());
+        oldSubject.setSemesterType(newSubject.getSemesterType());
         oldSubject.setCourse(newSubject.getCourse());
         subjectRepository.save(oldSubject);
 
