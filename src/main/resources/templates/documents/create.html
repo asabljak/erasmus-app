@@ -11,9 +11,9 @@
     <h2>Kreiranje novog dokumenta</h2>
     <br>
 
-    <script th:replace="template :: dropdown-jquery"></script>
+    <!--<script th:replace="template :: dropdown-jquery"></script>-->
 
- <!--   <script>
+   <!-- <script>
         function replaceComponents(elem){
             if(elem.value == 64) {
                 document.getElementById('img-uploads').style.display = "block";
@@ -30,7 +30,7 @@
         <div class="form-group ">
             <label class="col-sm-2 control-label">Tip dokumenta:</label>
             <div class="col-sm-5">
-                <select id="dropdown" class="form-control" onchange="replaceComponents(this)" th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
+                <select id="dropdown" class="form-control" th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
                     <option th:each="documentType : ${documentTypeList}"
                             th:value="${{documentType}}"
                             th:text="${documentType.name}">
@@ -56,8 +56,8 @@
                 <input type="file" name="file" class="form-control-file"  required/>
             </div>
         </div>
-        <div class="form-group" id="img-uploads">
-            <!--<label class="col-sm-2 control-label" >Slika:</label>-->
+        <!--<div class="form-group" id="img-uploads">
+            &lt;!&ndash;<label class="col-sm-2 control-label" >Slika:</label>&ndash;&gt;
 
             <th:block th:each="iter: ${#numbers.sequence(1, 10)}">
                 <label class="col-sm-2 control-label" th:text="Slika + ${iter}">Slika:</label>
@@ -65,7 +65,7 @@
                     <input type="file" name="file" class="form-control-file"  required/>
                 </div>
             </th:block>
-        </div>
+        </div>-->
         <br>
         <div class="form-group">
             <div class="row">

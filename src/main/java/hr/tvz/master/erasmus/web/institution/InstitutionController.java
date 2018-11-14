@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.*;
 
-//TODO provjeriti ispis više smjerova
 @Controller
 public class InstitutionController {
 

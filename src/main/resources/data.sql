@@ -31,3 +31,14 @@ insert into field(id, code, name, created, version)	values (2, 'INFO', 'Informat
 insert into field(id, code, name, created, version)	values (3, 'ELO', 'Elektrotehnika', now(), 1);
 insert into field(id, code, name, created, version)	values (4, 'STRO', 'Strojarstvo', now(), 1);
 insert into field(id, code, name, created, version)	values (5, 'MEH', 'Mehatronika', now(), 1);
+
+insert into document_type(id, created, version, code, description, name) values (1, now(), 1, 'NAST_PLAN', 'Nastavni plan opis', 'Nastavni plan');
+insert into document_type(id, created, version, code, description, name) values (2, now(), 1, 'PRIJAVA', 'Prijavni obrazac opis', 'Prijavni obrazac');
+insert into document_type(id, created, version, code, description, name) values (3, now(), 1, 'DOMOVNICA', 'Domovnica opis', 'Domovnica');
+insert into document_type(id, created, version, code, description, name) values (4, now(), 1, 'CV', 'CV u Europass formi', 'Životopis');
+insert into document_type(id, created, version, code, description, name) values (5, now(), 1, 'LA', 'LA opis', 'Learning Agreement');
+insert into document_type(id, created, version, code, description, name) values (6, now(), 1, 'OSOBNA', 'Preslika osobne opis', 'Preslika osobne');
+insert into document_type(id, created, version, code, description, name) values (7, now(), 1, 'ZIRO', 'Preslika žiro računa opis', 'Preslika žiro računa');
+insert into document_type(id, created, version, code, description, name) values (8, now(), 1, 'RACUN', ' opis', 'Račun');
+insert into document_type(id, created, version, code, description, name) values (9, now(), 1, 'SLIKA', ' opis', 'Fotografija');
+insert into document_type(id, created, version, code, description, name) values (10, now(), 1, 'OSTALO', ' opis', 'Ostalo');

@@ -1,19 +1,26 @@
 package hr.tvz.master.erasmus.web.mobility;
 
+import hr.tvz.master.erasmus.entity.document.Document;
+import hr.tvz.master.erasmus.entity.document.DocumentType;
+import hr.tvz.master.erasmus.entity.institution.Institution;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
+import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
+import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class MobilityController {
@@ -36,8 +43,15 @@ public class MobilityController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    DocumentTypeRepository documentTypeRepository;
+
+    @Autowired
+    DocumentRepository documentRepository;
+
     @GetMapping("/mobilities")
     public String getAllActive(Model model) {
+
         List<Mobility> list = mobilityRepository.findAll(); //TODO find po statusu
         model.addAttribute("mobilityList", list);
         return "mobilities/list";
@@ -68,6 +82,62 @@ public class MobilityController {
     public String create(@ModelAttribute Mobility mobility) {
         Mobility createdMobility = mobilityRepository.save(mobility);
         return "redirect:/mobilities/details/" + createdMobility.getId();
+    }
+
+    @GetMapping("/mobilities/create/{institutionId}")
+    public String prepareForVisitorRequest(Model model, @PathVariable(name = "institutionId") Long institutionId) {
+        model.addAttribute("institution", institutionRepository.getOne(institutionId));
+        return "mobilities/createForInstitution";
+    }
+
+    @PostMapping("/mobilities/create/{institutionId}")
+    public String handleVisitorRequest(@PathVariable(name = "institutionId") Long id,
+                                       @RequestParam("prijavniObrazac") MultipartFile prijavniObrazac,
+                                       @RequestParam("nastavniPlan") MultipartFile nastavniPlan,
+                                       @RequestParam("cv") MultipartFile cv,
+                                       @RequestParam("domovnica") MultipartFile domovnica) {
+
+//        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); zasto je id null?
+        String email = ((AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
+        AppUser appUser = appUserRepository.findByEmail(email).get();
+
+        Institution institution = institutionRepository.getOne(id);
+
+        Document docPrijavniObrazac = null;
+        Document docNastavniPlan = null;
+        Document docCv = null;
+        Document docDomovnica = null;
+        try {
+            docPrijavniObrazac = this.createDocument(appUser, prijavniObrazac, documentTypeRepository.getOne(DocumentType.PRIJAVA));
+            docNastavniPlan = this.createDocument(appUser, nastavniPlan, documentTypeRepository.getOne(DocumentType.NAST_PLAN));
+            docCv = this.createDocument(appUser, cv, documentTypeRepository.getOne(DocumentType.CV));
+            docDomovnica = this.createDocument(appUser, domovnica, documentTypeRepository.getOne(DocumentType.DOMOVNICA));
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO ispis u log
+        }
+        documentRepository.saveAll(Stream.of(docPrijavniObrazac, docNastavniPlan, docCv,docDomovnica).collect(Collectors.toList()));
+
+        Mobility mobility = new Mobility();
+        mobility.setStudent(appUser);
+        mobility.setInstitution(institution);
+        mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
+        mobilityRepository.save(mobility);
+
+        return "redirect:/";
+    }
+
+    private Document createDocument(AppUser appUser, MultipartFile multipartFile, DocumentType documentType) throws IOException {
+        Document document = new Document();
+        document.setName(multipartFile.getOriginalFilename());
+        document.setDescription(documentType.getName() + " za studenta" + appUser.getName() + " " + appUser.getSurname());
+        document.setFileName(appUser.getJmbag() + "_" + multipartFile.getOriginalFilename());
+        document.setFileContent(multipartFile.getBytes());
+        document.setFileContentType(multipartFile.getContentType());
+        document.setOwner(appUser);
+        document.setDocumentType(documentType);
+
+        return document;
     }
 
     @GetMapping("/mobilities/edit/{id}")
@@ -101,4 +171,5 @@ public class MobilityController {
         mobilityRepository.deleteById(id);
         return "redirect:/mobilities";
     }
+
 }

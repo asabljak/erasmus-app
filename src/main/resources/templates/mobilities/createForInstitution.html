@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="template :: htmlHeader">
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:replace="template :: navigation"></div>
+
+<!--TODO promijeniti id na drupdornu s trazilicom u class, includati script tagove i pobrisati kopirane-->
+
+<div class="col-md-8 col-md-offset-2 fh5co-heading">
+
+    <h2>Kreiranje novoe mobilnosti</h2>
+    <br>
+    <form class="form-horizontal" action="#" th:action="@{/mobilities/create/} + ${institution.getId()}" enctype="multipart/form-data" method="post">
+        <div class="row details-text"><span><b>Institucija: </b></span><span th:text="${institution.getName()}"></span></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Prijavni obrazac:</label>
+            <div class="col-sm-5">
+                <input type="file" name="prijavniObrazac" class="form-control-file" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Nastavni plan:</label>
+            <div class="col-sm-5">
+                <input type="file" name="nastavniPlan" class="form-control-file" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">CV:</label>
+            <div class="col-sm-5">
+                <input type="file" name="cv" class="form-control-file" required/>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label class="col-sm-2 control-label">Domovnica:</label>
+            <div class="col-sm-5">
+                <input type="file" name="domovnica" class="form-control-file"  required/>
+            </div>
+        </div>
+
+
+        <br>
+        <div class="form-group">
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Spremi</button>
+                <a th:href="${'/mobilities/'}" class="btn btn-default">Otkaži</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="template :: footer"></div>
+</body>
+</html>

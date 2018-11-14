@@ -73,6 +73,7 @@ public class MobilityStatusController {
         return "redirect:/mobilityStatus/details/" + oldMobilityStatus.getId();
     }
 
+
 //    @GetMapping(path = "/mobilityStatus/delete/{id}")
 //    public String deleteProduct(@PathVariable(name = "id") Long id) {
 //        mobilityStatusRepository.deleteById(id);

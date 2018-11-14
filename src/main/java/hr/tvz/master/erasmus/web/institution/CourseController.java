@@ -4,6 +4,7 @@ import hr.tvz.master.erasmus.entity.institution.Course;
 import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.FieldRepository;
 import hr.tvz.master.erasmus.repository.InstitutionRepository;
+import hr.tvz.master.erasmus.repository.SubjectRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class CourseController {
     @Autowired
     InstitutionRepository institutionRepository;
 
+    @Autowired
+    SubjectRepository subjectRepository;
+
     @GetMapping("/courses")
     public String getAll(Model model) {
         List<Course> list = courseRepository.findAll();
@@ -38,6 +42,7 @@ public class CourseController {
     @GetMapping(path = "courses/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("course", courseRepository.getOne(id));
+        model.addAttribute("subjects", subjectRepository.findAllByCourse_Id(id));
         return "courses/details";
     }
 

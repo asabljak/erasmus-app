@@ -16,6 +16,24 @@
             <div class ="row details-text"><span><b>Područje: </b></span><span th:text="${course.getFields()}"></span></div>
             <div th:if="${course.getInstitution() != null}" class ="row details-text"><span><b>Institucija: </b></span><span th:text="${course.getInstitution().getCode() + ' - ' + course.getInstitution().getName()}"></span></div>
             <br>
+            <div class="row details-text"><span><b>Predmeti: </b></span></div>
+            <br>
+
+            <table id="approval" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Predmet</th>
+                    <th>ECTS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subject : ${subjects}" th:onclick="'javascript:rowClicked(\'/subjects/details/' + ${subject.getId()} + '\');'">
+                    <td th:text="${subject.getName()}" class="row-pointer"></td>
+                    <td th:text="${subject.getEctsValue()}" class="row-pointer"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
             <form>
                 <td><a th:href="${'/courses/edit/' + course.getId()}" class="btn btn-primary">Izmjeni</a></td>
                 <td><a th:href="${'/courses/delete/' + course.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
