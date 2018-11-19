@@ -18,22 +18,24 @@ import java.util.stream.Stream;
 public class Mobility extends AbstractErasmusEntity {
 
     @OneToOne(targetEntity = AppUser.class)
-    AppUser student;
+    private AppUser student;
 
     @OneToOne(targetEntity = Institution.class)
-    Institution institution;
+    private Institution institution;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDate mobilityStart;
+    private LocalDate mobilityStart;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDate mobilityEnd;
+    private LocalDate mobilityEnd;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    List<Approval> approvals;
+    private List<Approval> approvals;
 
     @OneToOne(targetEntity = MobilityStatus.class)
-    MobilityStatus mobilityStatus;
+    private MobilityStatus mobilityStatus;
+
+    private Integer points;
 
     //Getters and setters
 
@@ -83,6 +85,14 @@ public class Mobility extends AbstractErasmusEntity {
 
     public void setMobilityStatus(MobilityStatus mobilityStatus) {
         this.mobilityStatus = mobilityStatus;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
     public boolean isValid() {

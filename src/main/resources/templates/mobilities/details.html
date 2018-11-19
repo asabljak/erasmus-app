@@ -17,6 +17,7 @@
         <div class="row details-text" th:if="${mobility.getInstitution() != null}"><span><b>Institucija: </b></span><span th:text="${mobility.getInstitution().getCode() + ' - ' + mobility.getInstitution().getName()}"></span></div>
         <div class="row details-text"><span><b>Početak mobilnosti: </b></span><span th:text="${#temporals.format(mobility.getMobilityStart(), 'dd.MM.yyyy.')}"></span></div>
         <div class="row details-text"><span><b>Završetak mobilnosti: </b></span><span th:text="${#temporals.format(mobility.getMobilityEnd(), 'dd.MM.yyyy.')}"></span></div> <!--TODO uvjetno pirkazivanje datuma ovisno o fazi-->
+        <div class="row details-text"><span><b>Broj bodova: </b></span><span th:text="${mobility.getPoints()}"></span></div>
         <br>
         <div class="row details-text"><span><b>Odobrenja: </b></span></div>
         <br>

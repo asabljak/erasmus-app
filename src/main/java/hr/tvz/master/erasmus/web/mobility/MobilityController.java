@@ -160,14 +160,16 @@ public class MobilityController {
         Mobility oldMobility = mobilityRepository.getOne(newMobility.getId());
         oldMobility.setInstitution(newMobility.getInstitution());
         oldMobility.setMobilityStart(newMobility.getMobilityStart());
+        oldMobility.setMobilityEnd(newMobility.getMobilityEnd());
         oldMobility.setMobilityStatus(newMobility.getMobilityStatus());
+        oldMobility.setPoints(newMobility.getPoints());
         mobilityRepository.save(oldMobility);
 
         return "redirect:/mobilities/details/" + oldMobility.getId();
     }
 
     @GetMapping(path = "/mobilities/delete/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
+    public String delete(@PathVariable(name = "id") Long id) {
         mobilityRepository.deleteById(id);
         return "redirect:/mobilities";
     }
