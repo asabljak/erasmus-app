@@ -16,6 +16,11 @@ public class ApprovalType extends AbstractErasmusEntity {
     public static final Long DOCUMENTATION_BEFORE_DELIVERED_UNSUCCESSFULLY = new Long(6);
     public static final Long DOCUMENTATION_AFTER_DELIVERED_SUCCESSFULLY = new Long(7);
     public static final Long DOCUMENTATION_AFTER_DELIVERED_UNSUCCESSFULLY = new Long(8);
+    public static final Long GRANT = new Long(9);
+    public static final Long SCOLARSHIP_BEFORE = new Long(10);
+    public static final Long SCHOLARSHIP_AFTER = new Long(11);
+    public static final Long SOCIAL_SCHOLARSHIP = new Long(12);
+
 
     private String name;
     private String description;

@@ -15,7 +15,7 @@
         <div th:if="${appUser.getSurname() != null && appUser.getSurname().length() > 0}" class ="row details-text"><span><b>Prezime: </b></span><span th:text="${appUser.getSurname()}"></span></div>
         <div th:if="${appUser.getJmbag() != null && appUser.getJmbag().length() > 0}" class ="row details-text"><span><b>Jmbag: </b></span><span th:text="${appUser.getJmbag()}"></span></div>
         <div th:if="${appUser.getEmail() != null && appUser.getEmail().length() > 0}" class ="row details-text"><span><b>Email: </b></span><span th:text="${appUser.getEmail()}"></span></div>
-        <div th:if="${appUser.getBirthday() != null}" class ="row details-text"><span><b>Datum rođenja: </b></span><span th:text="${#dates.format(appUser.getBirthday(), 'dd.MM.yyyy.')}"></span></div>
+        <div th:if="${appUser.getBirthday() != null}" class ="row details-text"><span><b>Datum rođenja: </b></span><span th:text="${#temporals.format(appUser.getBirthday(), 'dd.MM.yyyy.')}"></span></div>
         <div th:if="${appUser.getPhone() != null && appUser.getPhone().length() > 0}" class ="row details-text"><span><b>Broj mobitela: </b></span><span th:text="${appUser.getPhone()}"></span></div>
         <div th:if="${appUser.getHomeCourse() != null}" class ="row details-text"><span><b>Smjer: </b></span><span th:text="${appUser.getHomeCourse().getName()}"></span></div>
         <div th:if="${appUser.getYearOfStudy() != null}" class ="row details-text"><span><b>Godina studija: </b></span><span th:text="${appUser.getYearOfStudy()}"></span></div>

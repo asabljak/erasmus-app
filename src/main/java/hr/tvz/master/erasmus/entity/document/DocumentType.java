@@ -12,16 +12,18 @@ import java.util.stream.Stream;
 
 @Entity
 public class DocumentType extends AbstractErasmusEntity {
-    public static final Long NAST_PLAN = new Long(1);
+    public static final Long MOTIVACIJSKO_PISMO = new Long(1);
     public static final Long PRIJAVA = new Long(2);
     public static final Long DOMOVNICA = new Long(3);
     public static final Long CV = new Long(4);
-    public static final Long LA = new Long(5);
-    public static final Long OSOBNA = new Long(6);
-    public static final Long ZIRO = new Long(7);
-    public static final Long RACUN = new Long(8);
-    public static final Long SLIKA = new Long(9);
-    public static final Long OSTALO = new Long(10);
+    public static final Long STATUS_STUDENTA = new Long(5);
+    public static final Long PRIJEPIS_OCJENA = new Long(6);
+    public static final Long LA = new Long(7);
+    public static final Long OSOBNA = new Long(8);
+    public static final Long ZIRO = new Long(9);
+    public static final Long RACUN = new Long(10);
+    public static final Long SLIKA = new Long(11);
+    public static final Long OSTALO = new Long(12);
 
     private String code;
     private String name;

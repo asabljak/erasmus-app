@@ -5,7 +5,7 @@ import hr.tvz.master.erasmus.entity.institution.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -19,7 +19,7 @@ public class AppUser extends AbstractErasmusEntity {
     private String jmbag;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private LocalDate birthday;
 
     private String phone;
 
@@ -92,11 +92,11 @@ public class AppUser extends AbstractErasmusEntity {
         this.jmbag = jmbag;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

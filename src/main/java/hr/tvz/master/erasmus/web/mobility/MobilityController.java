@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 public class MobilityController {
@@ -93,7 +92,7 @@ public class MobilityController {
     @PostMapping("/mobilities/create/{institutionId}")
     public String handleVisitorRequest(@PathVariable(name = "institutionId") Long id,
                                        @RequestParam("prijavniObrazac") MultipartFile prijavniObrazac,
-                                       @RequestParam("nastavniPlan") MultipartFile nastavniPlan,
+                                       @RequestParam("motivacijskoPismo") MultipartFile motivacijskoPismo,
                                        @RequestParam("cv") MultipartFile cv,
                                        @RequestParam("domovnica") MultipartFile domovnica) {
 
@@ -104,19 +103,19 @@ public class MobilityController {
         Institution institution = institutionRepository.getOne(id);
 
         Document docPrijavniObrazac = null;
-        Document docNastavniPlan = null;
+        Document docMotivacijskoPismo = null;
         Document docCv = null;
         Document docDomovnica = null;
         try {
             docPrijavniObrazac = this.createDocument(appUser, prijavniObrazac, documentTypeRepository.getOne(DocumentType.PRIJAVA));
-            docNastavniPlan = this.createDocument(appUser, nastavniPlan, documentTypeRepository.getOne(DocumentType.NAST_PLAN));
+            docMotivacijskoPismo = this.createDocument(appUser, motivacijskoPismo, documentTypeRepository.getOne(DocumentType.MOTIVACIJSKO_PISMO));
             docCv = this.createDocument(appUser, cv, documentTypeRepository.getOne(DocumentType.CV));
             docDomovnica = this.createDocument(appUser, domovnica, documentTypeRepository.getOne(DocumentType.DOMOVNICA));
         } catch (IOException e) {
             e.printStackTrace();
             //TODO ispis u log
         }
-        documentRepository.saveAll(Stream.of(docPrijavniObrazac, docNastavniPlan, docCv,docDomovnica).collect(Collectors.toList()));
+        documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv,docDomovnica));
 
         Mobility mobility = new Mobility();
         mobility.setStudent(appUser);
