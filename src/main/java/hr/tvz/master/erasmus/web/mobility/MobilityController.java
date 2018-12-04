@@ -94,7 +94,9 @@ public class MobilityController {
                                        @RequestParam("prijavniObrazac") MultipartFile prijavniObrazac,
                                        @RequestParam("motivacijskoPismo") MultipartFile motivacijskoPismo,
                                        @RequestParam("cv") MultipartFile cv,
-                                       @RequestParam("domovnica") MultipartFile domovnica) {
+                                       @RequestParam("domovnica") MultipartFile domovnica,
+                                       @RequestParam("statusStudenta") MultipartFile statusStudenta,
+                                       @RequestParam("prijepisOcjena") MultipartFile prijepisOcjena) {
 
 //        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); zasto je id null?
         String email = ((AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
@@ -106,16 +108,21 @@ public class MobilityController {
         Document docMotivacijskoPismo = null;
         Document docCv = null;
         Document docDomovnica = null;
+        Document docStatusStudenta = null;
+        Document docPrijepisOcjena = null;
+
         try {
             docPrijavniObrazac = this.createDocument(appUser, prijavniObrazac, documentTypeRepository.getOne(DocumentType.PRIJAVA));
             docMotivacijskoPismo = this.createDocument(appUser, motivacijskoPismo, documentTypeRepository.getOne(DocumentType.MOTIVACIJSKO_PISMO));
             docCv = this.createDocument(appUser, cv, documentTypeRepository.getOne(DocumentType.CV));
             docDomovnica = this.createDocument(appUser, domovnica, documentTypeRepository.getOne(DocumentType.DOMOVNICA));
+            docStatusStudenta = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.STATUS_STUDENTA));
+            docPrijepisOcjena = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.PRIJEPIS_OCJENA));
         } catch (IOException e) {
             e.printStackTrace();
             //TODO ispis u log
         }
-        documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv,docDomovnica));
+        documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
 
         Mobility mobility = new Mobility();
         mobility.setStudent(appUser);
@@ -129,7 +136,7 @@ public class MobilityController {
     private Document createDocument(AppUser appUser, MultipartFile multipartFile, DocumentType documentType) throws IOException {
         Document document = new Document();
         document.setName(multipartFile.getOriginalFilename());
-        document.setDescription(documentType.getName() + " za studenta" + appUser.getName() + " " + appUser.getSurname());
+        document.setDescription(documentType.getName() + " za studenta " + appUser.getName() + " " + appUser.getSurname());
         document.setFileName(appUser.getJmbag() + "_" + multipartFile.getOriginalFilename());
         document.setFileContent(multipartFile.getBytes());
         document.setFileContentType(multipartFile.getContentType());

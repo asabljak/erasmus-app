@@ -37,7 +37,6 @@ public class SubjectController {
 
     @GetMapping(path = "subjects/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
-        Subject s = subjectRepository.getOne(id);
         model.addAttribute("subject", subjectRepository.getOne(id));
         return "subjects/details";
     }
