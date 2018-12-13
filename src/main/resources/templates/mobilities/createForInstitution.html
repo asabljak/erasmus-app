@@ -11,7 +11,7 @@
 
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
 
-    <h2>Kreiranje novoe mobilnosti</h2>
+    <h2>Prijava mobilnosti</h2>
     <br>
     <form class="form-horizontal" action="#" th:action="@{/mobilities/create/} + ${institution.getId()}" enctype="multipart/form-data" method="post">
         <div class="row details-text"><span><b>Institucija: </b></span><span th:text="${institution.getName()}"></span></div>
@@ -55,7 +55,7 @@
         <br>
         <div class="form-group">
             <div class="row">
-                <button type="submit" class="btn btn-primary">Spremi</button>
+                <button type="submit" class="btn btn-primary">Prijava</button>
                 <a th:href="${'/mobilities/'}" class="btn btn-default">Otkaži</a>
             </div>
         </div>

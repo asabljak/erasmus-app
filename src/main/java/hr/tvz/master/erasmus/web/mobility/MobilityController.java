@@ -9,6 +9,8 @@ import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import java.util.Optional;
 
 @Controller
 public class MobilityController {
+    Logger logger = LoggerFactory.getLogger(MobilityController.class);
 
     @Autowired
     MobilityRepository mobilityRepository;
@@ -119,8 +122,7 @@ public class MobilityController {
             docStatusStudenta = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.STATUS_STUDENTA));
             docPrijepisOcjena = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.PRIJEPIS_OCJENA));
         } catch (IOException e) {
-            e.printStackTrace();
-            //TODO ispis u log
+            logger.error("Document create error", e);
         }
         documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
 
