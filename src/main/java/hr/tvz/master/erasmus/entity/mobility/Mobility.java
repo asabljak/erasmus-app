@@ -6,8 +6,11 @@ import hr.tvz.master.erasmus.entity.user.AppUser;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -26,8 +29,8 @@ public class Mobility extends AbstractErasmusEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate mobilityEnd;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    private List<Approval> approvals;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Approval> approvals;
 
     @OneToOne(targetEntity = MobilityStatus.class)
     private MobilityStatus mobilityStatus;
@@ -68,13 +71,13 @@ public class Mobility extends AbstractErasmusEntity {
         this.mobilityEnd = mobilityEnd;
     }
 
-//    public List<Approval> getApprovals() {
-//        return approvals;
-//    }
-//
-//    public void setApprovals(List<Approval> approvals) {
-//        this.approvals = approvals;
-//    }
+    public List<Approval> getApprovals() {
+        return approvals;
+    }
+
+    public void setApprovals(List<Approval> approvals) {
+        this.approvals = approvals;
+    }
 
     public MobilityStatus getMobilityStatus() {
         return mobilityStatus;

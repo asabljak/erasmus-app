@@ -62,7 +62,8 @@
                 <select id="multi-select" th:field="*{documents}" size="10" multiple="multiple" required>
                     <option th:each="document : ${documentList}"
                             th:value="${{document}}"
-                            th:text="${document.getName() + ' (' + document.getDocumentType().getCode() + ')'}">
+                            th:text="${document.getName() + ' (' + document.getDocumentType() + ')'}">
+<!--                        th:text="${document.getName() + ' (' + document.getDocumentType().getCode() + ')'}">-->
                     </option>
                 </select>
             </div>

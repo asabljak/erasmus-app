@@ -15,7 +15,7 @@ public class Document extends AbstractErasmusEntity {
     private String description;
 
     @OneToOne(targetEntity = AppUser.class)
-    AppUser owner;
+    private AppUser owner;
 
     @OneToOne(targetEntity = DocumentType.class)
     private DocumentType documentType;
@@ -27,6 +27,7 @@ public class Document extends AbstractErasmusEntity {
 
     private String fileContentType;
 
+    //TODO treba li ovo?
     private LocalDateTime seen;
 
     //Getters and setters

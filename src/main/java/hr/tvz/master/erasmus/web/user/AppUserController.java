@@ -1,14 +1,11 @@
 package hr.tvz.master.erasmus.web.user;
 
 import hr.tvz.master.erasmus.entity.user.AppUser;
-import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.AppUserRepository;
 import hr.tvz.master.erasmus.repository.FieldRepository;
 import hr.tvz.master.erasmus.repository.RoleRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +30,6 @@ public class AppUserController {
 
     @GetMapping("/appUsers")
     public String getAll(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-
         model.addAttribute("appUsers", appUserRepository.findAll());
         model.addAttribute("roles", roleRepository.findAll());
         return "appUsers/list";
@@ -43,9 +37,7 @@ public class AppUserController {
 
     @GetMapping("/appUsers/byRole/{id}")
     public String getAllByRole(Model model, @PathVariable(value = "id") Long id) {
-        Role role = roleRepository.getOne(id);
-
-        List<AppUser> list = appUserRepository.findAllByRoles(role);
+        List<AppUser> list = appUserRepository.findAllByRoles_Id(id);
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("appUsers", list);
 

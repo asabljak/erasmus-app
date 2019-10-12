@@ -38,16 +38,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                //.loginPage("/login")
                 .permitAll()
                 .and()
                 .logout();
+
     }
 
     private PasswordEncoder getPasswordEncoder() {
         return new PasswordEncoder() {
             @Override
             public String encode(CharSequence charSequence) {
+                //todo ovdje hashirati
                 return charSequence.toString();
             }
 

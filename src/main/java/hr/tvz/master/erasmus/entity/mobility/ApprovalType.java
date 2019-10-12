@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 @Entity
 public class ApprovalType extends AbstractErasmusEntity {
+    public static final Long APPLIED = new Long(0);
     public static final Long APPLY_APPROVED = new Long(1);
     public static final Long APPLY_REJECTED = new Long(2);
     public static final Long SUBJECTS_APPROVED = new Long(3);

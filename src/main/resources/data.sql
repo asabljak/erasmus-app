@@ -6,6 +6,7 @@ insert into mobility_status (id, name, description, created, version) values (5,
 insert into mobility_status (id, name, description, created, version) values (6,'Cancelled', 'Mobilnost prekinuta prije predviđenog završetka', now(), 1);
 insert into mobility_status (id, name, description, created, version) values (7,'Done', 'Mobilnost je završena', now(), 1);
 
+insert into approval_type (id, name, description, created, version) values (0,'Appllied', 'Student se prijavio za mobilnost', now(), 1);
 insert into approval_type (id, name, description, created, version) values (1,'Apply approved', 'Prijava za mobilnost odobrena', now(), 1);
 insert into approval_type (id, name, description, created, version) values (2,'Apply rejected', 'Prijava za mobilnost odbijena', now(), 1);
 insert into approval_type (id, name, description, created, version) values (3,'Subjects approved', 'Predmeti koje student želi upisati na mobilnosti su prihvaćeni', now(), 1);

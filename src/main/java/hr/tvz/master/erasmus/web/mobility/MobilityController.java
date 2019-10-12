@@ -4,10 +4,10 @@ import hr.tvz.master.erasmus.entity.document.Document;
 import hr.tvz.master.erasmus.entity.document.DocumentType;
 import hr.tvz.master.erasmus.entity.institution.Institution;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
-import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
+import hr.tvz.master.erasmus.service.MobilityService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,13 +43,13 @@ public class MobilityController {
     ApprovalRepository approvalRepository;
 
     @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
     DocumentTypeRepository documentTypeRepository;
 
     @Autowired
     DocumentRepository documentRepository;
+
+    @Autowired
+    MobilityService mobilityService;
 
     @GetMapping("/mobilities")
     public String getAllActive(Model model) {
@@ -63,18 +63,19 @@ public class MobilityController {
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         Mobility mobility = mobilityRepository.getOne(id);
         model.addAttribute("mobility", mobility);
-        model.addAttribute("approvalList", approvalRepository.findByMobility_Id(id));
+       // model.addAttribute("approvalList", approvalRepository.findByMobility_Id(id));
 
         return "mobilities/details";
     }
 
     @GetMapping("/mobilities/create")
     public String getEmpty(Model model){
-        Role erasmusStudent = roleRepository.getOne(Role.ROLE_ERASMUS_STUDENT);
+//        Role erasmusStudent = roleRepository.getOne(Role.ROLE_ERASMUS_STUDENT);
 
         model.addAttribute("mobility", new Mobility());
         model.addAttribute("mobilityStatusList", mobilityStatusRepository.findAll());
-        model.addAttribute("studentList", appUserRepository.findAllByRoles(erasmusStudent));
+//        model.addAttribute("studentList", appUserRepository.findAllByRoles(erasmusStudent));
+        model.addAttribute("studentList", appUserRepository.findAllByRoles_Id(Role.ROLE_ERASMUS_STUDENT));
         model.addAttribute("institutionList", institutionRepository.findAll());
         
         return "mobilities/create";
@@ -122,15 +123,16 @@ public class MobilityController {
             docStatusStudenta = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.STATUS_STUDENTA));
             docPrijepisOcjena = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.PRIJEPIS_OCJENA));
         } catch (IOException e) {
-            logger.error("Document create error", e);
+            logger.error("Document creation error", e);
         }
-        documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
+//        documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
 
         Mobility mobility = new Mobility();
         mobility.setStudent(appUser);
         mobility.setInstitution(institution);
-        mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
-        mobilityRepository.save(mobility);
+//        mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
+        mobilityService.applyMobility(mobility,
+                Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
 
         return "redirect:/";
     }

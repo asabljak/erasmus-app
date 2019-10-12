@@ -24,7 +24,8 @@ public class ErasmusUserDetailsService implements UserDetailsService {
 
         optionalUsers
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        return optionalUsers
-                .map(ErasmusUserDetails::new).get();
+        UserDetails userDetails= optionalUsers.map(ErasmusUserDetails::new).get();
+
+        return userDetails;
     }
 }
