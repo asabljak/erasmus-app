@@ -29,7 +29,7 @@ public class ErasmusUserDetails extends AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getName();
+        return super.getEmail();
     }
 
     @Override

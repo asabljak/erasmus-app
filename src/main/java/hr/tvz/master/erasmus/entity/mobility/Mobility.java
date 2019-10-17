@@ -33,7 +33,7 @@ public class Mobility extends AbstractErasmusEntity {
     private List<Approval> approvals;
 
     @OneToOne(targetEntity = MobilityStatus.class)
-    private MobilityStatus mobilityStatus;
+    private MobilityStatus mobilityStatus; //TODO treba li ovo uopće??
 
     private Integer points;
 

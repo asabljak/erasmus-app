@@ -132,14 +132,14 @@
 		</div>
 	</nav>
 
-		<table id="notifications" class="table table-striped table-hover">
+		<table th:if="${notifications != null && notifications.size() > 0} " id="notifications" class="table table-striped table-hover">
 			<thead>
 			<tr>
 				<td>Notifikacije</td>
 			</tr>
 			</thead>
 			<tbody>
-			<tr th:each="n : ${notifications}" th:onclick="'javascript:rowClicked(\'/approvals/details/' + ${n.getId()} + '\');'">
+			<tr th:each="n : ${notifications}" th:onclick="'javascript:rowClicked(\'/notifications/details/' + ${n.getId()} + '\');'">
 				<td th:text="${n.getMessage()}" class="row-pointer"></td>
 			</tr>
 			</tbody>

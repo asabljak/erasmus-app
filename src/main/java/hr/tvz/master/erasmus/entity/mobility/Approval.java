@@ -63,11 +63,11 @@ public class Approval extends AbstractErasmusEntity {
 //        this.mobility = mobility;
 //    }
 
-    public boolean isSuccessful() {
+    public Boolean isSuccessful() {
         return isSuccessful;
     }
 
-    public void setSuccessful(boolean successful) {
+    public void setSuccessful(Boolean successful) {
         isSuccessful = successful;
     }
 

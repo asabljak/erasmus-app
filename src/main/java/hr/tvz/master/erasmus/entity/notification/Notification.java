@@ -29,6 +29,13 @@ public class Notification extends AbstractErasmusEntity {
 
     private LocalDateTime seen;
 
+    @OneToOne(targetEntity = AppUser.class)
+    private AppUser seenBy;
+
+    private boolean actionRequired;
+
+    //Getters and setters
+
     public AppUser getSender() {
         return sender;
     }
@@ -69,9 +76,30 @@ public class Notification extends AbstractErasmusEntity {
         this.seen = seen;
     }
 
+    public AppUser getSeenBy() {
+        return seenBy;
+    }
+
+    public void setSeenBy(AppUser seenBy) {
+        this.seenBy = seenBy;
+    }
+
+    public boolean isActionRequired() {
+        return actionRequired;
+    }
+
+    public void setActionRequired(boolean actionRequired) {
+        this.actionRequired = actionRequired;
+    }
+
     @Override
     protected boolean isValid() {
         return Stream.of(sender, receivers, approval)
                 .noneMatch(Objects::isNull);
+    }
+
+    @Override
+    public String toString() {
+        return this.getMessage();
     }
 }

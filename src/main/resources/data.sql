@@ -6,19 +6,14 @@ insert into mobility_status (id, name, description, created, version) values (5,
 insert into mobility_status (id, name, description, created, version) values (6,'Cancelled', 'Mobilnost prekinuta prije predviđenog završetka', now(), 1);
 insert into mobility_status (id, name, description, created, version) values (7,'Done', 'Mobilnost je završena', now(), 1);
 
-insert into approval_type (id, name, description, created, version) values (0,'Appllied', 'Student se prijavio za mobilnost', now(), 1);
-insert into approval_type (id, name, description, created, version) values (1,'Apply approved', 'Prijava za mobilnost odobrena', now(), 1);
-insert into approval_type (id, name, description, created, version) values (2,'Apply rejected', 'Prijava za mobilnost odbijena', now(), 1);
-insert into approval_type (id, name, description, created, version) values (3,'Subjects approved', 'Predmeti koje student želi upisati na mobilnosti su prihvaćeni', now(), 1);
-insert into approval_type (id, name, description, created, version) values (4,'Subjects rejected', 'Predmeti koje student želi upisati na mobilnosti nisu prihvaćeni', now(), 1);
-insert into approval_type (id, name, description, created, version) values (5,'Documentation before delivered successfully', 'Sva potrebna dokumentacija prije mobilnosti je dostavljena', now(), 1);
--- insert into approval_type (id, name, description, created, version) values (6,'Documentation before delivered unsuccessfully', 'Sva potrebna dokumentacija prije mobilnosti nije uredno dostavljena', now(), 1);
-insert into approval_type (id, name, description, created, version) values (7,'Documentation after delivered successfully', 'Sva porebna dokumentacija nakon mobilnosti je dostavljena', now(), 1);
--- insert into approval_type (id, name, description, created, version) values (8,'Documentation after delivered unsuccessfully', 'Sva porebna dokumentacija nakon mobilnosti nije uredno dostavljena', now(), 1);
-insert into approval_type (id, name, description, created, version) values (9,'Grant', 'Student je dobio odobrenje za odlazak na mobilnost od strane domaće institucije', now(), 1);
-insert into approval_type (id, name, description, created, version) values (10,'Scholarship before', 'Odobren prvi dio stipendije koju student dobiva prije mobilnosti', now(), 1);
-insert into approval_type (id, name, description, created, version) values (11,'Scholarship after', 'Odobren drugi dio stipendije koju student dobiva nakon mobilnosti', now(), 1);
-insert into approval_type (id, name, description, created, version) values (12,'Social scholarship', 'Odobrena dodatna stipendija za studente slabijeg socioekonomskog statusa', now(), 1);
+insert into approval_type (id, name, description, created, version) values (1,'Appllied', 'Korisnik se prijavio za mobilnost', now(), 1);
+insert into approval_type (id, name, description, created, version) values (2,'Subjects', 'Predmeti koje student želi upisati na mobilnosti', now(), 1);
+insert into approval_type (id, name, description, created, version) values (3,'Documentation before delivered', 'Sva potrebna dokumentacija prije mobilnosti je dostavljena', now(), 1);
+insert into approval_type (id, name, description, created, version) values (4,'Documentation after delivered', 'Sva porebna dokumentacija nakon mobilnosti je dostavljena', now(), 1);
+insert into approval_type (id, name, description, created, version) values (5,'Grant', 'Korisnik je dobio odobrenje za odlazak na mobilnost od strane domaće institucije', now(), 1);
+insert into approval_type (id, name, description, created, version) values (6,'Scholarship before', 'Odobren prvi dio stipendije koju korisnik dobiva prije mobilnosti', now(), 1);
+insert into approval_type (id, name, description, created, version) values (7,'Scholarship after', 'Odobren drugi dio stipendije koju korisnik dobiva nakon mobilnosti', now(), 1);
+insert into approval_type (id, name, description, created, version) values (8,'Social scholarship', 'Odobrena dodatna stipendija za studente slabijeg socioekonomskog statusa', now(), 1);
 
 insert into semester_type(id, created, version, code, name) values (1, now(), 1, 'SUMMER', 'Ljetni');
 insert into semester_type(id, created, version, code, name) values (2, now(), 1, 'WINTER', 'Zimski');

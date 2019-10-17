@@ -19,9 +19,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHomepage(Model model) {
-        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //FIXME user nema popunjen id pa ga ni ne pronalazi u receiverima
+        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Notification> notifications = notificationService.getUnreadNotificationsForUser(appUser);
         model.addAttribute("notifications", notifications);
+//        model.addAttribute("reason", "");
+//        model.addAttribute("isSucessfull", new Boolean(null));
         return "template";
     }
 

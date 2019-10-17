@@ -72,6 +72,7 @@ public class MobilityService {
         List<AppUser> coords = appUserRepository.findAllByRoles_Id(Role.ROLE_COORDINATOR);
         notification.setReceivers(coords);
         notification.setMessage("Korisnik " + mobility.getStudent() + " se prijavio za mobilnost.");
+        notification.setActionRequired(true);
         notificationRepository.save(notification);
     }
 

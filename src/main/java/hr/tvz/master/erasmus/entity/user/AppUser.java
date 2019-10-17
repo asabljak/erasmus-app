@@ -1,23 +1,18 @@
 package hr.tvz.master.erasmus.entity.user;
 
+import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 import hr.tvz.master.erasmus.entity.institution.Field;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
 @Entity
-public class AppUser {
-    @Id
-    @GeneratedValue
-    @Column
-    protected Long id;
+public class AppUser extends AbstractErasmusEntity {
 
     private String name;
     private String surname;
@@ -41,22 +36,11 @@ public class AppUser {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "appUser.id"), inverseJoinColumns = @JoinColumn(name = "role.id"))
     private Set<Role> roles;
 
-    @Column
-    @CreationTimestamp
-    protected LocalDateTime created;
-
-    @Column
-    @UpdateTimestamp
-    protected LocalDateTime updated;
-
-    @Column
-    @Version
-    protected Integer version;
-
     public AppUser() {
     }
 
     public AppUser(AppUser appUser) {
+        this.id = appUser.getId();
         this.name = appUser.getName();
         this.surname = appUser.getSurname();
         this.email = appUser.getEmail();
@@ -68,6 +52,9 @@ public class AppUser {
         this.yearOfStudy = appUser.getYearOfStudy();
         this.enabled = appUser.isEnabled();
         this.roles = appUser.getRoles();
+        this.created = appUser.getCreated();
+        this.updated = appUser.getUpdated();
+        this.version = appUser.getVersion();
     }
 
 
@@ -159,42 +146,6 @@ public class AppUser {
         this.roles = roles;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public boolean isValid() {
         return Stream.of(name, surname, email, roles)
                 .noneMatch(Objects::isNull);
@@ -203,10 +154,32 @@ public class AppUser {
     @Override
     public String toString() {
         StringBuilder appUserString =  new StringBuilder(this.name + " " + this.surname);
-        if (this.jmbag != null) {
-            appUserString.append(" (" + this.jmbag + ")");
+        if (!StringUtils.isEmpty(this.jmbag)) {
+            appUserString.append(" (").append(this.jmbag).append(")");
         }
 
         return new String(appUserString);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AppUser)) return false;
+        AppUser appUser = (AppUser) o;
+        return Objects.equals(getName(), appUser.getName()) &&
+                Objects.equals(getSurname(), appUser.getSurname()) &&
+                Objects.equals(getEmail(), appUser.getEmail()) &&
+                Objects.equals(getPassword(), appUser.getPassword()) &&
+                Objects.equals(getJmbag(), appUser.getJmbag()) &&
+                Objects.equals(getBirthday(), appUser.getBirthday()) &&
+                Objects.equals(getPhone(), appUser.getPhone()) &&
+                Objects.equals(getYearOfStudy(), appUser.getYearOfStudy()) &&
+                Objects.equals(isEnabled(), appUser.isEnabled());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getSurname(), getEmail(), getPassword(), getJmbag(), getBirthday(), getPhone(),
+                getHomeCourse(), getYearOfStudy(), isEnabled(), getRoles());
     }
 }
