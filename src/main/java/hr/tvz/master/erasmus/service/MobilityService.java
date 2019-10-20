@@ -82,6 +82,11 @@ public class MobilityService {
             approvals = new ArrayList<>();
         }
         approvals.add(approval);
+
+        //ako je aproval applied true, postavi mobility u created
+        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
+            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
+        }
         mobility.setApprovals(approvals);
         return mobility;
     }

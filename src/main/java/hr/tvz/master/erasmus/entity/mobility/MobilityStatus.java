@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 @Entity
 public class MobilityStatus extends AbstractErasmusEntity {
     public static final Long REQUESTED = new Long(1);
-    public static final Long APPROVED = new Long(2);
+    public static final Long CREATED = new Long(2);
     public static final Long REJECTED = new Long(3);
     public static final Long HOST_REJECTED = new Long(4);
     public static final Long ACTIVE = new Long(5);

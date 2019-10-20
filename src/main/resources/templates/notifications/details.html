@@ -8,11 +8,17 @@
 
 <script>
     function submitApproved(state) {
-        console.log("Postavljam hidden");
         $('#isSuccessfulHidden').val(state);
         console.log($('#isSuccessfulHidden').val());
         $('#notificationForm').submit();
     }
+
+    jQuery(document).ready(function($) {
+        $("#rateYo").rateYo({
+            rating: 3.2,
+            rtl: true
+        });
+    });
 </script>
 
 <div th:replace="template :: navigation"></div>
