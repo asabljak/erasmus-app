@@ -7,6 +7,7 @@ import hr.tvz.master.erasmus.repository.InstitutionRepository;
 import hr.tvz.master.erasmus.repository.SubjectRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class CourseController {
     @Autowired
     SubjectRepository subjectRepository;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping("/courses")
     public String getAll(Model model) {
         List<Course> list = courseRepository.findAll();
@@ -39,6 +41,7 @@ public class CourseController {
         return "courses/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "courses/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("course", courseRepository.getOne(id));
@@ -46,6 +49,7 @@ public class CourseController {
         return "courses/details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/courses/create")
     public String getEmpty(Model model){
         model.addAttribute("course", new Course());
@@ -55,12 +59,14 @@ public class CourseController {
         return "courses/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/courses/create")
     public String create(@ModelAttribute Course course) {
         Course createdCourse = courseRepository.save(course);
         return "redirect:/courses/details/" + createdCourse.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/courses/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -77,6 +83,7 @@ public class CourseController {
         return "courses/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/courses/edit")
     public String edit(@ModelAttribute Course newCourse) {
         if(!newCourse.isValid()) {
@@ -93,8 +100,9 @@ public class CourseController {
         return "redirect:/courses/details/" + oldCourse.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/courses/delete/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
+    public String deleteCourse(@PathVariable(name = "id") Long id) {
         courseRepository.deleteById(id);
         return "redirect:/courses";
     }

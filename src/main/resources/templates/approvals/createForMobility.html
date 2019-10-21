@@ -40,7 +40,7 @@
         <div class="form-group ">
             <label class="col-sm-2 control-label">Tip odobrenja:</label>
             <div class="col-sm-5">
-                <select class="form-control dropdown-searchable"  th:field="*{approvalType}" placeholder="Odaberite tip odobrenja..." onchange="setRequired(this)" required>
+                <select class="form-control dropdown-searchable"  th:field="*{approvalType}" placeholder="Odaberite tip odobrenja..." required>
                     <option th:each="approvalType : ${approvalTypeList}"
                             th:value="${{approvalType}}"
                             th:text="${approvalType.getName()}">
@@ -51,7 +51,7 @@
         <div class="form-group ">
             <label class="col-sm-2 control-label">Dokumenti:</label>
             <div class="col-sm-5">
-                <select id="multi-select" th:field="*{documents}" size="10" multiple="multiple" required>
+                <select id="multi-select" th:field="*{documents}" size="10" multiple="multiple" >
                     <option th:each="document : ${documentList}"
                             th:value="${{document}}"
                             th:text="${document.getName() + ' (' + document.getDocumentType().getCode() + ')'}">

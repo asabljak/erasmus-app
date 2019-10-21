@@ -4,6 +4,7 @@ import hr.tvz.master.erasmus.entity.mobility.ApprovalType;
 import hr.tvz.master.erasmus.repository.ApprovalTypeRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class ApprovalTypeController {
     @Autowired
     ApprovalTypeRepository approvalTypeRepository;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping("/approvalTypes")
     public String getAll(Model model) {
         List<ApprovalType> list = approvalTypeRepository.findAll();
@@ -27,6 +29,7 @@ public class ApprovalTypeController {
         return "approvalTypes/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "approvalTypes/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("approvalType", approvalTypeRepository.getOne(id));
@@ -45,6 +48,7 @@ public class ApprovalTypeController {
 //        return "redirect:/approvalTypes/details/" + createdApprovalType.getId();
 //    }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/approvalTypes/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -59,6 +63,7 @@ public class ApprovalTypeController {
         return "approvalTypes/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/approvalTypes/edit")
     public String edit(@ModelAttribute ApprovalType newApprovalType) {
         if(!newApprovalType.isValid()) {

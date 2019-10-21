@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="template :: htmlHeader">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
@@ -31,7 +31,7 @@
         </table>
     </form>
     <br><br>
-    <a th:href="${'/mobilities/create/'}" class="btn btn-primary">Kreiraj novo</a>
+    <a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR')" th:href="${'/mobilities/create/'}" class="btn btn-primary">Kreiraj novo</a>
 </div>
 
 <div th:replace="template :: footer"></div>

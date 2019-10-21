@@ -5,6 +5,7 @@ import hr.tvz.master.erasmus.repository.ApprovalTypeRepository;
 import hr.tvz.master.erasmus.repository.DocumentTypeRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class DocumentTypeController {
     @Autowired
     ApprovalTypeRepository approvalTypeRepository;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping("/documentTypes")
     public String getAll(Model model) {
         List<DocumentType> list = documentTypeRepository.findAll();
@@ -31,12 +33,14 @@ public class DocumentTypeController {
         return "documentTypes/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "documentTypes/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("documentType", documentTypeRepository.getOne(id));
         return "documentTypes/details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/documentTypes/create")
     public String getEmpty(Model model){
         model.addAttribute("documentType", new DocumentType());
@@ -44,12 +48,14 @@ public class DocumentTypeController {
         return "documentTypes/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/documentTypes/create")
     public String create(@ModelAttribute DocumentType documentType) {
         DocumentType createdDocumentType = documentTypeRepository.save(documentType);
         return "redirect:/documentTypes/details/" + createdDocumentType.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/documentTypes/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -65,6 +71,7 @@ public class DocumentTypeController {
         return "documentTypes/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/documentTypes/edit")
     public String edit(@ModelAttribute DocumentType newDocumentType) {
         if(!newDocumentType.isValid()) {
@@ -80,6 +87,7 @@ public class DocumentTypeController {
         return "redirect:/documentTypes/details/" + oldDocumentType.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/documentTypes/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         documentTypeRepository.deleteById(id);

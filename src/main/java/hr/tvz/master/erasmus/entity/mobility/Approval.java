@@ -22,12 +22,12 @@ public class Approval extends AbstractErasmusEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Document> documents;
 
-//    @OneToOne
-//    private Mobility mobility;
+    @OneToOne
+    private Mobility mobility;
 
     private Boolean isSuccessful;
 
-    private String comment;
+    private String comment; //TODO maakni?
 
     //Getters and setters
 
@@ -55,13 +55,13 @@ public class Approval extends AbstractErasmusEntity {
         this.documents = documents;
     }
 
-//    public Mobility getMobility() {
-//        return mobility;
-//    }
-//
-//    public void setMobility(Mobility mobility) {
-//        this.mobility = mobility;
-//    }
+    public Mobility getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(Mobility mobility) {
+        this.mobility = mobility;
+    }
 
     public Boolean isSuccessful() {
         return isSuccessful;

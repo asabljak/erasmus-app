@@ -6,6 +6,7 @@ import hr.tvz.master.erasmus.repository.FieldRepository;
 import hr.tvz.master.erasmus.repository.RoleRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,8 @@ public class AppUserController {
     @Autowired
     RoleRepository roleRepository;
 
-    @GetMapping("/appUsers")
+    @GetMapping("/appUsers") //TODO ifologija tko vidi što
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     public String getAll(Model model) {
         model.addAttribute("appUsers", appUserRepository.findAll());
         model.addAttribute("roles", roleRepository.findAll());
@@ -36,6 +38,7 @@ public class AppUserController {
     }
 
     @GetMapping("/appUsers/byRole/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     public String getAllByRole(Model model, @PathVariable(value = "id") Long id) {
         List<AppUser> list = appUserRepository.findAllByRoles_Id(id);
         model.addAttribute("roles", roleRepository.findAll());
@@ -44,7 +47,7 @@ public class AppUserController {
         return "appUsers/list";
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "appUsers/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("appUser", appUserRepository.getOne(id));
@@ -52,6 +55,7 @@ public class AppUserController {
     }
 
     @GetMapping("/appUsers/create")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     public String getEmpty(Model model){
         //TODO dohvat smjerova samo s TVZ-a
         model.addAttribute("appUser", new AppUser());
@@ -61,6 +65,7 @@ public class AppUserController {
     }
 
     @PostMapping("/appUsers/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public String create(@ModelAttribute AppUser appUser) {
         appUser.setEnabled(true);
         AppUser createdStudent = appUserRepository.save(appUser);
@@ -68,6 +73,7 @@ public class AppUserController {
     }
 
     @GetMapping("/appUsers/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
         Optional<AppUser> appUser = appUserRepository.findById(id);
@@ -84,6 +90,7 @@ public class AppUserController {
     }
 
     @PostMapping("/appUsers/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public String edit(@ModelAttribute AppUser newStudent) {
         if(!newStudent.isValid()) {
             throw new IllegalStateException("Sva polja nisu pravilno postavljena");
@@ -106,6 +113,7 @@ public class AppUserController {
     }
 
     @GetMapping(path = "/appUsers/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         appUserRepository.deleteById(id);
         return "redirect:/appUsers";

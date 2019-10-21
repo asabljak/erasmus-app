@@ -12,6 +12,7 @@ import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +52,7 @@ public class MobilityController {
     @Autowired
     MobilityService mobilityService;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping("/mobilities")
     public String getAllActive(Model model) {
 
@@ -59,6 +61,7 @@ public class MobilityController {
         return "mobilities/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping(path = "mobilities/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         Mobility mobility = mobilityRepository.getOne(id);
@@ -68,6 +71,7 @@ public class MobilityController {
         return "mobilities/details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/mobilities/create")
     public String getEmpty(Model model){
 //        Role erasmusStudent = roleRepository.getOne(Role.ROLE_ERASMUS_STUDENT);
@@ -81,18 +85,21 @@ public class MobilityController {
         return "mobilities/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/mobilities/create")
     public String create(@ModelAttribute Mobility mobility) {
         Mobility createdMobility = mobilityRepository.save(mobility);
         return "redirect:/mobilities/details/" + createdMobility.getId();
     }
 
+    @PreAuthorize("hasRole('VISITOR')")
     @GetMapping("/mobilities/create/{institutionId}")
     public String prepareForVisitorRequest(Model model, @PathVariable(name = "institutionId") Long institutionId) {
         model.addAttribute("institution", institutionRepository.getOne(institutionId));
         return "mobilities/createForInstitution";
     }
 
+    @PreAuthorize("hasRole('VISITOR')")
     @PostMapping("/mobilities/create/{institutionId}")
     public String handleVisitorRequest(@PathVariable(name = "institutionId") Long id,
                                        @RequestParam("prijavniObrazac") MultipartFile prijavniObrazac,
@@ -150,6 +157,7 @@ public class MobilityController {
         return document;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/mobilities/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -160,11 +168,13 @@ public class MobilityController {
         }
 
         model.addAttribute("mobility", mobility.get());
+        model.addAttribute("approvalList", approvalRepository.findByMobility_Id(id));
         model.addAttribute("mobilityStatusList", mobilityStatusRepository.findAll());
 
         return "mobilities/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/mobilities/edit")
     public String edit(@ModelAttribute Mobility newMobility) {
         Mobility oldMobility = mobilityRepository.getOne(newMobility.getId());
@@ -178,6 +188,7 @@ public class MobilityController {
         return "redirect:/mobilities/details/" + oldMobility.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/mobilities/delete/{id}")
     public String delete(@PathVariable(name = "id") Long id) {
         mobilityRepository.deleteById(id);

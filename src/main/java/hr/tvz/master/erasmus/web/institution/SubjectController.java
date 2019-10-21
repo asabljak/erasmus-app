@@ -6,6 +6,7 @@ import hr.tvz.master.erasmus.repository.SemesterTypeRepository;
 import hr.tvz.master.erasmus.repository.SubjectRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,18 +30,21 @@ public class SubjectController {
     SemesterTypeRepository semesterTypeRepository;
 
     @GetMapping("/subjects")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     public String getAll(Model model) {
         List<Subject> list = subjectRepository.findAll();
         model.addAttribute("subjects", list);
         return "subjects/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "subjects/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("subject", subjectRepository.getOne(id));
         return "subjects/details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/subjects/create")
     public String getEmpty(Model model){
         model.addAttribute("subject", new Subject());
@@ -49,12 +53,14 @@ public class SubjectController {
         return "subjects/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/subjects/create")
     public String create(@ModelAttribute Subject subject) {
         Subject createdSubject = subjectRepository.save(subject);
         return "redirect:/subjects/details/" + createdSubject.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/subjects/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -71,6 +77,7 @@ public class SubjectController {
         return "subjects/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/subjects/edit")
     public String edit(@ModelAttribute Subject newSubject) {
         if(!newSubject.isValid()) {
@@ -90,6 +97,7 @@ public class SubjectController {
         return "redirect:/subjects/details/" + oldSubject.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/subjects/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         subjectRepository.deleteById(id);

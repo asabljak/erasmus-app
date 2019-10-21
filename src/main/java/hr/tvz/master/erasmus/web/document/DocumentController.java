@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,13 +30,15 @@ public class DocumentController {
     @Autowired
     DocumentTypeRepository documentTypeRepository;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('\"ERASMUS_STUDENT\"')")
     @GetMapping("/documents")
-    public String getAll(Model model) {
+    public String getAll(Model model) { //TODO ifologija tko vidi koje dokumente
         List<Document> list = documentRepository.findAll();
         model.addAttribute("documents", list);
         return "documents/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('ERASMUS_STUDENT')")
     @GetMapping(path = "documents/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) throws IOException{
         model.addAttribute("document", documentRepository.getOne(id));
@@ -45,6 +48,7 @@ public class DocumentController {
 
     @ResponseBody
     @GetMapping("/documents/download/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('ERASMUS_STUDENT')")
     public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable(value="id") Long id) throws IOException {
         Document document = documentRepository.getOne(id);
         byte[] content = document.getFileContent();
@@ -58,6 +62,7 @@ public class DocumentController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ERASMUS_STUDENT')")
     @GetMapping("/documents/create")
     public String getEmpty(Model model){
         model.addAttribute("document", new Document());
@@ -65,6 +70,7 @@ public class DocumentController {
         return "documents/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ERASMUS_STUDENT')")
     @PostMapping("/documents/create")
     public String create(@ModelAttribute Document document, @RequestParam("file") MultipartFile file) throws IOException {
         AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -77,6 +83,7 @@ public class DocumentController {
         return "redirect:/documents/details/" + createdDocument.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/documents/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -92,6 +99,7 @@ public class DocumentController {
         return "documents/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/documents/edit")
     public String edit(@ModelAttribute Document newDocument) {
         if(!newDocument.isValid()) {
@@ -106,6 +114,7 @@ public class DocumentController {
         return "redirect:/documents/details/" + oldDocument.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/documents/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         documentRepository.deleteById(id);

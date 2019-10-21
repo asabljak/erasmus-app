@@ -1,10 +1,9 @@
-package hr.tvz.master.erasmus.web;
+package hr.tvz.master.erasmus.web.home;
 
 import hr.tvz.master.erasmus.entity.notification.Notification;
-import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.service.NotificationService;
+import hr.tvz.master.erasmus.web.AbstractErasmusController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,18 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class HomeController extends AbstractErasmusController {
 
     @Autowired
     NotificationService notificationService;
 
     @GetMapping("/")
     public String getHomepage(Model model) {
-        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Notification> notifications = notificationService.getUnreadNotificationsForUser(appUser);
+        List<Notification> notifications = notificationService.getUnreadNotificationsForUser(getLoggedInUser());
         model.addAttribute("notifications", notifications);
-//        model.addAttribute("reason", "");
-//        model.addAttribute("isSucessfull", new Boolean(null));
         return "template";
     }
 

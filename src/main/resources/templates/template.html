@@ -92,8 +92,7 @@
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
 							<li class=""><a th:href="${'/'}">Home</a></li>
-							<!--<li><a href="product.html">Product</a></li>-->
-							<li class="has-dropdown">
+							<li sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR')" class="has-dropdown">
 								<a th:href="${'/mobilities/'}">Mobilnosti</a>
 								<ul class="dropdown">
                                     <li><a th:href="${'/approvals/'}">Odobrenja</a></li>
@@ -103,19 +102,19 @@
 							</li>
                             <li class="has-dropdown">
                                 <a th:href="${'/institutions/'}">Institucije</a>
-                                <ul class="dropdown">
+                                <ul sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" class="dropdown">
                                     <li><a th:href="${'/fields/'}">Polja</a></li>
                                     <li><a th:href="${'/courses/'}">Smjerovi</a></li>
                                     <li><a th:href="${'/subjects/'}">Predmeti</a></li>
                                 </ul>
                             </li>
-                            <li class="has-dropdown">
+                            <li sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('ERASMUS_STUDENT')" class="has-dropdown">
                                 <a th:href="${'/documents/'}">Dokumenti</a>
-                                <ul class="dropdown">
+                                <ul sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" class="dropdown">
                                     <li><a th:href="${'/documentTypes/'}">Tipovi dokumenata</a></li>
                                 </ul>
                             </li>
-                            <li><a th:href="${'/appUsers/'}">Korisnici</a></li>
+                            <li><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/appUsers/'}">Korisnici</a></li>
                             <!--<li><a href="about.html">About</a></li>-->
 							<!--<li class="btn-cta"><a th:href="${'/logout/'}"><span>Logout</span></a></li>-->
 							<li class="btn-cta"><span>

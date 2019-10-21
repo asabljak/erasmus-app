@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,9 +58,13 @@ public class MobilityService {
         Approval approval = new Approval();
         approval.setApprovalType(approvalTypeRepository.getOne(ApprovalType.APPLIED));
         approval.setDocuments(documents);
+        approval.setMobility(mobility);
         approvalRepository.save(approval);
 
-        mobility = addApproval(mobility, approval);
+        //ako je aproval applied true, postavi mobility u created
+        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
+            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
+        }
         mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
         mobilityRepository.save(mobility);
 
@@ -76,19 +79,19 @@ public class MobilityService {
         notificationRepository.save(notification);
     }
 
-    public Mobility addApproval(Mobility mobility, Approval approval) {
-        List<Approval> approvals = mobility.getApprovals();
-        if (approvals == null) {
-            approvals = new ArrayList<>();
-        }
-        approvals.add(approval);
-
-        //ako je aproval applied true, postavi mobility u created
-        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
-            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
-        }
-        mobility.setApprovals(approvals);
-        return mobility;
-    }
+//    public Mobility addApproval(Mobility mobility, Approval approval) {
+//        List<Approval> approvals = mobility.getApprovals();
+//        if (approvals == null) {
+//            approvals = new ArrayList<>();
+//        }
+//        approvals.add(approval);
+//
+//        //ako je aproval applied true, postavi mobility u created
+//        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
+//            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
+//        }
+//        mobility.setApprovals(approvals);
+//        return mobility;
+//    }
 
 }

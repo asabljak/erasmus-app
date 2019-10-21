@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:include="template :: htmlHeader">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
@@ -15,9 +15,9 @@
         <div class="row details-text"><span><b>Name: </b></span><span th:text="${field.getName()}"></span></div>
         <br>
         <form>
-            <td><a th:href="${'/fields/edit/' + field.getId()}" class="btn btn-primary">Edit</a></td>
-            <td><a th:href="${'/fields/delete/' + field.getId()}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
-            <td><a th:href="${'/fields/'}" class="btn btn-default">Back to list</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/fields/edit/' + field.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/fields/delete/' + field.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td><a th:href="${'/fields/'}" class="btn btn-default">Povratak</a></td>
         </form>
         <br><br>
     </div>

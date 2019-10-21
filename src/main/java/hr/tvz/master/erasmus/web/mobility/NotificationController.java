@@ -3,18 +3,21 @@ package hr.tvz.master.erasmus.web.mobility;
 import hr.tvz.master.erasmus.entity.notification.Notification;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.service.NotificationService;
+import hr.tvz.master.erasmus.web.AbstractErasmusController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class NotificationController {
+public class NotificationController extends AbstractErasmusController {
     private static final Logger LOGGER = LoggerFactory.getLogger(NotificationController.class);
     private static final String APPROVED = "approved";
     private static final String REJECTED = "rejected";
@@ -26,7 +29,7 @@ public class NotificationController {
     @GetMapping(path = "notifications/details/{id}")
     public String getOne(HttpServletRequest request, Model model, @PathVariable(value = "id") Long id) {
         Notification notification = notificationService.getOne(id);
-        appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        appUser = getLoggedInUser();
 
         if (notification != null && notification.getReceivers().contains(appUser)) {
             model.addAttribute("notification", notification);

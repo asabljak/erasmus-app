@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="template :: htmlHeader">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
@@ -17,7 +17,6 @@
                 <td>Id</td>
                 <td>Ime</td>
                 <td>Opis</td>
-                <!--<th>Delete</th>-->
             </tr>
             </thead>
             <tbody>
@@ -25,13 +24,12 @@
                 <td th:text="${document.getId()}" class="row-pointer"></td>
                 <td th:text="${document.getName()}" class="row-pointer"></td>
                 <td th:text="${document.getDescription()}" class="row-pointer"></td>
-                <!--<td><a th:href="${'/documents/delete/' + document.getId()}" class="btn btn-danger">Delete</a></td>-->
             </tr>
             </tbody>
         </table>
     </form>
     <br><br>
-    <a th:href="${'/documents/create/'}" class="btn btn-primary">Kreiraj novi dokument</a>
+    <a sec:authorize="hasRole('ADMIN') or hasRole('ERASMUS_STUDENT')" th:href="${'/documents/create/'}" class="btn btn-primary">Kreiraj novi dokument</a>
 </div>
 
 <div th:replace="template :: footer"></div>

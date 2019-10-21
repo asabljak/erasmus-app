@@ -4,6 +4,7 @@ import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.repository.MobilityStatusRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class MobilityStatusController {
     @Autowired
     MobilityStatusRepository mobilityStatusRepository;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping("/mobilityStatus")
     public String getAll(Model model) {
         List<MobilityStatus> list = mobilityStatusRepository.findAll();
@@ -27,6 +29,7 @@ public class MobilityStatusController {
         return "mobilityStatus/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping(path = "mobilityStatus/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("mobilityStatus", mobilityStatusRepository.getOne(id));
@@ -45,6 +48,7 @@ public class MobilityStatusController {
 //        return "redirect:/mobilityStatus/details/" + createdMobilityStatus.getId();
 //    }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/mobilityStatus/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -59,6 +63,7 @@ public class MobilityStatusController {
         return "mobilityStatus/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/mobilityStatus/edit")
     public String edit(@ModelAttribute MobilityStatus newMobilityStatus) {
         if(!newMobilityStatus.isValid()) {

@@ -14,6 +14,8 @@ public class Review extends AbstractErasmusEntity {
     private String cons;
     private String opinion;
 
+    //Getters and setters
+
     public Institution getInstitution() {
         return institution;
     }

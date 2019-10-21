@@ -35,7 +35,7 @@
         </table>
     </form>
     <br><br>
-    <a th:href="${'/institutions/create/'}" class="btn btn-primary">Kreiraj novo</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="${'/institutions/create/'}" class="btn btn-primary">Kreiraj novo</a>
 </div>
 
 <div th:replace="template :: footer"></div>

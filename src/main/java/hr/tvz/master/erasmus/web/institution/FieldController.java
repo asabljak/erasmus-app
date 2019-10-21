@@ -4,6 +4,7 @@ import hr.tvz.master.erasmus.entity.institution.Field;
 import hr.tvz.master.erasmus.repository.FieldRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class FieldController {
     @Autowired
     FieldRepository fieldRepository;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping("/fields")
     public String getAll(Model model) {
         List<Field> list = fieldRepository.findAll();
@@ -27,18 +29,21 @@ public class FieldController {
         return "fields/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "fields/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("field", fieldRepository.getOne(id));
         return "fields/details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/fields/create")
     public String getEmpty(Model model){
         model.addAttribute("field", new Field());
         return "fields/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/fields/create")
     public String create(@ModelAttribute Field field) {
         if(!field.isValid()) {
@@ -49,6 +54,7 @@ public class FieldController {
         return "redirect:/fields/details/" + createdField.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/fields/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -63,6 +69,7 @@ public class FieldController {
         return "fields/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/fields/edit")
     public String edit(@ModelAttribute Field newField) {
         if(!newField.isValid()) {
@@ -76,6 +83,7 @@ public class FieldController {
         return "redirect:/fields/details/" + oldField.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/fields/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         fieldRepository.deleteById(id);

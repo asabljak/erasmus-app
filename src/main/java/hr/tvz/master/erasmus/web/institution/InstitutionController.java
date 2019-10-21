@@ -7,6 +7,7 @@ import hr.tvz.master.erasmus.repository.CourseRepository;
 import hr.tvz.master.erasmus.repository.InstitutionRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,18 +45,21 @@ public class InstitutionController {
         return "institutions/details";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/institutions/create")
     public String getEmpty(Model model){
         model.addAttribute("institution", new Institution());
         return "institutions/create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/institutions/create")
     public String create(@ModelAttribute Institution institution) {
         Institution createdInstitution = institutionRepository.save(institution);
         return "redirect:/institutions/details/" + createdInstitution.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/institutions/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -70,6 +74,7 @@ public class InstitutionController {
         return "institutions/edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/institutions/edit")
     public String edit(@ModelAttribute Institution newInstitution) {
         if(!newInstitution.isValid()) {
@@ -94,6 +99,7 @@ public class InstitutionController {
         return "redirect:/institutions/details/" + oldInstitution.getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/institutions/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         institutionRepository.deleteById(id);

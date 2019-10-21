@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="template :: htmlHeader">
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
@@ -20,7 +20,6 @@
                 <td>Ects</td>
                 <td>Jezik</td>
                 <td>Institucija</td>
-                <!--<th>Delete</th>-->
             </tr>
             </thead>
             <tbody>
@@ -31,13 +30,12 @@
                 <td th:text="${subject.getEctsValue()}" class="row-pointer"></td>
                 <td th:text="${subject.getLanguage()}" class="row-pointer"></td>
                 <td th:text="${subject.getCourse().getInstitution().getName()}" class="row-pointer"></td>
-                <!--<td><a th:href="${'/subjects/delete/' + subject.getId()}" class="btn btn-danger">Delete</a></td>-->
             </tr>
             </tbody>
         </table>
     </form>
     <br><br>
-    <a th:href="${'/subjects/create/'}" class="btn btn-primary">Kreiraj novi predmet</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="${'/subjects/create/'}" class="btn btn-primary">Kreiraj novi predmet</a>
 </div>
 
 <div th:replace="template :: footer"></div>
