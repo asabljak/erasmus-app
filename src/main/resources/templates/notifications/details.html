@@ -9,16 +9,8 @@
 <script>
     function submitApproved(state) {
         $('#isSuccessfulHidden').val(state);
-        console.log($('#isSuccessfulHidden').val());
-        $('#notificationForm').submit();
-    }
-
-    jQuery(document).ready(function($) {
-        $("#rateYo").rateYo({
-            rating: 3.2,
-            rtl: true
-        });
-    });
+        $('#notificationResolveForm').submit();
+    };
 </script>
 
 <div th:replace="template :: navigation"></div>
@@ -55,8 +47,9 @@
 
             <br>
             <br>
-            <td><a onclick="submitApproved('approved')" class="btn btn-primary">Odobri</a></td>
-            <td><a onclick="submitApproved('rejected')" class="btn btn-danger">Odbij</a></td>
+            <td th:if="${notification.getSeen() == null}"><a onclick="submitApproved('approved')" class="btn btn-primary">Odobri</a></td>
+            <td th:if="${notification.getSeen() == null}"><a onclick="submitApproved('rejected')" class="btn btn-danger">Odbij</a></td>
+            <td th:if="${notification.getSeen() != null}"><a th:href="${'/notifications/'}" class="btn btn-primary">U redu</a></td>
         <br><br>
     </div>
 

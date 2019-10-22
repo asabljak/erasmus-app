@@ -8,6 +8,7 @@ import hr.tvz.master.erasmus.repository.*;
 import hr.tvz.master.erasmus.service.AppUserService;
 import hr.tvz.master.erasmus.service.MobilityService;
 import hr.tvz.master.erasmus.web.AbstractErasmusController;
+import hr.tvz.master.erasmus.web.notification.NotificationController;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,6 +8,7 @@ import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
 import hr.tvz.master.erasmus.service.MobilityService;
+import hr.tvz.master.erasmus.web.AbstractErasmusController;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class MobilityController {
+public class MobilityController extends AbstractErasmusController {
     Logger logger = LoggerFactory.getLogger(MobilityController.class);
 
     @Autowired
@@ -51,15 +51,6 @@ public class MobilityController {
 
     @Autowired
     MobilityService mobilityService;
-
-    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
-    @GetMapping("/mobilities")
-    public String getAllActive(Model model) {
-
-        List<Mobility> list = mobilityRepository.findAll(); //TODO find po statusu
-        model.addAttribute("mobilityList", list);
-        return "mobilities/list";
-    }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping(path = "mobilities/details/{id}")

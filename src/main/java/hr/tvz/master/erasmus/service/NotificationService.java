@@ -1,9 +1,13 @@
 package hr.tvz.master.erasmus.service;
 
 import hr.tvz.master.erasmus.entity.mobility.Approval;
+import hr.tvz.master.erasmus.entity.mobility.ApprovalType;
+import hr.tvz.master.erasmus.entity.mobility.Mobility;
+import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.notification.Notification;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.repository.ApprovalRepository;
+import hr.tvz.master.erasmus.repository.MobilityStatusRepository;
 import hr.tvz.master.erasmus.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,9 @@ public class NotificationService {
     @Autowired
     private  ApprovalRepository approvalRepository;
 
+    @Autowired
+    private MobilityStatusRepository mobilityStatusRepository;
+
     public Notification getOne(Long id) {
         return notificationRepository.getOne(id);
     }
@@ -41,6 +48,10 @@ public class NotificationService {
         approval.setSuccessful(Boolean.TRUE);
         approvalRepository.save(approval);
 
+        if (ApprovalType.APPLIED.equals(approval.getApprovalType().getId()) && approval.isSuccessful()) {
+            Mobility mobility = approval.getMobility();
+            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
+        }
         notification.setSeen(LocalDateTime.now());
         notification.setSeenBy(approvedBy);
         notificationRepository.save(notification);
@@ -91,4 +102,7 @@ public class NotificationService {
         return  message.toString();
     }
 
+    public List<Notification> getAllForUser(AppUser appUser) {
+        return notificationRepository.findByReceiversContains(appUser);
+    }
 }

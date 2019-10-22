@@ -55,6 +55,7 @@ public class MobilityService {
     public void applyMobility(Mobility mobility, List<Document> documents) {
         documentRepository.saveAll(documents);
 
+        ApprovalType apt = approvalTypeRepository.getOne(ApprovalType.APPLIED);
         Approval approval = new Approval();
         approval.setApprovalType(approvalTypeRepository.getOne(ApprovalType.APPLIED));
         approval.setDocuments(documents);
@@ -62,9 +63,9 @@ public class MobilityService {
         approvalRepository.save(approval);
 
         //ako je aproval applied true, postavi mobility u created
-        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
-            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
-        }
+//        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
+//            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
+//        }
         mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
         mobilityRepository.save(mobility);
 

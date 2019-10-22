@@ -114,7 +114,8 @@
                                     <li><a th:href="${'/documentTypes/'}">Tipovi dokumenata</a></li>
                                 </ul>
                             </li>
-                            <li><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/appUsers/'}">Korisnici</a></li>
+							<li><a sec:authorize="hasRole('ERASMUS_STUDENT') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/notifications/'}">Obavijesti</a></li>
+							<li><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/appUsers/'}">Korisnici</a></li>
                             <!--<li><a href="about.html">About</a></li>-->
 							<!--<li class="btn-cta"><a th:href="${'/logout/'}"><span>Logout</span></a></li>-->
 							<li class="btn-cta"><span>

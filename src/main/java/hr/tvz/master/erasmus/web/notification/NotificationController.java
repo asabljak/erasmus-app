@@ -1,4 +1,4 @@
-package hr.tvz.master.erasmus.web.mobility;
+package hr.tvz.master.erasmus.web.notification;
 
 import hr.tvz.master.erasmus.entity.notification.Notification;
 import hr.tvz.master.erasmus.entity.user.AppUser;
@@ -7,6 +7,7 @@ import hr.tvz.master.erasmus.web.AbstractErasmusController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class NotificationController extends AbstractErasmusController {
@@ -25,6 +27,16 @@ public class NotificationController extends AbstractErasmusController {
 
     @Autowired
     NotificationService notificationService;
+
+    @PreAuthorize("hasRole('COORDINATOR') or hasRole('ERASMUS_STUDENT')")
+    @GetMapping("/notifications")
+    public String getAllForUser(Model model) {
+        AppUser appUser = getLoggedInUser();
+
+        List<Notification> notifications = notificationService.getAllForUser(appUser);
+        model.addAttribute("notificationList", notifications);
+        return "notifications/list";
+    }
 
     @GetMapping(path = "notifications/details/{id}")
     public String getOne(HttpServletRequest request, Model model, @PathVariable(value = "id") Long id) {
@@ -72,7 +84,10 @@ public class NotificationController extends AbstractErasmusController {
             return request.getRequestURL().toString();
         }
 
-        notificationService.readNotification(notification);
+        if (notification.getSeen() == null) {
+            notificationService.readNotification(notification);
+        }
+        
         return "redirect:/";
     }
 }
