@@ -1,7 +1,10 @@
 package hr.tvz.master.erasmus.web.notification;
 
+import hr.tvz.master.erasmus.entity.mobility.Mobility;
+import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.notification.Notification;
 import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.repository.MobilityRepository;
 import hr.tvz.master.erasmus.service.NotificationService;
 import hr.tvz.master.erasmus.web.AbstractErasmusController;
 import org.slf4j.Logger;
@@ -26,7 +29,10 @@ public class NotificationController extends AbstractErasmusController {
     private AppUser appUser;
 
     @Autowired
-    NotificationService notificationService;
+    private NotificationService notificationService;
+
+    @Autowired
+    private MobilityRepository mobilityRepository;
 
     @PreAuthorize("hasRole('COORDINATOR') or hasRole('ERASMUS_STUDENT')")
     @GetMapping("/notifications")
@@ -87,7 +93,27 @@ public class NotificationController extends AbstractErasmusController {
         if (notification.getSeen() == null) {
             notificationService.readNotification(notification);
         }
-        
+
         return "redirect:/";
     }
+
+    @PreAuthorize("hasRole('COORDINATOR')")
+    @GetMapping("/notifications/interview")
+    public String openCllForInterviewPage(Model model) {
+        //dohavati usere i dodaj ih u model
+        model.addAttribute("mobilityList", mobilityRepository.findAllByMobilityStatus_Id(MobilityStatus.CREATED));
+
+
+//        model.addAttribute("notificationList", notifications);
+        return "notifications/interview";
+    }
+
+    @PreAuthorize("hasRole('COORDINATOR')")
+    @PostMapping("/notifications/interview")
+    public String callForInterview(Model model, @RequestParam(name = "mobilities") List<Mobility> mobilities,
+                                   @RequestParam(name = "message") String message) {
+        notificationService.sendInterviewCalls(mobilities, message);
+        return "redirect:/";
+    }
+
 }

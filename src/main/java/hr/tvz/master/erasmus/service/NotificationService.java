@@ -6,7 +6,9 @@ import hr.tvz.master.erasmus.entity.mobility.Mobility;
 import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.notification.Notification;
 import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.ApprovalRepository;
+import hr.tvz.master.erasmus.repository.ApprovalTypeRepository;
 import hr.tvz.master.erasmus.repository.MobilityStatusRepository;
 import hr.tvz.master.erasmus.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,10 +29,16 @@ public class NotificationService {
     private NotificationRepository notificationRepository;
 
     @Autowired
-    private  ApprovalRepository approvalRepository;
+    private ApprovalRepository approvalRepository;
+
+    @Autowired
+    private ApprovalTypeRepository approvalTypeRepository;
 
     @Autowired
     private MobilityStatusRepository mobilityStatusRepository;
+
+    @Autowired
+    private  AppUserService appUserService;
 
     public Notification getOne(Long id) {
         return notificationRepository.getOne(id);
@@ -51,6 +60,10 @@ public class NotificationService {
         if (ApprovalType.APPLIED.equals(approval.getApprovalType().getId()) && approval.isSuccessful()) {
             Mobility mobility = approval.getMobility();
             mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
+
+            if (notification.getReceivers() != null) {
+                appUserService.addRole(notification.getReceivers().get(0), Role.ROLE_ERASMUS_STUDENT);
+            }
         }
         notification.setSeen(LocalDateTime.now());
         notification.setSeenBy(approvedBy);
@@ -104,5 +117,28 @@ public class NotificationService {
 
     public List<Notification> getAllForUser(AppUser appUser) {
         return notificationRepository.findByReceiversContains(appUser);
+    }
+
+    public void sendInterviewCalls(List<Mobility> mobilities, String message) {
+        List<Notification> notifications = new ArrayList<>();
+        List<Approval> approvals = new ArrayList<>();
+
+        for (Mobility mobility : mobilities) {
+            Approval approval = new Approval();
+            approval.setMobility(mobility);
+            approval.setApprovalType(approvalTypeRepository.getOne(ApprovalType.GRANT));
+            approvals.add(approval);
+
+            Notification notification = new Notification();
+            notification.setActionRequired(false);
+            notification.setMessage(message);
+            notification.setApproval(approval);
+            notification.setReceivers(Arrays.asList(mobility.getStudent()));
+            notifications.add(notification);
+        }
+
+        approvalRepository.saveAll(approvals);
+        notificationRepository.saveAll(notifications);
+
     }
 }
