@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -51,6 +52,14 @@ public class MobilityController extends AbstractErasmusController {
 
     @Autowired
     MobilityService mobilityService;
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
+    @GetMapping("/mobilities")
+    public String getAll(Model model) {
+        List<Mobility> list = mobilityRepository.findAll();
+        model.addAttribute("mobilityList", list);
+        return "mobilities/list";
+    }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping(path = "mobilities/details/{id}")

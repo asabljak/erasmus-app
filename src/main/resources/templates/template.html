@@ -148,7 +148,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr th:each="n : ${notifications}" th:onclick="'javascript:rowClicked(\'/notifications/details/' + ${n.getId()} + '\');'">
+			<tr class="danger" th:each="n : ${notifications}" th:onclick="'javascript:rowClicked(\'/notifications/details/' + ${n.getId()} + '\');'">
 				<td th:text="${n.getMessage()}" class="row-pointer"></td>
 			</tr>
 			</tbody>

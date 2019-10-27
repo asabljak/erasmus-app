@@ -5,12 +5,10 @@ import hr.tvz.master.erasmus.entity.mobility.ApprovalType;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
 import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.notification.Notification;
+import hr.tvz.master.erasmus.entity.notification.NotificationType;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
-import hr.tvz.master.erasmus.repository.ApprovalRepository;
-import hr.tvz.master.erasmus.repository.ApprovalTypeRepository;
-import hr.tvz.master.erasmus.repository.MobilityStatusRepository;
-import hr.tvz.master.erasmus.repository.NotificationRepository;
+import hr.tvz.master.erasmus.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +22,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
+
+    public static final String REVIEW_MSG = "Vaša mobilnost je završila. Molimo vas da podijelite Vaša iskustva " +
+            "recenziranjem ustanove na kojoj ste boravili za vrijeme mobilnosti.";
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -39,6 +40,9 @@ public class NotificationService {
 
     @Autowired
     private  AppUserService appUserService;
+
+    @Autowired
+    private NotificationTypeRepository notificationTypeRepository;
 
     public Notification getOne(Long id) {
         return notificationRepository.getOne(id);
@@ -133,12 +137,22 @@ public class NotificationService {
             notification.setActionRequired(false);
             notification.setMessage(message);
             notification.setApproval(approval);
-            notification.setReceivers(Arrays.asList(mobility.getStudent()));
             notifications.add(notification);
         }
 
         approvalRepository.saveAll(approvals);
         notificationRepository.saveAll(notifications);
+    }
 
+    public void askForReview(Mobility mobility) {
+        //kreira notifikaciju s gumbom koji otvvarra ekran za psasnje reviewa
+        // po tipu notifikacije zna koja polja na ekranu učitava
+
+        Notification notification = new Notification();
+        notification.setReceivers(Arrays.asList(mobility.getStudent()));
+        notification.setActionRequired(true);
+        notification.setMessage(REVIEW_MSG);
+        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.INTERVIEW));
+        notificationRepository.save(notification);
     }
 }

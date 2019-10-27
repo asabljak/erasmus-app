@@ -2,6 +2,7 @@ package hr.tvz.master.erasmus.entity.notification;
 
 import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 import hr.tvz.master.erasmus.entity.mobility.Approval;
+import hr.tvz.master.erasmus.entity.mobility.Mobility;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 
 import javax.persistence.Entity;
@@ -26,6 +27,12 @@ public class Notification extends AbstractErasmusEntity {
     private Approval approval;
 
     private String message;
+
+    @OneToOne(targetEntity = NotificationType.class)
+    private NotificationType notificationType;
+
+    @OneToOne(targetEntity = Mobility.class)
+    private Mobility mobility;
 
     private LocalDateTime seen;
 
@@ -68,6 +75,22 @@ public class Notification extends AbstractErasmusEntity {
         this.message = message;
     }
 
+    public NotificationType getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(NotificationType notificationType) {
+        this.notificationType = notificationType;
+    }
+
+    public Mobility getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(Mobility mobility) {
+        this.mobility = mobility;
+    }
+
     public LocalDateTime getSeen() {
         return seen;
     }
@@ -94,7 +117,7 @@ public class Notification extends AbstractErasmusEntity {
 
     @Override
     protected boolean isValid() {
-        return Stream.of(sender, receivers, approval)
+        return Stream.of(sender, receivers)
                 .noneMatch(Objects::isNull);
     }
 

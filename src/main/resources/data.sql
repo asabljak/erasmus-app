@@ -45,3 +45,7 @@ insert into document_type(id, created, version, code, description, name) values 
 insert into document_type(id, created, version, code, description, name) values (11, now(), 1, 'RACUN', 'Račun usluge za koju student očekuje povrat novca od Veleučilišta', 'Račun');
 insert into document_type(id, created, version, code, description, name) values (12, now(), 1, 'SLIKA', 'Fotografija koju student predaje nakon mobilnosti', 'Fotografija');
 insert into document_type(id, created, version, code, description, name) values (13, now(), 1, 'OSTALO', 'Ostali dokumenti koji nisu navedeni kao zaseban tip dokumenta', 'Ostalo');
+
+insert into notification_type (id, name, description, created, version) values (1,'Approval', 'Korisnik je dobio novi approval', now(), 1);
+insert into notification_type (id, name, description, created, version) values (2,'Interview', 'Korisnik je pozvan na intervju', now(), 1);
+insert into notification_type (id, name, description, created, version) values (3,'Review', 'Korisnik je poslan upit da recenzira ustanovu na kojoj je zrvršavao mobilnost', now(), 1);

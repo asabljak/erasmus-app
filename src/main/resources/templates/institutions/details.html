@@ -9,11 +9,11 @@
 
 <script>
     $(function () {
-        console.log("dokument je redi");
-        $("#rateYo").rateYo({
-            rating: 3.6
+        var avgRating = $("#avgRatingHidden").val();
+        $("#rateYoAvg").rateYo({
+            rating: avgRating,
+            readOnly: true
         });
-
     });
 </script>
 <div th:replace="template :: navigation"></div>
@@ -29,13 +29,6 @@
         <div class ="row details-text"><span><b>Broj studenata: </b></span><span th:text="${institution.getNumberOfStudents()}"></span></div>
         <div  th:if="${institution.getInformation() != null && institution.getInformation().length() > 0}" class ="row details-text"><span><b>Informacije: </b></span><span th:text="${institution.getInformation()}"></span></div>
         <div  th:if="${institution.getWebUrl() != null && institution.getWebUrl().length() > 0}" class ="row details-text"><span><b>Web: </b></span><a th:href="${institution.getWebUrl()}"><span th:text="${institution.getWebUrl()}"></span></a></div>
-       <!-- <div class ="row details-text">
-            <span><b>Smjerovi: </b>
-                <span th:each="course : ${courses}">
-                    <span th:text="${course.getName()}"></span>
-                </span>
-            </span>
-        </div>-->
         <div class ="row details-text">
             <span><b>Polja: </b>
                 <span th:each="field : ${fields}">
@@ -59,12 +52,39 @@
             </tr>
             </tbody>
         </table>
-        <dvi sec:authorize="hasRole('VISITOR')">
-            <br><br><br>
+        <div sec:authorize="hasRole('VISITOR')">
+            <br><br>
             <a th:href="${'/mobilities/create/' + institution.getId()}" class="btn btn-primary">Prijavi se za mobilnost!</a>
-        </dvi>
+        </div>
         <br>
-        <div id="rateYo"></div>
+        <div id="rateYoAvg"></div>
+        <input type="number" id="avgRatingHidden" th:value="${avgRating}" step=".1" hidden/>
+<!--        <div id="rateYo" class="col-sm-5"></div>-->
+        <br><br>
+        <div class ="row details-text" th:if="${reviews}" th:each="r : ${reviews}">
+            <div class="col-sm-2">
+                <label th:text="*{r.getAppUser().getName() + ' ' + r.getAppUser().getSurname()}"></label>
+            </div>
+<!--            <div class="col-sm-12 rateYo"></div>-->
+            <div class="col-sm-10">
+                <div class="bg-success" ><b>Pozitivno: </b></div>
+                <div class="bg-success" th:text="${r.getPros()}"></div>
+                <br>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div class="bg-danger" ><b>Negativno: </b></div>
+                <div class="bg-danger" th:text="${r.getCons()}"></div>
+                <br>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div><b>Dojam: </b></div>
+                <div th:text="${r.getOpinion()}"></div>
+                <br><br>
+            </div>
+
+        </div>
         <br><br>
         <form>
             <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/institutions/edit/' + institution.getId()}" class="btn btn-primary">Izmjeni</a></td>

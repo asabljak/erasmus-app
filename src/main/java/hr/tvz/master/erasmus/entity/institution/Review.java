@@ -3,15 +3,26 @@ package hr.tvz.master.erasmus.entity.institution;
 import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+@Entity
 public class Review extends AbstractErasmusEntity {
+
+    @OneToOne(targetEntity = Institution.class)
     private Institution institution;
+
+    @OneToOne(targetEntity = AppUser.class)
     private AppUser appUser;
+
     private Double rating;
+
     private String pros;
+
     private String cons;
+
     private String opinion;
 
     //Getters and setters
