@@ -30,4 +30,8 @@ public class ReviewService {
         return  reviewRepository.findAllByInstitution_Id(institutionId);
     }
 
+    public void delete(Long institutionId) {
+        reviewRepository.deleteById(institutionId);
+    }
+
 }

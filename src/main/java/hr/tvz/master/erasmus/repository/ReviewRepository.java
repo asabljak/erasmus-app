@@ -13,5 +13,7 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     Double getAvgRatingForInstitution(@Param("instutionId") Long instutionId);
 
     List<Review> findAllByInstitution_Id(Long institutionId);
+
+    void deleteById(Long institutionId);
 }
 

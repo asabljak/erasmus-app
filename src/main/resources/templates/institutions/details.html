@@ -83,12 +83,17 @@
                 <div th:text="${r.getOpinion()}"></div>
                 <br><br>
             </div>
+            <div sec:authorize="hasRole('ADMIN')" class="col-sm-10">
+                <a th:href="${'/institutions/' + institution.getId() + '/deleteReview/' + r.getId()}" class="btn btn-danger"
+                   onclick="return confirm('Jeste li sigurni da želite obrisati recenziju?')">Obriši recenziju</a>
+                <br><br>
+            </div>
 
         </div>
         <br><br>
         <form>
             <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/institutions/edit/' + institution.getId()}" class="btn btn-primary">Izmjeni</a></td>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/institutions/delete/' + institution.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/institutions/delete/' + institution.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da želite obrisati instituciju?')">Obriši</a></td>
             <td><a th:href="${'/institutions/'}" class="btn btn-default">Povratak</a></td>
         </form>
         <br><br>

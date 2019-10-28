@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
@@ -106,7 +107,7 @@ public class InstitutionController extends AbstractErasmusController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/institutions/delete/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
+    public String deleteInstitution(@PathVariable(name = "id") Long id) {
         institutionRepository.deleteById(id);
         return "redirect:/institutions";
     }
@@ -124,6 +125,14 @@ public class InstitutionController extends AbstractErasmusController {
     public String postReview(@ModelAttribute Review review, @PathVariable(name = "id") Long id) {
         reviewService.saveReview(review, institutionRepository.getOne(id), getLoggedInUser());
         return "redirect:/";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(path = "/institutions/{institutionId}/deleteReview/{reviewId}")
+    public String deleteReview(HttpServletRequest request, @PathVariable(name = "institutionId") Long institutionId,
+                @PathVariable(name = "reviewId") Long reviewId) {
+        //reviewService.delete(reviewId);
+        return "redirect:/institutions/details/" + institutionId;
     }
 
     private List<Field> getFieldsDistinct(List<Course> courses) {

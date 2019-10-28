@@ -111,7 +111,7 @@ public class NotificationController extends AbstractErasmusController {
     }
 
     @PreAuthorize("hasRole('ERASMUS_STUDENT')")
-    @PostMapping("/notifications/review/{id}")
+    @GetMapping("/notifications/review/{id}")
     public String review(@PathVariable(value = "id") Long id) {
         Notification notification = notificationService.getOne(id);
         //model.addAttribute("institution", notification.getMobility().getInstitution());
@@ -126,19 +126,4 @@ public class NotificationController extends AbstractErasmusController {
         notificationService.sendInterviewCalls(mobilities, message);
         return "redirect:/";
     }
-//
-//    @PreAuthorize("hasRole('COORDINATOR')")
-//    @GetMapping("/notifications/grant")
-//    public String openGrantPage(Model model) {
-//        model.addAttribute("mobilityList", mobilityRepository.findAllByMobilityStatus_Id(MobilityStatus.CREATED));
-//        return "notifications/interview";
-//    }
-//
-//    @PreAuthorize("hasRole('COORDINATOR')")
-//    @PostMapping("/notifications/grant")
-//    public String callForInterview(@RequestParam(name = "mobilities") List<Mobility> mobilities) {
-//        notificationService.sendInterviewCalls(mobilities, message);
-//        return "redirect:/";
-//    }
-
 }
