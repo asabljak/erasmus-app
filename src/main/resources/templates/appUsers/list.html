@@ -6,21 +6,12 @@
 </head>
 <body>
 <script>
-    window.onload = function setup() {
-        var element = document.getElementById("dropdown");
-        if (element.options[element.selectedIndex].value) {
-            var id = window.location.href.split("/").pop();
-            element.value=id;
-
-            if(id == 4) {
-                document.getElementById('coordinators').style.display = 'none';
-                document.getElementById('students').style.display = 'block';
-            } else {
-                document.getElementById('coordinators').style.display = 'block';
-                document.getElementById('students').style.display = 'none';
-            }
+    jQuery(document).ready(function($) {
+        var rola = $('#roleHidden').val();
+        if (rola) {
+            $('#roleFilter').val(rola);
         }
-    }
+    });
 </script>
 
 <div th:replace="template :: navigation"></div>
@@ -31,7 +22,8 @@
     <form method="get" class="text-center" >
         <label class="col-sm-2 control-label">Rola:</label>
         <div class="col-sm-5">
-            <select id="dropdown" class="form-control" onchange="if (this.value) window.location.href = '/appUsers/byRole/' + this.value" placeholder="Odaberite rolu...">
+            <select id="roleFilter" class="form-control" onchange="window.location.href = '/appUsers/byRole/' + this.value" placeholder="Odaberite rolu...">
+                <option value="">Sve role</option>
                 <option th:each="role : ${roles}"
                         th:value="${{role}}"
                         th:text="${role.getRole()}">
@@ -43,15 +35,14 @@
     <br>
     <br>
     <br>
-    <form method="get" id="form" class="table-responsive">
-        <table id="students" style="display:none" class="table table-striped table-hover">
-            <thead>
+    <form method="get" id="form" >
+        <table id="students" class="table table-striped table-hover">
+            <thead class="text-center">
             <tr>
-                <td>Jmbag</td>
-                <td>Ime</td>
-                <td>Prezime</td>
-                <td>Smjer</td>
-                <!--<th>Delete</th>-->
+                <th>Jmbag</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Smjer</th>
             </tr>
             </thead>
             <tbody>
@@ -60,28 +51,11 @@
                 <td th:text="${appUser.getName()}" class="row-pointer"></td>
                 <td th:text="${appUser.getSurname()}" class="row-pointer"></td>
                 <td th:if="${appUser.getHomeCourse() != null}" th:text="${appUser.getHomeCourse().getName()}" class="row-pointer"></td>
-                <!--<td><a th:href="${'/appUsers/delete/' + appUser.getId()}" class="btn btn-danger">Delete</a></td>-->
+                <td th:unless="${appUser.getHomeCourse() != null}" class="row-pointer"></td>
             </tr>
             </tbody>
         </table>
-        <table id="coordinators" class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <td>Ime</td>
-                <td>Prezime</td>
-                <td>Email</td>
-                <!--<th>Delete</th>-->
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="appUser : ${appUsers}" th:onclick="'javascript:rowClicked(\'/appUsers/details/' + ${appUser.getId()} + '\');'">
-                <td th:text="${appUser.getName()}" class="row-pointer"></td>
-                <td th:text="${appUser.getSurname()}" class="row-pointer"></td>
-                <td th:text="${appUser.getEmail()}" class="row-pointer"></td>
-                <!--<td><a th:href="${'/appUsers/delete/' + appUser.getId()}" class="btn btn-danger">Delete</a></td>-->
-            </tr>
-            </tbody>
-        </table>
+        <input type="hidden" id="roleHidden" th:value="${roleId}">
     </form>
     <br><br>
     <a sec:authorize="hasRole('ADMIN')" th:href="${'/appUsers/create/'}" class="btn btn-primary">Kreiraj novo</a>

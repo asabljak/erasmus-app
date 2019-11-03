@@ -63,6 +63,9 @@
 
 	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css}">
 
+	<!--	<link rel="stylesheet" th:href="@{/css/datatables.min.css}">-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
 		<!-- Modernizr JS -->
 	<script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
 	<!-- FOR IE9 below -->
@@ -115,10 +118,10 @@
                                 </ul>
                             </li>
 							<li><a sec:authorize="hasRole('ERASMUS_STUDENT') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/notifications/'}">Obavijesti</a></li>
-							<li><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/appUsers/'}">Korisnici</a></li>
-							<li class="has-dropdown">
+							<li><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')" th:href="${'/appUsers/byRole/'}">Korisnici</a></li>
+							<li sec:authorize="hasRole('COORDINATOR')" class="has-dropdown">
 								<a>Moje akcije</a>
-								<ul sec:authorize="hasRole('COORDINATOR')" class="dropdown">
+								<ul class="dropdown">
 									<li><a th:href="${'/notifications/interview/'}">Pozovi studente na intervju</a></li>
 								</ul>
 							</li>
@@ -141,19 +144,11 @@
 		</div>
 	</nav>
 
-		<table th:if="${notifications != null && notifications.size() > 0} " id="notifications" class="table table-striped table-hover">
-			<thead>
-			<tr>
-				<td>Notifikacije</td>
-			</tr>
-			</thead>
-			<tbody>
-			<tr class="danger" th:each="n : ${notifications}" th:onclick="'javascript:rowClicked(\'/notifications/details/' + ${n.getId()} + '\');'">
-				<td th:text="${n.getMessage()}" class="row-pointer"></td>
-			</tr>
-			</tbody>
-		</table>
-
+		<div th:if="${notifications != null && notifications.size() > 0} " id="notifications">
+			<div class="bg-danger notification" th:each="n : ${notifications}" th:onclick="'javascript:rowClicked(\'/notifications/details/' + ${n.getId()} + '\');'"
+				th:text="${n.getMessage()}"></div>
+		</div>
+		<br>
 		<aside id="fh5co-hero" class="js-fullheight">
 		<div class="flexslider js-fullheight">
 			<ul class="slides">
@@ -417,12 +412,18 @@
 
 		<script type="application/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js}"></script>
 
+		<!--		<script type="application/javascript" th:src="@{/js/datatables.min.js}"></script>-->
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
 		<script>
+			$(function () {
+				$('.table').DataTable();
+			});
+
             function rowClicked(value) {
                 location.href = value;
             }
         </script>
-
 	</div>
 
 	</body>

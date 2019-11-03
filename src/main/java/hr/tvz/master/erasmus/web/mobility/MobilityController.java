@@ -58,6 +58,23 @@ public class MobilityController extends AbstractErasmusController {
     public String getAll(Model model) {
         List<Mobility> list = mobilityRepository.findAll();
         model.addAttribute("mobilityList", list);
+        model.addAttribute("mobilityStatusList", mobilityStatusRepository.findAll());
+        return "mobilities/list";
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
+    @GetMapping("/mobilities/listByStatus")
+    public String getAllByStatus(Model model, @RequestParam Long mobilityStatusId) {
+        List<Mobility> mobilityList;
+        if (mobilityStatusId != null) {
+            mobilityList = mobilityRepository.findAllByMobilityStatus_Id(mobilityStatusId);
+        } else {
+            mobilityList = mobilityRepository.findAll();
+        }
+
+        model.addAttribute("mobilityList", mobilityList);
+        model.addAttribute("mobilityStatusList", mobilityStatusRepository.findAll());
+        model.addAttribute("mobilityStatus", mobilityStatusId);
         return "mobilities/list";
     }
 
@@ -66,7 +83,7 @@ public class MobilityController extends AbstractErasmusController {
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         Mobility mobility = mobilityRepository.getOne(id);
         model.addAttribute("mobility", mobility);
-       // model.addAttribute("approvalList", approvalRepository.findByMobility_Id(id));
+        model.addAttribute("approvalList", approvalRepository.findByMobility_Id(id));
 
         return "mobilities/details";
     }

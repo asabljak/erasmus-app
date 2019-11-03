@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
@@ -129,9 +131,9 @@ public class InstitutionController extends AbstractErasmusController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/institutions/{institutionId}/deleteReview/{reviewId}")
-    public String deleteReview(HttpServletRequest request, @PathVariable(name = "institutionId") Long institutionId,
+    public String deleteReview(@PathVariable(name = "institutionId") Long institutionId,
                 @PathVariable(name = "reviewId") Long reviewId) {
-        //reviewService.delete(reviewId);
+        reviewService.delete(reviewId);
         return "redirect:/institutions/details/" + institutionId;
     }
 

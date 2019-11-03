@@ -5,19 +5,44 @@
     <meta http-equiv="Content-Type" fileContent="text/html; charset=UTF-8" />
 </head>
 <body>
+
+<script>
+    jQuery(document).ready(function($) {
+        var mobilityStatus = $('#mobilityStatusHidden').val();
+        if (mobilityStatus) {
+            $('#mobilityStatusFilter').val(mobilityStatus);
+        }
+    });
+</script>
+
 <div th:replace="template :: navigation"></div>
 
 <div class="col-md-8 col-md-offset-2 fh5co-heading">
     <h2>Mobilnosti</h2>
     <br>
-    <form method="get" id="forma" class="text-center">
+    <div class="form-group ">
+        <label class="col-sm-2 control-label">Status mobilnosti:</label>
+        <div class="col-sm-5">
+            <form method="get" th:action="@{/mobilities/listByStatus}">
+                <select class="form-control dropdown-searchable" id="mobilityStatusFilter" onchange="this.form.submit()" th:value="${mobilityStatusId}" name="mobilityStatusId" placeholder="Odaberite status..." >
+                    <option value="">Svi status mobilnosti</option>
+                    <option th:each="m : ${mobilityStatusList}"
+                            th:value="${m.getId()}"
+                            th:text="${m.getName()}">
+                    </option>
+                </select>
+            </form>
+    </div>
+    <br><br><br><br>
+    </div>
+    <form method="get" id="forma">
         <table id="mobility" class="table table-striped table-hover">
-            <thead>
+            <thead class="text-center">
             <tr>
-                <td>Jmbag studenta</td>
-                <td>Student</td>
-                <td>Institucija</td>
-                <td>Status</td>
+                <th>Jmbag studenta</th>
+                <th>Student</th>
+                <th>Institucija</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -30,6 +55,7 @@
             </tbody>
         </table>
     </form>
+    <input type="hidden" id="mobilityStatusHidden" th:value="${mobilityStatus}">
     <br><br>
     <a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR')" th:href="${'/mobilities/create/'}" class="btn btn-primary">Kreiraj novo</a>
 </div>

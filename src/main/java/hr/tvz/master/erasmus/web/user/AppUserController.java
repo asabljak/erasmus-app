@@ -29,7 +29,7 @@ public class AppUserController {
     @Autowired
     RoleRepository roleRepository;
 
-    @GetMapping("/appUsers") //TODO ifologija tko vidi što
+    @GetMapping("/appUsers/byRole")
     @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     public String getAll(Model model) {
         model.addAttribute("appUsers", appUserRepository.findAll());
@@ -43,7 +43,7 @@ public class AppUserController {
         List<AppUser> list = appUserRepository.findAllByRoles_Id(id);
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("appUsers", list);
-
+        model.addAttribute("roleId", id);
         return "appUsers/list";
     }
 

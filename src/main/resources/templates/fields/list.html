@@ -8,16 +8,15 @@
     <div th:replace="template :: navigation"></div>
 
     <div class="col-md-8 col-md-offset-2 fh5co-heading">
-        <h2>Fields</h2>
+        <h2>Polja</h2>
         <br>
-        <form method="get" id="forma" class="text-center">
+        <form method="get" id="forma">
             <table id="fields" class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <td>Id</td>
-                    <td>Code</td>
-                    <td>Name</td>
-                    <!--<th>Delete</th>-->
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Name</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,11 +30,11 @@
             </table>
         </form>
         <br><br>
-        <a sec:authorize="hasRole('ADMIN')" th:href="${'/fields/create/'}" class="btn btn-primary">Create new</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="${'/fields/create/'}" class="btn btn-primary">Kreiraj novo</a>
     </div>
 
     <div th:replace="template :: footer"></div>
-    <script th:href="@{/js/main.js}"></script>
+    <div th:replace="template :: scripts"></div>
 
     <!--<script>-->
         <!--function rowClicked(value) {-->
