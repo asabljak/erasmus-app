@@ -22,10 +22,8 @@
                 </span>
             </span>
         </div>
-        <div class ="row details-text" th:if="${approval.getComment() != null && approval.getComment().length() > 0}"><span><b>Komentar: </b></span><span th:text="${approval.getComment()}"></span></div>
         <div class ="row details-text"><span><b>Datum: </b></span><span th:text="${#temporals.format(approval.getCreated(), 'dd.MM.yyyy.')}"></span></div> <!--TODO formatirati datum-->
         <br>
-        <div class="row details-text" th:if="${approval.getComment() != null && approval.getComment().length() > 0}"><span><b>Komentar: </b></span><span th:text="${approval.getComment()}"></span></div>
         <br>
         <form>
             <td><a sec:authorize="hasRole('ADMIN')" th:href="${'/approvals/edit/' + approval.getId()}" class="btn btn-primary">Izmjeni</a></td>

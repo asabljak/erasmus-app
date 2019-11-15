@@ -1,5 +1,6 @@
 package hr.tvz.master.erasmus.service;
 
+import hr.tvz.master.erasmus.entity.document.Document;
 import hr.tvz.master.erasmus.entity.mobility.Approval;
 import hr.tvz.master.erasmus.entity.mobility.ApprovalType;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
@@ -23,8 +24,8 @@ import java.util.stream.Collectors;
 @Service
 public class NotificationService {
 
-    public static final String REVIEW_MSG = "Vaša mobilnost je završila. Molimo vas da podijelite Vaša iskustva " +
-            "recenziranjem ustanove na kojoj ste boravili za vrijeme mobilnosti.";
+//    public static final String REVIEW_MSG = "Vaša mobilnost je završila. Molimo vas da podijelite Vaša iskustva " +
+//            "recenziranjem ustanove na kojoj ste boravili za vrijeme mobilnosti.";
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -73,7 +74,8 @@ public class NotificationService {
         notification.setSeenBy(approvedBy);
         notificationRepository.save(notification);
 
-        notificationRepository.save(getResposeNotification(approvedBy ,notification.getSender(), approval, reason));
+        //TODO ako je sub.app, druga poruka
+        notificationRepository.save(getResposneNotification(approvedBy ,notification.getSender(), approval, reason));
     }
 
     public void readNotification(Notification notification) {
@@ -91,25 +93,28 @@ public class NotificationService {
         notification.setSeenBy(rejectedBy);
         notificationRepository.save(notification);
 
-        notificationRepository.save(getResposeNotification(rejectedBy, notification.getSender(), approval, reason));
+        notificationRepository.save(getResposneNotification(rejectedBy, notification.getSender(), approval, reason));
     }
 
-    private Notification getResposeNotification(AppUser sender, AppUser receiver, Approval approval, String reason) {
+    private Notification getResposneNotification(AppUser sender, AppUser receiver, Approval approval, String reason) {
         Notification responseNotification = new Notification();
         responseNotification.setSender(sender);
         responseNotification.setReceivers(Arrays.asList(receiver));
         responseNotification.setApproval(approval);
         responseNotification.setMessage(getApproveNotificationMessage(sender, approval, reason));
         responseNotification.setActionRequired(false);
+        responseNotification.setNotificationType(notificationTypeRepository.getOne(NotificationType.RESPONSE));
         return responseNotification;
     }
 
     private String getApproveNotificationMessage(AppUser appUser, Approval approval, String reason) {
         StringBuilder message = new StringBuilder();
-        if (approval.isSuccessful()) {
-            message.append("Vaša prijava je odobrena. ");
-        } else  {
-            message.append("Vaša prijava je odbijena. ");
+
+        if (ApprovalType.APPLIED.equals(approval.getApprovalType().getId())) {
+            message.append(approval.isSuccessful() ? "Vaša prijava je odobrena. " : "Vaša prijava je odbijena");
+        } else if (ApprovalType.SUBJECTS.equals(approval.getApprovalType().getId())) {
+            message.append(approval.isSuccessful() ? "Predmeti koje ste prijavili za upis na mobilnosti su odobreni. "
+                    : "Predmeti koje ste prijavili za upis na mobilnosti su odbijeni");
         }
 
         if (!StringUtils.isEmpty(reason)) {
@@ -144,15 +149,34 @@ public class NotificationService {
         notificationRepository.saveAll(notifications);
     }
 
-    public void askForReview(Mobility mobility) {
-        //kreira notifikaciju s gumbom koji otvvarra ekran za psasnje reviewa
-        // po tipu notifikacije zna koja polja na ekranu učitava
+    @Transactional
+    public void sendLaApprovalRequest(AppUser sender, Document document) {
+        Approval approval = new Approval();
+        approval.setMobility(document.getMobility());
+        approval.setDocuments(Arrays.asList(document));
+        approval.setApprovalType(approvalTypeRepository.getOne(ApprovalType.SUBJECTS));
+        approvalRepository.save(approval);
 
         Notification notification = new Notification();
-        notification.setReceivers(Arrays.asList(mobility.getStudent()));
-        notification.setActionRequired(true);
-        notification.setMessage(REVIEW_MSG);
-        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.INTERVIEW));
+        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.SUBJECTS_APPROVAL));
+        notification.setReceivers(appUserService.findAllByRoleId(Role.ROLE_SUBJECT_COORDINATOR));
+        notification.setMessage("Student " + sender + " predao je popunjeni Learning Agreement na pregled. Molimo pregledatje dokument.");
+        notification.setActionRequired(Boolean.TRUE);
+        notification.setApproval(approval);
+        notification.setSender(sender);
+        notification.setMobility(document.getMobility());
         notificationRepository.save(notification);
     }
+
+//    public void askForReview(Mobility mobility) {
+//        //kreira notifikaciju s gumbom koji otvvarra ekran za psasnje reviewa
+//        // po tipu notifikacije zna koja polja na ekranu učitava
+//
+//        Notification notification = new Notification();
+//        notification.setReceivers(Arrays.asList(mobility.getStudent()));
+//        notification.setActionRequired(true);
+//        notification.setMessage(REVIEW_MSG);
+//        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.INTERVIEW));
+//        notificationRepository.save(notification);
+//    }
 }

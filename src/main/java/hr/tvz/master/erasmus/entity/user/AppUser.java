@@ -7,8 +7,10 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Entity
@@ -181,5 +183,11 @@ public class AppUser extends AbstractErasmusEntity {
     public int hashCode() {
         return Objects.hash(getName(), getSurname(), getEmail(), getPassword(), getJmbag(), getBirthday(), getPhone(),
                 getHomeCourse(), getYearOfStudy(), isEnabled(), getRoles());
+    }
+
+    public List getIdRoles() {
+        return roles.stream()
+                .map(Role::getId)
+                .collect(Collectors.toList());
     }
 }

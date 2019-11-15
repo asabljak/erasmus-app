@@ -48,4 +48,6 @@ insert into document_type(id, created, version, code, description, name) values 
 
 insert into notification_type (id, name, description, created, version) values (1,'Approval', 'Korisnik je dobio novi approval', now(), 1);
 insert into notification_type (id, name, description, created, version) values (2,'Interview', 'Korisnik je pozvan na intervju', now(), 1);
-insert into notification_type (id, name, description, created, version) values (3,'Review', 'Korisnik je poslan upit da recenzira ustanovu na kojoj je zrvršavao mobilnost', now(), 1);
+insert into notification_type (id, name, description, created, version) values (3,'Review', 'Korisnik je poslan upit da recenzira ustanovu na kojoj je izvršavao mobilnost', now(), 1);
+insert into notification_type (id, name, description, created, version) values (4,'Subjects Approval', 'Korisnik je prijavio predmete koje želi upisati namobilnost', now(), 1);
+insert into notification_type (id, name, description, created, version) values (5,'Response', 'Odgovor na zahtjev', now(), 1);

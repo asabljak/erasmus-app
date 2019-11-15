@@ -25,6 +25,7 @@
             <br>
             <div class="row details-text" th:if="${notification.getMessage() != null}"><span th:text="${notification.getMessage()}"></span></div>
             <br>
+            <br>
             <table id="documents" class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -39,9 +40,18 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" th:value="${reason}" name="reason" />
+            <br>
+            <br>
+<!--            <div class="form-group">-->
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Komentar:</label>
+                <div class="col-sm-5">
+                    <textarea id="cons-text" class="form-control" th:value="${reason}" name="reason" rows="2" ></textarea>
+                </div>
             </div>
+<!--            <div class="col-sm-5">-->
+<!--                <input type="text" class="form-control" th:value="${reason}" name="reason" />-->
+<!--            </div>-->
             <input type="hidden" id="isSuccessfulHidden" th:value="${state}" name="state"/>
         </form>
 

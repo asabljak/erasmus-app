@@ -21,15 +21,30 @@
                 onchange : function(val){}
             });
         });
+
+        // $('#select_style_text').onclick(function () {
+        //     console.log("changeeeees");
+        //     if ($('#approvalTypes').val() == 5) {
+        //         $('mobilityPoints').hide()
+        //     } else {
+        //         $('mobilityPoints').show()
+        //     }
+        // })
+
+
     </script>
 
     <script>
-        function setRequired(elem){
-            if(elem.value % 2 == 0)
-                document.getElementById("comment-text").required = true;
-            else
-                document.getElementById("comment-text").required = false;
-        }
+        $(function () {
+            $( "#select_style_ul" ).click(function(event) {
+                console.log("changeeeees " + $(event.target).text());
+                if ($(event.target).text() == "Grant") {
+                    $('#mobilityPoints').show()
+                } else {
+                    $('#mobilityPoints').hide()
+                }
+            });
+        });
     </script>
 
     <h2>Kreiranje novog odobrenja</h2>
@@ -40,7 +55,7 @@
         <div class="form-group ">
             <label class="col-sm-2 control-label">Tip odobrenja:</label>
             <div class="col-sm-5">
-                <select class="form-control dropdown-searchable"  th:field="*{approvalType}" placeholder="Odaberite tip odobrenja..." required>
+                <select class="form-control dropdown-searchable" id="approvalTypes" th:field="*{approvalType}" placeholder="Odaberite tip odobrenja..." required>
                     <option th:each="approvalType : ${approvalTypeList}"
                             th:value="${{approvalType}}"
                             th:text="${approvalType.getName()}">
@@ -59,10 +74,10 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Komentar:</label>
+        <div class="form-group" id="mobilityPoints" >
+            <label class="col-sm-2 control-label">Broj bodova:</label>
             <div class="col-sm-5">
-                <textarea id="comment-text" class="form-control" th:field="*{comment}" rows="4" ></textarea>
+                <input type="number" id="points" class="form-control" th:value="${mobilityPoints}" name="mobilityPoints" />
             </div>
         </div>
         <br>

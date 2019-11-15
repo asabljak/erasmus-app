@@ -27,8 +27,6 @@ public class Approval extends AbstractErasmusEntity {
 
     private Boolean isSuccessful;
 
-    private String comment; //TODO maakni?
-
     //Getters and setters
 
     public ApprovalType getApprovalType() {
@@ -69,14 +67,6 @@ public class Approval extends AbstractErasmusEntity {
 
     public void setSuccessful(Boolean successful) {
         isSuccessful = successful;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     @Override

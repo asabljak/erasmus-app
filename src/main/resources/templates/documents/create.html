@@ -28,9 +28,20 @@
 
     <form class="form-horizontal" action="#" th:action="@{/documents/create}" th:object="${document}" enctype="multipart/form-data" method="post">
         <div class="form-group ">
+            <label class="col-sm-2 control-label">Moblinost:</label>
+            <div class="col-sm-5">
+                <select id="dropdownMobility" class="form-control" th:field="*{mobility}" placeholder="Odaberite mobilnost..." required>
+                    <option th:each="mobility : ${mobilityList}"
+                            th:value="${{mobility}}"
+                            th:text="${mobility.student.name + ' ' + mobility.student.surname + ' - ' + mobility.institution.name}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group ">
             <label class="col-sm-2 control-label">Tip dokumenta:</label>
             <div class="col-sm-5">
-                <select id="dropdown" class="form-control" th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
+                <select id="dropdownDocumentType" class="form-control" th:field="*{documentType}" placeholder="Odaberite tip dokumenta..." required>
                     <option th:each="documentType : ${documentTypeList}"
                             th:value="${{documentType}}"
                             th:text="${documentType.name}">

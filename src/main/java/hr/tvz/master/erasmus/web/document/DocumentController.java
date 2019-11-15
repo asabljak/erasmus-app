@@ -1,9 +1,14 @@
 package hr.tvz.master.erasmus.web.document;
 
 import hr.tvz.master.erasmus.entity.document.Document;
+import hr.tvz.master.erasmus.entity.document.DocumentType;
 import hr.tvz.master.erasmus.entity.user.AppUser;
+import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.DocumentRepository;
 import hr.tvz.master.erasmus.repository.DocumentTypeRepository;
+import hr.tvz.master.erasmus.repository.MobilityRepository;
+import hr.tvz.master.erasmus.service.NotificationService;
+import hr.tvz.master.erasmus.web.AbstractErasmusController;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -22,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class DocumentController {
+public class DocumentController extends AbstractErasmusController {
 
     @Autowired
     DocumentRepository documentRepository;
@@ -30,17 +35,31 @@ public class DocumentController {
     @Autowired
     DocumentTypeRepository documentTypeRepository;
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('\"ERASMUS_STUDENT\"')")
+    @Autowired
+    NotificationService notificationService;
+
+    @Autowired
+    MobilityRepository mobilityRepository;
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('ERASMUS_STUDENT')")
     @GetMapping("/documents")
-    public String getAll(Model model) { //TODO ifologija tko vidi koje dokumente
-        List<Document> list = documentRepository.findAll();
+    public String getAll(Model model) {
+        List<Document> list = null;
+        List loggedUseerRoles = getLoggedInUser().getIdRoles();
+        if (loggedUseerRoles.contains(Role.ROLE_ADMIN) || loggedUseerRoles.contains(Role.ROLE_COORDINATOR)) {
+            list = documentRepository.findAll();
+        } else if (loggedUseerRoles.contains(Role.ROLE_ERASMUS_STUDENT)) {
+            list = documentRepository.findByOwner(getLoggedInUser());
+        } else if (loggedUseerRoles.contains(Role.ROLE_SUBJECT_COORDINATOR)) {
+            list = documentRepository.findByDocumentType_Id(DocumentType.LA);
+        }
         model.addAttribute("documents", list);
         return "documents/list";
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('ERASMUS_STUDENT')")
     @GetMapping(path = "documents/details/{id}")
-    public String getOne(Model model, @PathVariable(value = "id") Long id) throws IOException{
+    public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("document", documentRepository.getOne(id));
 
         return "documents/details";
@@ -65,6 +84,7 @@ public class DocumentController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('ERASMUS_STUDENT')")
     @GetMapping("/documents/create")
     public String getEmpty(Model model){
+        model.addAttribute("mobilityList", mobilityRepository.findAllByStudent(getLoggedInUser()));
         model.addAttribute("document", new Document());
         model.addAttribute("documentTypeList", documentTypeRepository.findAll());
         return "documents/create";
@@ -80,6 +100,10 @@ public class DocumentController {
         document.setFileContentType(file.getContentType());
         document.setOwner(appUser);
         Document createdDocument = documentRepository.save(document);
+        if (DocumentType.LA.equals(createdDocument.getDocumentType().getId())) {
+            //TODO dodati link na dokumente
+            notificationService.sendLaApprovalRequest(appUser, createdDocument);
+        }
         return "redirect:/documents/details/" + createdDocument.getId();
     }
 

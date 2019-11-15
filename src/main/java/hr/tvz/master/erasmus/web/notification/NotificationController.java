@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -50,14 +53,14 @@ public class NotificationController extends AbstractErasmusController {
 
         if (notification != null && notification.getReceivers().contains(appUser)) {
             model.addAttribute("notification", notification);
-            if (NotificationType.INTERVIEW.equals(notification.getMobility().getMobilityStatus().getId())) {
+            if (NotificationType.INTERVIEW.equals(notification.getNotificationType().getId())) {
                 return "notifications/interview";
-            } else if (NotificationType.REVIEW.equals(notification.getMobility().getMobilityStatus().getId())) {
+            } else if (NotificationType.REVIEW.equals(notification.getNotificationType().getId())) {
 //                model.addAttribute("notificationId", notificationId);
                 return "notifications/review";
             }
 
-                model.addAttribute("isSuccessful", Boolean.FALSE);
+            model.addAttribute("isSuccessful", Boolean.FALSE);
             return "notifications/details";
         }
 
@@ -114,6 +117,8 @@ public class NotificationController extends AbstractErasmusController {
     @GetMapping("/notifications/review/{id}")
     public String review(@PathVariable(value = "id") Long id) {
         Notification notification = notificationService.getOne(id);
+//        notification.setSeen(LocalDateTime.now());
+//        notification.setSeenBy(getLoggedInUser());
         //model.addAttribute("institution", notification.getMobility().getInstitution());
         //TODO označi notifikaciju seen
         return "redirect:/institutions/review/" + notification.getMobility().getInstitution().getId();

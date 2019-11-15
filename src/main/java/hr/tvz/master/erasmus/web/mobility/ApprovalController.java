@@ -15,11 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -95,9 +93,11 @@ public class ApprovalController extends AbstractErasmusController {
         return "approvals/createForMobility";
     }
 
+    @Transactional
     @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
-    @PostMapping("/approvals/createForMobility/{mobilityId}")
-    public String createForMobility(@ModelAttribute Approval approval, @PathVariable Long mobilityId) {
+    @PostMapping("/approvals/createForMobility/{mobilityId}") //dodati bodove kao request param i zapisati ih
+    public String createForMobility(@ModelAttribute Approval approval, @PathVariable Long mobilityId,
+                                    @RequestParam(name = "mobilityPoints") Integer mobilityPoints) {
         AppUser coordinator = getLoggedInUser();
         if (!appUserService.userHasRole(coordinator, Role.ROLE_COORDINATOR)) {
             LOGGER.warn("Ulogirani korinsik nema prava za dodavanje mobilnosti: " + coordinator);
@@ -108,9 +108,11 @@ public class ApprovalController extends AbstractErasmusController {
         approval.setCoordinator(coordinator);
         Approval createdApproval = approvalRepository.save(approval);
 
-//        Mobility mobility = mobilityService.getOne(mobilityId);
-//        mobility = mobilityService.addApproval(mobility, createdApproval);
-//        mobilityService.save(mobility);
+        if (mobilityPoints != null ) {
+            Mobility mobility = mobilityService.getOne(mobilityId);
+            mobility.setPoints(mobilityPoints);
+            mobilityService.save(mobility);
+        }
 
         return "redirect:/approvals/details/" + createdApproval.getId();
     }
@@ -143,7 +145,6 @@ public class ApprovalController extends AbstractErasmusController {
         Approval oldApproval = approvalRepository.getOne(newApproval.getId());
         oldApproval.setApprovalType(newApproval.getApprovalType());
         oldApproval.setDocuments(newApproval.getDocuments());
-        oldApproval.setComment(newApproval.getComment());
         approvalRepository.save(oldApproval);
 
         return "redirect:/approvals/details/" + oldApproval.getId();

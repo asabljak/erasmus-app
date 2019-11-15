@@ -1,10 +1,13 @@
 package hr.tvz.master.erasmus.entity.document;
 
 import hr.tvz.master.erasmus.entity.AbstractErasmusEntity;
+import hr.tvz.master.erasmus.entity.mobility.Mobility;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -20,15 +23,15 @@ public class Document extends AbstractErasmusEntity {
     @OneToOne(targetEntity = DocumentType.class)
     private DocumentType documentType;
 
+    @OneToOne(targetEntity = Mobility.class)
+    private Mobility mobility;
+
     @Basic(fetch = FetchType.LAZY)
     private byte[] fileContent;
 
     private String fileName;
 
     private String fileContentType;
-
-    //TODO treba li ovo?
-    private LocalDateTime seen;
 
     //Getters and setters
 
@@ -64,6 +67,14 @@ public class Document extends AbstractErasmusEntity {
         this.documentType = documentType;
     }
 
+    public Mobility getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(Mobility mobility) {
+        this.mobility = mobility;
+    }
+
     public byte[] getFileContent() {
         return fileContent;
     }
@@ -86,14 +97,6 @@ public class Document extends AbstractErasmusEntity {
 
     public void setFileContentType(String fileContentType) {
         this.fileContentType = fileContentType;
-    }
-
-    public LocalDateTime getSeen() {
-        return seen;
-    }
-
-    public void setSeen(LocalDateTime seen) {
-        this.seen = seen;
     }
 
     @Override
