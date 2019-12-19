@@ -26,17 +26,17 @@
             <div class="row details-text" th:if="${mobility.getStudent() != null}"><span><b>Jmbag studenta: </b></span><span th:text="${mobility.getStudent().getJmbag()}"></span></div>
             <div class="row details-text" th:if="${mobility.getStudent() != null}"><span><b>Student: </b></span><span th:text="${mobility.getStudent().getName() + ' ' + mobility.getStudent().getSurname()}"></span></div>
             <br>
-            <div class="form-group ">
-                <label class="col-sm-2 control-label">Status mobilnosti:</label>
-                <div class="col-sm-5">
-                    <select id="dropdown" class="form-control"  th:field="*{mobilityStatus}" placeholder="Odaberite instituciju..." data-search="true"  required>
-                        <option th:each="mobilityStatus : ${mobilityStatusList}"
-                                th:value="${{mobilityStatus}}"
-                                th:text="${mobilityStatus.getName()}">
-                        </option>
-                    </select>
-                </div>
-            </div>
+<!--            <div class="form-group ">-->
+<!--                <label class="col-sm-2 control-label">Status mobilnosti:</label>-->
+<!--                <div class="col-sm-5">-->
+<!--                    <select id="dropdown" class="form-control"  th:field="*{mobilityStatus}" placeholder="Odaberite instituciju..." data-search="true"  required>-->
+<!--                        <option th:each="mobilityStatus : ${mobilityStatusList}"-->
+<!--                                th:value="${{mobilityStatus}}"-->
+<!--                                th:text="${mobilityStatus.getName()}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="form-group ">
                 <label class="col-sm-2 control-label">Status mobilnosti:</label>
                 <div class="col-sm-5">

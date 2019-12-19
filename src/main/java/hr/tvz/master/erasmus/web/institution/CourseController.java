@@ -41,7 +41,6 @@ public class CourseController {
         return "courses/list";
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
     @GetMapping(path = "courses/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("course", courseRepository.getOne(id));

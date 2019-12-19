@@ -15,6 +15,7 @@ public class MobilityStatus extends AbstractErasmusEntity {
     public static final Long ACTIVE = new Long(5);
     public static final Long CANCELLED = new Long(6);
     public static final Long DONE = new Long(7);
+    public static final Long ALL_DONE = new Long(8);
 
 //    private String code;
     private String name;

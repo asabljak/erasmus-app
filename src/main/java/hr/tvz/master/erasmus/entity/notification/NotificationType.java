@@ -8,9 +8,10 @@ import java.util.stream.Stream;
 
 @Entity
 public class NotificationType extends AbstractErasmusEntity {
+    public static final Long APPLY = new Long(0);
     public static final Long APPROVAL = new Long(1);
-    public static final Long REVIEW = new Long(2);
-    public static final Long INTERVIEW = new Long(3);
+    public static final Long INTERVIEW = new Long(2);
+    public static final Long REVIEW = new Long(3);
     public static final Long SUBJECTS_APPROVAL = new Long(4);
     public static final Long RESPONSE = new Long(5);
 

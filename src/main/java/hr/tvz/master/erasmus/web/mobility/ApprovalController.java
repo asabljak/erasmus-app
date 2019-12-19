@@ -1,10 +1,10 @@
 package hr.tvz.master.erasmus.web.mobility;
 
-import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.mobility.Approval;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
-import hr.tvz.master.erasmus.entity.user.Role;
-import hr.tvz.master.erasmus.repository.*;
+import hr.tvz.master.erasmus.repository.ApprovalRepository;
+import hr.tvz.master.erasmus.repository.ApprovalTypeRepository;
+import hr.tvz.master.erasmus.repository.DocumentRepository;
 import hr.tvz.master.erasmus.service.AppUserService;
 import hr.tvz.master.erasmus.service.MobilityService;
 import hr.tvz.master.erasmus.web.AbstractErasmusController;
@@ -94,18 +94,13 @@ public class ApprovalController extends AbstractErasmusController {
     }
 
     @Transactional
-    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
-    @PostMapping("/approvals/createForMobility/{mobilityId}") //dodati bodove kao request param i zapisati ih
+    @PreAuthorize("hasRole('COORDINATOR')")
+    @PostMapping("/approvals/createForMobility/{mobilityId}")
     public String createForMobility(@ModelAttribute Approval approval, @PathVariable Long mobilityId,
                                     @RequestParam(name = "mobilityPoints") Integer mobilityPoints) {
-        AppUser coordinator = getLoggedInUser();
-        if (!appUserService.userHasRole(coordinator, Role.ROLE_COORDINATOR)) {
-            LOGGER.warn("Ulogirani korinsik nema prava za dodavanje mobilnosti: " + coordinator);
-            return "redirect:/";
-        }
 
         approval.setMobility(mobilityService.getOne(mobilityId));
-        approval.setCoordinator(coordinator);
+        approval.setCoordinator(getLoggedInUser());
         Approval createdApproval = approvalRepository.save(approval);
 
         if (mobilityPoints != null ) {

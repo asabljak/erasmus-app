@@ -4,6 +4,7 @@ import hr.tvz.master.erasmus.entity.document.Document;
 import hr.tvz.master.erasmus.entity.document.DocumentType;
 import hr.tvz.master.erasmus.entity.institution.Institution;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
+import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -126,10 +126,7 @@ public class MobilityController extends AbstractErasmusController {
                                        @RequestParam("statusStudenta") MultipartFile statusStudenta,
                                        @RequestParam("prijepisOcjena") MultipartFile prijepisOcjena) {
 
-//        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); zasto je id null?
-        String email = ((AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
-        AppUser appUser = appUserRepository.findByEmail(email).get();
-
+        AppUser appUser = getLoggedInUser();
         Institution institution = institutionRepository.getOne(id);
 
         Document docPrijavniObrazac = null;
@@ -145,16 +142,15 @@ public class MobilityController extends AbstractErasmusController {
             docCv = this.createDocument(appUser, cv, documentTypeRepository.getOne(DocumentType.CV));
             docDomovnica = this.createDocument(appUser, domovnica, documentTypeRepository.getOne(DocumentType.DOMOVNICA));
             docStatusStudenta = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.STATUS_STUDENTA));
-            docPrijepisOcjena = this.createDocument(appUser, statusStudenta, documentTypeRepository.getOne(DocumentType.PRIJEPIS_OCJENA));
+            docPrijepisOcjena = this.createDocument(appUser, prijepisOcjena, documentTypeRepository.getOne(DocumentType.PRIJEPIS_OCJENA));
         } catch (IOException e) {
             logger.error("Document creation error", e);
         }
-//        documentRepository.saveAll(Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
 
         Mobility mobility = new Mobility();
         mobility.setStudent(appUser);
         mobility.setInstitution(institution);
-//        mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
+        mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
         mobilityService.applyMobility(mobility,
                 Arrays.asList(docPrijavniObrazac, docMotivacijskoPismo, docCv, docDomovnica, docStatusStudenta, docPrijepisOcjena));
 
@@ -174,7 +170,7 @@ public class MobilityController extends AbstractErasmusController {
         return document;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping("/mobilities/edit/{id}")
     public String getExisting(Model model, @PathVariable Long id) throws NotFoundException {
 
@@ -191,7 +187,7 @@ public class MobilityController extends AbstractErasmusController {
         return "mobilities/edit";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @PostMapping("/mobilities/edit")
     public String edit(@ModelAttribute Mobility newMobility) {
         Mobility oldMobility = mobilityRepository.getOne(newMobility.getId());

@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ApprovalRepository extends JpaRepository<Approval,Long> {
     List<Approval> findByMobility_Id(Long mobilityId);
+//    List<Approval> findByMobility_MobilityStatus_Done();
 }
 

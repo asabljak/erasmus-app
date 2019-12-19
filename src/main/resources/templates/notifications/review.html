@@ -15,7 +15,7 @@
     <br>
     <br>
     <form class="form-horizontal" action="#" th:action="@{/notifications/review/__${notification.getId()}__ }" th:object="${notification}" method="post">
-        <button type="submit" th:if="${notification.getMobility() != null && notification.getMobility().getInstitution() != null}"
+        <button type="submit" th:if="${notification.getMobility() != null && notification.getMobility().getInstitution() != null && notification.getSeen() == null}"
                 class="btn btn-primary">Recenziraj instituciju</button>
     </form>
     <br>

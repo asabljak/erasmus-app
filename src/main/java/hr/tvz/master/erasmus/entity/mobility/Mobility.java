@@ -26,9 +26,6 @@ public class Mobility extends AbstractErasmusEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate mobilityEnd;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    private List<Approval> approvals;
-
     @OneToOne(targetEntity = MobilityStatus.class)
     private MobilityStatus mobilityStatus; //TODO treba li ovo uopće??
 
@@ -67,14 +64,6 @@ public class Mobility extends AbstractErasmusEntity {
     public void setMobilityEnd(LocalDate mobilityEnd) {
         this.mobilityEnd = mobilityEnd;
     }
-
-//    public List<Approval> getApprovals() {
-//        return approvals;
-//    }
-//
-//    public void setApprovals(List<Approval> approvals) {
-//        this.approvals = approvals;
-//    }
 
     public MobilityStatus getMobilityStatus() {
         return mobilityStatus;

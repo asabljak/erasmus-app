@@ -101,8 +101,9 @@ public class DocumentController extends AbstractErasmusController {
         document.setOwner(appUser);
         Document createdDocument = documentRepository.save(document);
         if (DocumentType.LA.equals(createdDocument.getDocumentType().getId())) {
-            //TODO dodati link na dokumente
             notificationService.sendLaApprovalRequest(appUser, createdDocument);
+        } else {
+            notificationService.sendNewDocumentNotification(appUser, createdDocument);
         }
         return "redirect:/documents/details/" + createdDocument.getId();
     }

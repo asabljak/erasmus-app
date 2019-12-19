@@ -4,8 +4,8 @@ import hr.tvz.master.erasmus.entity.document.Document;
 import hr.tvz.master.erasmus.entity.mobility.Approval;
 import hr.tvz.master.erasmus.entity.mobility.ApprovalType;
 import hr.tvz.master.erasmus.entity.mobility.Mobility;
-import hr.tvz.master.erasmus.entity.mobility.MobilityStatus;
 import hr.tvz.master.erasmus.entity.notification.Notification;
+import hr.tvz.master.erasmus.entity.notification.NotificationType;
 import hr.tvz.master.erasmus.entity.user.AppUser;
 import hr.tvz.master.erasmus.entity.user.Role;
 import hr.tvz.master.erasmus.repository.*;
@@ -37,6 +37,9 @@ public class MobilityService {
     private NotificationRepository notificationRepository;
 
     @Autowired
+    private NotificationTypeRepository notificationTypeRepository;
+
+    @Autowired
     private  ApprovalRepository approvalRepository;
 
     public Mobility getOne(Long id) {
@@ -54,45 +57,23 @@ public class MobilityService {
     @Transactional
     public void applyMobility(Mobility mobility, List<Document> documents) {
         documentRepository.saveAll(documents);
+        mobilityRepository.save(mobility);
 
-        ApprovalType apt = approvalTypeRepository.getOne(ApprovalType.APPLIED);
         Approval approval = new Approval();
         approval.setApprovalType(approvalTypeRepository.getOne(ApprovalType.APPLIED));
         approval.setDocuments(documents);
         approval.setMobility(mobility);
         approvalRepository.save(approval);
 
-        //ako je aproval applied true, postavi mobility u created
-//        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
-//            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
-//        }
-        mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.REQUESTED));
-        mobilityRepository.save(mobility);
-
         //notifikacija
         Notification notification = new Notification();
         notification.setApproval(approval);
         notification.setSender(mobility.getStudent());
+        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.APPLY));
         List<AppUser> coords = appUserRepository.findAllByRoles_Id(Role.ROLE_COORDINATOR);
         notification.setReceivers(coords);
         notification.setMessage("Korisnik " + mobility.getStudent() + " se prijavio za mobilnost.");
         notification.setActionRequired(true);
         notificationRepository.save(notification);
     }
-
-//    public Mobility addApproval(Mobility mobility, Approval approval) {
-//        List<Approval> approvals = mobility.getApprovals();
-//        if (approvals == null) {
-//            approvals = new ArrayList<>();
-//        }
-//        approvals.add(approval);
-//
-//        //ako je aproval applied true, postavi mobility u created
-//        if (approval.getApprovalType().getId().equals(ApprovalType.APPLIED) && approval.isSuccessful()) {
-//            mobility.setMobilityStatus(mobilityStatusRepository.getOne(MobilityStatus.CREATED));
-//        }
-//        mobility.setApprovals(approvals);
-//        return mobility;
-//    }
-
 }

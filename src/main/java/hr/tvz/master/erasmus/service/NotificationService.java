@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @Service
 public class NotificationService {
 
-//    public static final String REVIEW_MSG = "Vaša mobilnost je završila. Molimo vas da podijelite Vaša iskustva " +
-//            "recenziranjem ustanove na kojoj ste boravili za vrijeme mobilnosti.";
+    public static final String REVIEW_MSG = "Vaša mobilnost je završila. Molimo vas da podijelite svoja iskustva " +
+            "recenziranjem ustanove na kojoj ste boravili za vrijeme mobilnosti.";
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -47,6 +47,10 @@ public class NotificationService {
 
     public Notification getOne(Long id) {
         return notificationRepository.getOne(id);
+    }
+
+    public Notification save(Notification notification) {
+        return notificationRepository.save(notification);
     }
 
     public List<Notification> getUnreadNotificationsForUser(AppUser appUser) {
@@ -73,9 +77,7 @@ public class NotificationService {
         notification.setSeen(LocalDateTime.now());
         notification.setSeenBy(approvedBy);
         notificationRepository.save(notification);
-
-        //TODO ako je sub.app, druga poruka
-        notificationRepository.save(getResposneNotification(approvedBy ,notification.getSender(), approval, reason));
+        notificationRepository.save(getResponseNotification(approvedBy ,notification.getSender(), approval, reason));
     }
 
     public void readNotification(Notification notification) {
@@ -93,10 +95,10 @@ public class NotificationService {
         notification.setSeenBy(rejectedBy);
         notificationRepository.save(notification);
 
-        notificationRepository.save(getResposneNotification(rejectedBy, notification.getSender(), approval, reason));
+        notificationRepository.save(getResponseNotification(rejectedBy, notification.getSender(), approval, reason));
     }
 
-    private Notification getResposneNotification(AppUser sender, AppUser receiver, Approval approval, String reason) {
+    private Notification getResponseNotification(AppUser sender, AppUser receiver, Approval approval, String reason) {
         Notification responseNotification = new Notification();
         responseNotification.setSender(sender);
         responseNotification.setReceivers(Arrays.asList(receiver));
@@ -128,7 +130,8 @@ public class NotificationService {
         return notificationRepository.findByReceiversContains(appUser);
     }
 
-    public void sendInterviewCalls(List<Mobility> mobilities, String message) {
+    @Transactional
+    public void sendInterviewCalls(List<Mobility> mobilities, String message, AppUser sender) {
         List<Notification> notifications = new ArrayList<>();
         List<Approval> approvals = new ArrayList<>();
 
@@ -142,6 +145,9 @@ public class NotificationService {
             notification.setActionRequired(false);
             notification.setMessage(message);
             notification.setApproval(approval);
+            notification.setSender(sender);
+            notification.setReceivers(Arrays.asList(mobility.getStudent()));
+            notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.INTERVIEW));
             notifications.add(notification);
         }
 
@@ -168,15 +174,29 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
-//    public void askForReview(Mobility mobility) {
-//        //kreira notifikaciju s gumbom koji otvvarra ekran za psasnje reviewa
-//        // po tipu notifikacije zna koja polja na ekranu učitava
-//
-//        Notification notification = new Notification();
-//        notification.setReceivers(Arrays.asList(mobility.getStudent()));
-//        notification.setActionRequired(true);
-//        notification.setMessage(REVIEW_MSG);
-//        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.INTERVIEW));
-//        notificationRepository.save(notification);
-//    }
+    public void sendNewDocumentNotification(AppUser sender, Document document) {
+        Notification notification = new Notification();
+        notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.APPROVAL));
+        notification.setReceivers(appUserService.findAllByRoleId(Role.ROLE_COORDINATOR));
+        notification.setMessage("Student " + sender + " predao je novi dokument. Molimo pregledajte dokument.");
+        notification.setActionRequired(Boolean.FALSE);
+        notification.setSender(sender);
+        notification.setMobility(document.getMobility());
+        notificationRepository.save(notification);
+    }
+
+    public void sendReviewCalls(List<Mobility> mobilities, AppUser sender) {
+        List<Notification> notifications = new ArrayList<>();
+        for (Mobility mobility : mobilities) {
+            Notification notification = new Notification();
+            notification.setReceivers(Arrays.asList(mobility.getStudent()));
+            notification.setSender(sender);
+            notification.setMobility(mobility);
+            notification.setActionRequired(true);
+            notification.setMessage(REVIEW_MSG);
+            notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.REVIEW));
+            notifications.add(notification);
+        }
+        notificationRepository.saveAll(notifications);
+    }
 }

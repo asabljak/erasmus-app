@@ -55,12 +55,13 @@
             <input type="hidden" id="isSuccessfulHidden" th:value="${state}" name="state"/>
         </form>
 
-            <br>
-            <br>
-            <td th:if="${notification.getSeen() == null}"><a onclick="submitApproved('approved')" class="btn btn-primary">Odobri</a></td>
-            <td th:if="${notification.getSeen() == null}"><a onclick="submitApproved('rejected')" class="btn btn-danger">Odbij</a></td>
-            <td th:if="${notification.getSeen() != null}"><a th:href="${'/notifications/'}" class="btn btn-primary">U redu</a></td>
-        <br><br>
+        <br>
+        <br>
+        <td th:if="${notification.getSeen() == null}"><a onclick="submitApproved('approved')" class="btn btn-primary">Odobri</a></td>
+        <td th:if="${notification.getSeen() == null}"><a onclick="submitApproved('rejected')" class="btn btn-danger">Odbij</a></td>
+        <td th:if="${notification.getSeen() != null}"><a th:href="${'/notifications/'}" class="btn btn-primary">U redu</a></td>
+        <br>
+        <br>
     </div>
 
     <div th:if="${!notification.isActionRequired()}">
@@ -71,7 +72,7 @@
             <div class="row details-text" th:if="${notification.getMessage() != null}"><span th:text="${notification.getMessage()}"></span></div>
             <br>
             <br>
-            <button type="submit" class="btn btn-primary">U redu</button>
+            <button type="submit" class="btn btn-primary" th:if="${notification.getSeen() == null}">U redu</button>
         </form>
     </div>
 </div>

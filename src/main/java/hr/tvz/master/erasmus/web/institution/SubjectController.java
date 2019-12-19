@@ -37,7 +37,7 @@ public class SubjectController {
         return "subjects/list";
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR') or hasRole('SUBJECT_COORDINATOR') or hasRole('ERASMUS_STUDENT')")
     @GetMapping(path = "subjects/details/{id}")
     public String getOne(Model model, @PathVariable(value = "id") Long id) {
         model.addAttribute("subject", subjectRepository.getOne(id));

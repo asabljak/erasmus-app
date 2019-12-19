@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -53,12 +54,13 @@ public class NotificationController extends AbstractErasmusController {
 
         if (notification != null && notification.getReceivers().contains(appUser)) {
             model.addAttribute("notification", notification);
-            if (NotificationType.INTERVIEW.equals(notification.getNotificationType().getId())) {
-                return "notifications/interview";
-            } else if (NotificationType.REVIEW.equals(notification.getNotificationType().getId())) {
-//                model.addAttribute("notificationId", notificationId);
+            if (NotificationType.REVIEW.equals(notification.getNotificationType().getId())) {
                 return "notifications/review";
             }
+//            else if (NotificationType.REVIEW.equals(notification.getNotificationType().getId())) {
+////                model.addAttribute("notificationId", notificationId);
+//                return "notifications/review";
+//            }
 
             model.addAttribute("isSuccessful", Boolean.FALSE);
             return "notifications/details";
@@ -107,28 +109,41 @@ public class NotificationController extends AbstractErasmusController {
     }
 
     @PreAuthorize("hasRole('COORDINATOR')")
-    @GetMapping("/notifications/interview")
+    @GetMapping("/actions/callForInterview")
     public String openCllForInterviewPage(Model model) {
         model.addAttribute("mobilityList", mobilityRepository.findAllByMobilityStatus_Id(MobilityStatus.CREATED));
-        return "notifications/interview";
+        return "actions/callForInterview";
     }
 
     @PreAuthorize("hasRole('ERASMUS_STUDENT')")
-    @GetMapping("/notifications/review/{id}")
+    @PostMapping("/notifications/review/{id}")
     public String review(@PathVariable(value = "id") Long id) {
         Notification notification = notificationService.getOne(id);
-//        notification.setSeen(LocalDateTime.now());
-//        notification.setSeenBy(getLoggedInUser());
-        //model.addAttribute("institution", notification.getMobility().getInstitution());
-        //TODO označi notifikaciju seen
+        notification.setSeen(LocalDateTime.now());
+        notification.setSeenBy(getLoggedInUser());
+        notificationService.save(notification);
         return "redirect:/institutions/review/" + notification.getMobility().getInstitution().getId();
     }
 
     @PreAuthorize("hasRole('COORDINATOR')")
     @PostMapping("/notifications/interview")
     public String callForInterview(@RequestParam(name = "mobilities") List<Mobility> mobilities,
-                                       @RequestParam(name = "message") String message) {
-        notificationService.sendInterviewCalls(mobilities, message);
+                                   @RequestParam(name = "message") String message) {
+        notificationService.sendInterviewCalls(mobilities, message, getLoggedInUser());
+        return "redirect:/";
+    }
+
+    @PreAuthorize("hasRole('COORDINATOR')")
+    @GetMapping("/actions/callForReview")
+    public String openCllForReviewPage(Model model) {
+        model.addAttribute("mobilityList", mobilityRepository.findAllByMobilityStatus_Id(MobilityStatus.DONE));
+        return "actions/callForReview";
+    }
+
+    @PreAuthorize("hasRole('COORDINATOR')")
+    @PostMapping("/notifications/review")
+    public String callForReview(@RequestParam(name = "mobilities") List<Mobility> mobilities) {
+        notificationService.sendReviewCalls(mobilities, getLoggedInUser());
         return "redirect:/";
     }
 }
