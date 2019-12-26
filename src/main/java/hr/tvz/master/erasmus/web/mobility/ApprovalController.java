@@ -65,8 +65,7 @@ public class ApprovalController extends AbstractErasmusController {
     public String getEmpty(Model model){
         model.addAttribute("approval", new Approval());
         model.addAttribute("approvalTypeList", approvalTypeRepository.findAll());
-//        model.addAttribute("studentList", appUserRepository.findAll()); //TODO izmjeniti u findByID
-        model.addAttribute("documentList", documentRepository.findAll()); //TODO getDocumentsForUser
+        model.addAttribute("documentList", documentRepository.findAll());
         model.addAttribute("mobilityList", mobilityService.findAll());
 
         return "approvals/create";

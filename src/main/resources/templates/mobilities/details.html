@@ -46,7 +46,7 @@
         <br>
         <br>
         <form>
-            <td><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR')" th:href="${'/mobilities/edit/' + mobility.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a sec:authorize="hasRole('ADMIN') or hasRole('COORDINATOR')" th:href="${'/mobilities/edit/' + mobility.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <td><a sec:authorize="hasRole('ADMIN')" th:href="${'/mobilities/delete/' + mobility.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
             <td><a th:href="${'/mobilities/'}" class="btn btn-default">Povratak</a></td>
         </form>

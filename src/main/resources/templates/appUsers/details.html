@@ -21,7 +21,7 @@
         <div th:if="${appUser.getYearOfStudy() != null}" class ="row details-text"><span><b>Godina studija: </b></span><span th:text="${appUser.getYearOfStudy()}"></span></div>
         <br>
         <form>
-            <td><a sec:authorize="hasRole('ADMIN')" th:href="${'/appUsers/edit/' + appUser.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td><a sec:authorize="hasRole('ADMIN')" th:href="${'/appUsers/edit/' + appUser.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <td><a sec:authorize="hasRole('ADMIN')" th:href="${'/appUsers/delete/' + appUser.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
             <td><a th:href="${'/appUsers/byRole'}" class="btn btn-default">Povratak</a></td>
         </form>

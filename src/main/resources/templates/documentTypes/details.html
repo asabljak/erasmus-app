@@ -22,7 +22,7 @@
         </div>
         <br>
         <form>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/documentTypes/edit/' + documentType.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/documentTypes/edit/' + documentType.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/documentTypes/delete/' + documentType.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
             <td><a th:href="${'/documentTypes/'}" class="btn btn-default">Povratak</a></td>
         </form>

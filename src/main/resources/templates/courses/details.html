@@ -35,7 +35,7 @@
             </table>
             <br>
             <form>
-                <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/courses/edit/' + course.getId()}" class="btn btn-primary">Izmjeni</a></td>
+                <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/courses/edit/' + course.getId()}" class="btn btn-primary">Izmijeni</a></td>
                 <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/courses/delete/' + course.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
                 <td><a th:href="${'/courses/'}" class="btn btn-default">Povratak</a></td>
             </form>

@@ -17,7 +17,7 @@
         <div class ="row details-text"><a th:href="${'/documents/download/' + document.getId()}" class="btn btn-default">Preuzmi dokument</a></div>
         <br>
         <form>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/documents/edit/' + document.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/documents/edit/' + document.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/documents/delete/' + document.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
             <td><a th:href="${'/documents/'}" class="btn btn-default">Povratak</a></td>
         </form>

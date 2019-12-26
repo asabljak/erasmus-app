@@ -19,7 +19,7 @@
         <div class ="row details-text" th:if="${subject.getCourse() != null}" ><span><b>Smjer: </b></span><span th:text="${subject.getCourse().getName()}"></span></div>
         <br>
         <form>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/subjects/edit/' + subject.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/subjects/edit/' + subject.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/subjects/delete/' + subject.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
             <td><a th:href="${'/subjects/'}" class="btn btn-default">Povratak</a></td>
         </form>

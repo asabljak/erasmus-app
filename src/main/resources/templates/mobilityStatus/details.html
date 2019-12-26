@@ -15,7 +15,7 @@
         <div class ="row details-text"><span><b>Opis: </b></span><span th:text="${mobilityStatus.getDescription()}"></span></div>
         <br>
         <form>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/mobilityStatus/edit/' + mobilityStatus.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/mobilityStatus/edit/' + mobilityStatus.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <!--<td><a th:href="${'/mobilityStatus/delete/' + mobilityStatus.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>-->
             <td><a th:href="${'/mobilityStatus/'}" class="btn btn-default">Povratak</a></td>
         </form>

@@ -15,7 +15,7 @@
         <div class="row details-text"><span><b>Name: </b></span><span th:text="${field.getName()}"></span></div>
         <br>
         <form>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/fields/edit/' + field.getId()}" class="btn btn-primary">Izmjeni</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/fields/edit/' + field.getId()}" class="btn btn-primary">Izmijeni</a></td>
             <td sec:authorize="hasRole('ADMIN')"><a th:href="${'/fields/delete/' + field.getId()}" class="btn btn-danger" onclick="return confirm('Jeste li sigurni?')">Obriši</a></td>
             <td><a th:href="${'/fields/'}" class="btn btn-default">Povratak</a></td>
         </form>

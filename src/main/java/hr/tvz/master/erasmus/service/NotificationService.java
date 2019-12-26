@@ -166,7 +166,7 @@ public class NotificationService {
         Notification notification = new Notification();
         notification.setNotificationType(notificationTypeRepository.getOne(NotificationType.SUBJECTS_APPROVAL));
         notification.setReceivers(appUserService.findAllByRoleId(Role.ROLE_SUBJECT_COORDINATOR));
-        notification.setMessage("Student " + sender + " predao je popunjeni Learning Agreement na pregled. Molimo pregledatje dokument.");
+        notification.setMessage("Student " + sender + " predao je popunjeni Learning Agreement na pregled. Molimo pregledajte dokument.");
         notification.setActionRequired(Boolean.TRUE);
         notification.setApproval(approval);
         notification.setSender(sender);
